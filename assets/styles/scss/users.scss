@@ -1,0 +1,18 @@
+@import './colors';
+
+.main-navbar {
+    padding: 0;
+    a {
+        color: white;
+        padding: 20px 15px;
+    }
+
+    ul {
+        li.active {
+            
+            a {
+                background: $orange;
+            }
+        }
+    }
+}

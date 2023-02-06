@@ -1,0 +1,18 @@
+@import './colors';
+@import "../../bootstrap/scss/functions";
+@import "../../bootstrap/scss/variables";
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Parisienne&display=swap');
+
+$theme-colors: map-merge($map1: $theme-colors, $map2: $custom-map);
+
+
+@import '../../bootstrap/scss/bootstrap.scss';
+
+
+// *{
+//     font-family: 'Libre Baskerville', serif;
+// }
+
+// .text-elegant{
+//     font-family: 'Parisienne', cursive !important;
+// }

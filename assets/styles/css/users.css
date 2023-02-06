@@ -1,0 +1,10 @@
+.main-navbar {
+  padding: 0;
+}
+.main-navbar a {
+  color: white;
+  padding: 20px 15px;
+}
+.main-navbar ul li.active a {
+  background: #FC6603;
+}/*# sourceMappingURL=users.css.map */
