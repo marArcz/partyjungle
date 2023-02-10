@@ -4,15 +4,40 @@
     padding: 0;
     a {
         color: white;
-        padding: 20px 15px;
+        padding: 5px 20px;
+        box-sizing: border-box;
+        height: 100%;
+        font-size: 1.1rem;
     }
 
+    .search-input{
+        margin: 25px 10px;
+    }
     ul {
         li.active {
-            
             a {
                 background: $orange;
             }
+        }
+        li:not(.active){
+            a:hover{
+                background: $orange;
+            }
+        }
+    }
+}
+
+.hero-main{
+    .hero-text{
+        font-size: 5.5rem !important;
+        font-weight: bolder;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .hero-main{
+        .hero-text{
+            font-size: 3rem !important;
         }
     }
 }

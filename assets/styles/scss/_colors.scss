@@ -1,7 +1,8 @@
 $yellow:#FECB02;
 $orange: #FC6603;
-
+$gray:#f0f2fa;
 $custom-map: (
+    'gray':$gray,
     'yellow':$yellow,
     'orange':$orange
 );

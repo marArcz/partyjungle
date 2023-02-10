@@ -1,0 +1,108 @@
+@import './colors';
+$sidebar-w: 12vw;
+
+.login-container {
+    min-height: 100vh !important;
+    align-items: center;
+}
+
+.login-form {
+    min-height: 100vh;
+}
+
+
+
+.main-navbar {}
+
+.sidebar-wrapper {
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    padding: 10px 0;
+    background: $orange;
+    width: $sidebar-w;
+    box-sizing: border-box;
+
+    .sidebar {
+        .sidebar-nav {
+            li {
+                padding: 5px;
+
+                .nav-link {
+                    color: white !important;
+                    display: flex;
+                    align-items: center;
+                    opacity: 0.6;
+                    position: relative;
+                    padding-bottom: 0;
+                    padding-top: 0;
+                    transition: all 200ms;
+
+                    i {
+                        margin-right: 5px;
+                    }
+
+                    span {
+                        font-size: 0.8rem !important;
+                    }
+
+                    &::after {
+                        content: " ";
+                        width: 3px;
+                        height: 100%;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        background: white;
+                        visibility: hidden;
+                        transition: all 100ms;
+                        border-radius: 10px;
+                    }
+                }
+
+                &:not(.active):hover {
+                    .nav-link{
+                        opacity: 1;
+
+                        &::after {
+                            visibility: visible;
+                        }
+                    }
+                }
+
+                &.active {
+                    .nav-link {
+                        opacity: 1;
+
+                        &::after {
+                            visibility: visible;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.main-container {
+    margin-left: $sidebar-w;
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: $yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+
+    &.card-icon-sm {
+        width: 40px;
+        height: 40px;
+    }
+}

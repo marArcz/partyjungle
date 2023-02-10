@@ -1,0 +1,83 @@
+.login-container {
+  min-height: 100vh !important;
+  align-items: center;
+}
+
+.login-form {
+  min-height: 100vh;
+}
+
+.sidebar-wrapper {
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  padding: 10px 0;
+  background: #FC6603;
+  width: 12vw;
+  box-sizing: border-box;
+}
+.sidebar-wrapper .sidebar .sidebar-nav li {
+  padding: 5px;
+}
+.sidebar-wrapper .sidebar .sidebar-nav li .nav-link {
+  color: white !important;
+  display: flex;
+  align-items: center;
+  opacity: 0.6;
+  position: relative;
+  padding-bottom: 0;
+  padding-top: 0;
+  transition: all 200ms;
+}
+.sidebar-wrapper .sidebar .sidebar-nav li .nav-link i {
+  margin-right: 5px;
+}
+.sidebar-wrapper .sidebar .sidebar-nav li .nav-link span {
+  font-size: 0.8rem !important;
+}
+.sidebar-wrapper .sidebar .sidebar-nav li .nav-link::after {
+  content: " ";
+  width: 3px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: white;
+  visibility: hidden;
+  transition: all 100ms;
+  border-radius: 10px;
+}
+.sidebar-wrapper .sidebar .sidebar-nav li:not(.active):hover .nav-link {
+  opacity: 1;
+}
+.sidebar-wrapper .sidebar .sidebar-nav li:not(.active):hover .nav-link::after {
+  visibility: visible;
+}
+.sidebar-wrapper .sidebar .sidebar-nav li.active .nav-link {
+  opacity: 1;
+}
+.sidebar-wrapper .sidebar .sidebar-nav li.active .nav-link::after {
+  visibility: visible;
+}
+
+.main-container {
+  margin-left: 12vw;
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #FECB02;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.card-icon.card-icon-sm {
+  width: 40px;
+  height: 40px;
+}/*# sourceMappingURL=admin.css.map */

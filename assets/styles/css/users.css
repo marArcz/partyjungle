@@ -3,8 +3,28 @@
 }
 .main-navbar a {
   color: white;
-  padding: 20px 15px;
+  padding: 5px 20px;
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 1.1rem;
+}
+.main-navbar .search-input {
+  margin: 25px 10px;
 }
 .main-navbar ul li.active a {
   background: #FC6603;
+}
+.main-navbar ul li:not(.active) a:hover {
+  background: #FC6603;
+}
+
+.hero-main .hero-text {
+  font-size: 5.5rem !important;
+  font-weight: bolder;
+}
+
+@media screen and (max-width: 768px) {
+  .hero-main .hero-text {
+    font-size: 3rem !important;
+  }
 }/*# sourceMappingURL=users.css.map */
