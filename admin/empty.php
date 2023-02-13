@@ -13,14 +13,19 @@
 <body class="bg-gray">
     <div class="wrapper">
         <?php
-            $active_page = "dashboard";
-            include './includes/sidebar.php'
+        $active_page = "dashboard";
+        include './includes/sidebar.php'
         ?>
         <main class="main-container">
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
-                   
+                    <div class="d-flex align-items-end mb-4">
+                        <span class="card-icon card-icon-sm me-2 shadow-sm">
+                            <i class="bx bxs-time bx-sm"></i>
+                        </span>
+                        <p class="fs-4 fw-bold my-0"> Empty</p>
+                    </div>
                 </div>
             </section>
         </main>
@@ -28,7 +33,7 @@
 
     <?php include './includes/scripts.php' ?>
     <script>
-        
+
     </script>
 </body>
 

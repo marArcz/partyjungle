@@ -16,15 +16,19 @@
             <div class="col-md text-center">
                 <div class="my-3">
                     <ul class="nav justify-content-center align-items-center">
-                        <!-- <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="bx bx-sm text-dark bxs-shopping-bag"></i>
-                        </a>
-                    </li> -->
                         <li class="nav-item">
-                            <!-- <a href="logout.php" class="btn btn-sm btn-orange rounded-pill text-white px-4">
-                            Log out
-                        </a> -->
+                            <a href="#" class="nav-link">
+                                <i class="bx bx-sm text-dark bxs-shopping-bag"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="logout.php" class="btn btn-sm btn-orange rounded-pill text-white px-4">
+                                Log out
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+
                             <a href="login.php" class="btn btn-sm btn-orange rounded-pill text-white px-3 mb-2">
                                 Log in
                             </a>

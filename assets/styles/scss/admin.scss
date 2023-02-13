@@ -1,5 +1,5 @@
 @import './colors';
-$sidebar-w: 12vw;
+$sidebar-w: 13vw;
 
 .login-container {
     min-height: 100vh !important;
@@ -23,6 +23,25 @@ $sidebar-w: 12vw;
     background: $orange;
     width: $sidebar-w;
     box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* width */
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #e7e7e7;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #dad6d6;
+    }
+
+
 
     .sidebar {
         .sidebar-nav {
@@ -62,7 +81,7 @@ $sidebar-w: 12vw;
                 }
 
                 &:not(.active):hover {
-                    .nav-link{
+                    .nav-link {
                         opacity: 1;
 
                         &::after {

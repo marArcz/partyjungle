@@ -1,4 +1,6 @@
 <?php include './conn/conn.php' ?>
+<?php include './includes/Session.php' ?>
+<?php include './includes/verifyUserSession.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +8,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Party Jungle Toys & Party Needs</title>
     <?php include './includes/header.php' ?>
-
 </head>
 
 <body>
@@ -54,6 +55,7 @@
             </div>
         </section>
     </main>
+    <?php include './includes/scripts.php' ?>
 </body>
 
 </html>

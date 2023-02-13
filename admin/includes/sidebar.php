@@ -28,7 +28,7 @@
                 </a>
             </li>
             <li class="nav-item w-100 mb-4 <?php echo $active_page == "messages" ? "active" : "" ?>">
-                <a href="dashboard.php" class="nav-link">
+                <a href="messages.php" class="nav-link">
                     <i class='bx bxs-chat bx-sm'></i>
                     <span class="label">
                         Messages
@@ -39,10 +39,19 @@
                 </a>
             </li>
             <li class="nav-item w-100 mb-4 <?php echo $active_page == "products" ? "active" : "" ?>">
-                <a href="dashboard.php" class="nav-link">
+                <a href="products.php" class="nav-link">
                     <i class='bx bxs-package bx-sm'></i>
                     <span class="label">
                         Products
+                    </span>
+
+                </a>
+            </li>
+            <li class="nav-item w-100 mb-4 <?php echo $active_page == "categories" ? "active" : "" ?>">
+                <a href="categories.php" class="nav-link">
+                    <i class='bx bxs-category bx-sm'></i>
+                    <span class="label">
+                        Categories
                     </span>
 
                 </a>
