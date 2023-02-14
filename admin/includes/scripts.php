@@ -57,4 +57,11 @@
         target.click();
 
     })
+
+    $(".file-input").on("change", function(e) {
+        let files = e.target.files;
+        var previewElem = $($(this).data("img-preview"));
+
+        previewElem.attr("src", URL.createObjectURL(files[0]));
+    })
 </script>

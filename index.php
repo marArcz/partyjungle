@@ -41,8 +41,10 @@
                 ?>
                     <div class="col-md text-center">
                         <div class="card border-0 rounded-0 <?php echo $i % 2 == 0 ? "bg-yellow" : "bg-orange" ?>">
-                            <div class="card-body">
-                                <p class="text-light my-1">
+                            <div class="card-body text-center">
+                                <img src="<?php echo $row['category_photo'] ?>" alt="" class="img-fluid mb-3">
+
+                                <p class="text-light my-0">
                                     <?php echo $row['category_name'] ?>
                                 </p>
                             </div>
