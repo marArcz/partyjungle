@@ -8,9 +8,9 @@ $price = $_POST['price'];
 $stocks = $_POST['stocks'];
 $description = $_POST['description'];
 
-$target_dir = "../assets/products/";
+$target_dir = "assets/products/";
 $target_file = $target_dir . basename($_FILES["photo"]["name"]);
-move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file);
+move_uploaded_file($_FILES["photo"]["tmp_name"], "../" . $target_file);
 
 $query = mysqli_prepare($con, "INSERT INTO products(product_name,category_id,price,stocks,description,photo) VALUES(?,?,?,?,?,?)");
 $query->bind_param(
@@ -25,11 +25,11 @@ $query->bind_param(
 
 if($query->execute()){
     Session::insertSuccess("Successfully added!");
-    Session::redirectTo("products.php");
+    Session::redirectTo("products.php?category=$category_id");
     exit();
 }
 else{
     Session::insertError();
-    Session::redirectTo("products.php");
+    Session::redirectTo("products.php?category=$category_id");
     exit();
 }

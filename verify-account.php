@@ -162,11 +162,17 @@
             } else {
                 $("#submit-btn").removeAttr("disabled")
                 let code = ""
-                $.each(".code-input",function(i,elem){
-                    code += $(elem).val();
-                })
+                // $.each(".code-input",function(i,elem){
+                //     code += $(elem).val();
+                // })
+
+                let inputs = $(".code-input")
+                for(let input of inputs){
+                    code += $(input).val();
+                }
 
                 $("#input-code").val(code);
+                console.log($in)
             }
         })
     </script>

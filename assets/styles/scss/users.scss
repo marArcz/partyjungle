@@ -2,6 +2,7 @@
 
 .main-navbar {
     padding: 0;
+
     a {
         color: white;
         padding: 5px 20px;
@@ -10,34 +11,137 @@
         font-size: 1.1rem;
     }
 
-    .search-input{
+    .search-input {
         margin: 25px 10px;
     }
+
     ul {
         li.active {
             a {
                 background: $orange;
             }
         }
-        li:not(.active){
-            a:hover{
+
+        li:not(.active) {
+            a:hover {
                 background: $orange;
             }
         }
     }
 }
 
-.hero-main{
-    .hero-text{
+.hero-main {
+    background-image: url('../../images/banner1.jpg');
+
+    .hero-text {
         font-size: 5.5rem !important;
         font-weight: bolder;
     }
 }
 
+.icon-input-group {
+    position: relative !important;
+
+    input {
+        padding-right: 13px !important;
+    }
+
+    .input-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+}
+
+.product-card {
+    img {
+        height: 25vh;
+    }
+
+    .product-name {
+        font-size: .8rem;
+        color: black;
+    }
+
+    .product-price {
+        font-size: 0.9rem;
+        // font-weight: bold;
+        color: $orange;
+    }
+
+    .product-footer {
+        top: -15%;
+        background: $orange;
+        color: white;
+        display: none;
+        border: 0 !important;
+        left: 0;
+    }
+
+    &:hover {
+        transform: scale(1.01);
+        // border: 1px solid $orange !important;
+
+        // .product-footer{
+        //     display: block;
+        // }
+    }
+
+
+
+
+}
+
+.categories-container {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 15px !important;
+
+    .category-item {
+        justify-content: center;
+        width: max-content;
+        margin-right: 10px;
+
+        img {
+            width: 30px;
+        }
+
+        &.active {
+            width: max-content;
+            border: 1px solid $orange !important;
+
+            p {
+                color: $orange !important;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+main{
+    min-height: 90vh;
+}
+
+
 @media screen and (max-width:768px) {
-    .hero-main{
-        .hero-text{
+    .hero-main {
+        .hero-text {
             font-size: 3rem !important;
+        }
+    }
+
+    .category-item {
+        padding: 5px !important;
+
+        img {
+            width: 20px !important;
+        }
+
+        p {
+            font-size: 12px !important;
         }
     }
 }

@@ -14,7 +14,7 @@
         Session::redirectTo("send-verification.php");
     }else{
         $v_code = $query->fetch_assoc();
-        if($code === $v_code['code']){
+        if($code == $v_code['code']){
             //update user status
             $query = mysqli_query($con,"UPDATE users SET is_verified = 1 WHERE id = $user_id");
             Session::redirectTo("index.php");

@@ -82,11 +82,11 @@
 							</button>
 							<div class="collapse navbar-collapse" id="navbarsExample04">
 								<ul class="navbar-nav mr-auto">
-									<li class="nav-item active" id="nav_home">
+									<li class="nav-item <?php echo $active_page == "home" ? "active":"" ?>" id="nav_home">
 										<a class="nav-link" href="index.php">Home</a>
 									</li>
-									<li class="nav-item" id="nav_products">
-										<a class="nav-link" href="index.php">Products</a>
+									<li class="nav-item <?php echo $active_page == "products" ? "active":"" ?>" id="nav_products">
+										<a class="nav-link" href="products.php">Products</a>
 									</li>
 
 									<?php
@@ -123,7 +123,7 @@
 						<div class="search">
 
 							<input class="form_sea" type="text" placeholder="Search" name="search" id="search" onkeypress="searchproducts(this.value)">
-							<button class="seach_icon"><i class="fa fa-search"></i></button>
+							<button class="seach_icon mt-1"><i class="bx bx-search"></i></button>
 
 						</div>
 					</div>
