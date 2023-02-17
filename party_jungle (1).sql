@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2023 at 03:02 AM
+-- Generation Time: Feb 17, 2023 at 05:31 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -48,6 +48,23 @@ INSERT INTO `admin` (`id`, `firstname`, `middlename`, `lastname`, `contact`, `em
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_name` int(11) NOT NULL,
+  `product_photo` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
@@ -62,10 +79,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `category_name`, `category_photo`) VALUES
-(1, 'Ballons', ''),
-(2, 'Toys', ''),
-(3, 'Cake', ''),
-(4, 'Loot Bags', '');
+(1, 'Ballons', 'assets/products/balloons.png'),
+(2, 'Toys', 'assets/products/toys.png'),
+(3, 'Cake', 'assets/products/cake.png'),
+(4, 'Loot Bags', 'assets/products/lootbags.png');
 
 -- --------------------------------------------------------
 
@@ -124,8 +141,20 @@ CREATE TABLE `products` (
   `price` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `stocks` bigint(20) NOT NULL,
-  `is_featured` int(11) DEFAULT 0
+  `is_featured` int(11) DEFAULT 0,
+  `photo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `category_id`, `product_name`, `price`, `description`, `stocks`, `is_featured`, `photo`) VALUES
+(1, 2, 'Car', '1599', 'asjkdhajksh', 5, 1, 'assets/products/prod4.jpg'),
+(2, 2, 'Blue Motos', '1500', 'Blue motor \r\nbattery', 10, 1, 'assets/products/prod8.jpg'),
+(3, 2, 'Globe Ball', '10', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum non consectetur a erat nam at lectus. Feugiat nibh sed pulvinar proin. A lacus vestibulum sed arcu non odio euismod. Pretium', 200, 1, 'assets/products/globe.png'),
+(4, 2, 'Kid Educational Beads Toy', '35', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum non consectetur a erat nam at lectus. Feugiat nibh sed pulvinar proin. A lacus vestibulum sed arcu non odio euismod. Pretium', 100, 1, 'assets/products/b0625195-2b44-406f-a4c0-93bc09b26822.fd598e72ca1ab19973bf00acc55e4182.webp'),
+(5, 1, 'Birthday Ballons', '125', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum non consectetur a erat nam at lectus. Feugiat nibh sed pulvinar proin. A lacus vestibulum sed arcu non odio euismod. Pretium', 30, 0, 'assets/products/prod2.jpg');
 
 -- --------------------------------------------------------
 
@@ -151,7 +180,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstname`, `middlename`, `lastname`, `email`, `address`, `contact`, `username`, `password`, `is_verified`) VALUES
-(8, 'Marlo', 'A.', 'Zafe', 'marlozafe13@gmail.com', 'Gogon Centro, Virac, Catanduanes', '09691624065', 'marlozafe', '$2y$10$xiHz2xApMjken43vLKdq9eVnIFlEKAKuaLSfteuTIimrj3TzxmqJ.', 0);
+(8, 'Marlo', 'A.', 'Zafe', 'marlozafe13@gmail.com', 'Gogon Centro, Virac, Catanduanes', '09691624065', 'marlozafe', '$2y$10$xiHz2xApMjken43vLKdq9eVnIFlEKAKuaLSfteuTIimrj3TzxmqJ.', 1);
 
 -- --------------------------------------------------------
 
@@ -182,7 +211,9 @@ INSERT INTO `verification_codes` (`id`, `code`, `user_id`, `createdAt`, `status`
 (7, '082F12', 8, '2023-02-13 01:02:23', 0, '2023-02-13 01:12:23'),
 (8, 'C5FF93', 8, '2023-02-13 01:16:30', 0, '2023-02-13 01:26:30'),
 (9, 'F36642', 8, '2023-02-13 01:29:40', 0, '2023-02-13 01:39:40'),
-(10, 'A9EB9C', 8, '2023-02-13 01:40:34', 0, '2023-02-13 01:50:34');
+(10, 'A9EB9C', 8, '2023-02-13 01:40:34', 0, '2023-02-13 01:50:34'),
+(11, '169D56', 8, '2023-02-14 20:42:18', 0, '2023-02-14 20:52:18'),
+(12, '2EBDFC', 8, '2023-02-14 21:10:27', 0, '2023-02-14 21:20:27');
 
 --
 -- Indexes for dumped tables
@@ -192,6 +223,12 @@ INSERT INTO `verification_codes` (`id`, `code`, `user_id`, `createdAt`, `status`
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -249,6 +286,12 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -276,7 +319,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -288,7 +331,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `verification_codes`
 --
 ALTER TABLE `verification_codes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
