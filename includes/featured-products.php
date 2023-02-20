@@ -26,7 +26,7 @@
                                              <!-- <p class="product-name my-0"><?php echo $row['product_name'] ?></p> -->
                                              <div class="d-flex">
                                                  <p class="my-1 product-price">
-                                                     P.<?php echo $row['price'] ?>
+                                                 ₱ <?php echo $row['price'] ?>
                                                  </p>
                                              </div>
                                          </div>

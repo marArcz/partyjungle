@@ -77,13 +77,21 @@
             <li class="nav-item px-4 text-light opacity-50 mb-2">
                 <small>SYSTEM</small>
             </li>
+            <li class="nav-item w-100 mb-4 <?php echo $active_page == "shipping" ? "active" : "" ?>">
+                <a href="shipping.php" class="nav-link">
+                    <i class='bx bxs-truck bx-sm'></i>
+                    <span class="label">
+                        Shipping Options
+                    </span>
+
+                </a>
+            </li>
             <li class="nav-item w-100 mb-4 <?php echo $active_page == "settings" ? "active" : "" ?>">
-                <a href="dashboard.php" class="nav-link">
+                <a href="settings.php" class="nav-link">
                     <i class='bx bxs-cog bx-sm'></i>
                     <span class="label">
                         System Settings
                     </span>
-
                 </a>
             </li>
         </ul>

@@ -303,7 +303,7 @@
         border: inherit;
     }
     .navigation.navbar-dark .navbar-toggler-icon {
-        background: url(../images/menu_icon1.png);
+        background: url('../../images/menu_icon1.png');
         background-repeat: no-repeat;
         width: 64px;
         height: 44px;

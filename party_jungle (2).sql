@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2023 at 05:31 AM
+-- Generation Time: Feb 20, 2023 at 02:27 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -54,13 +54,20 @@ INSERT INTO `admin` (`id`, `firstname`, `middlename`, `lastname`, `contact`, `em
 CREATE TABLE `cart` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `product_name` int(11) NOT NULL,
-  `product_photo` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_photo` varchar(255) NOT NULL,
   `category_id` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `product_id`, `product_name`, `product_photo`, `category_id`, `price`, `quantity`, `user_id`) VALUES
+(13, 6, 'Kid Toy', 'assets/products/R (7).jpg', 2, 10, 5, 8);
 
 -- --------------------------------------------------------
 
@@ -125,7 +132,24 @@ CREATE TABLE `orders` (
   `total` int(11) NOT NULL,
   `shipping_address` varchar(255) NOT NULL,
   `shipping_type` int(11) NOT NULL,
-  `shipping_fee` int(11) NOT NULL
+  `shipping_fee` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE `order_details` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_photo` varchar(255) NOT NULL,
+  `price` bigint(20) NOT NULL,
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -150,11 +174,32 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `product_name`, `price`, `description`, `stocks`, `is_featured`, `photo`) VALUES
-(1, 2, 'Car', '1599', 'asjkdhajksh', 5, 1, 'assets/products/prod4.jpg'),
+(1, 4, 'Car2', '1599', 'KonekQ \r\n', 5, 1, 'assets/products/329023999_6570190866329176_1391263099262529913_n.png'),
 (2, 2, 'Blue Motos', '1500', 'Blue motor \r\nbattery', 10, 1, 'assets/products/prod8.jpg'),
-(3, 2, 'Globe Ball', '10', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum non consectetur a erat nam at lectus. Feugiat nibh sed pulvinar proin. A lacus vestibulum sed arcu non odio euismod. Pretium', 200, 1, 'assets/products/globe.png'),
+(3, 2, 'Globe Ball', '105', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum non consectetur a erat nam at lectus. Feugiat nibh sed pulvinar proin. A lacus vestibulum sed arcu non odio euismod. Pretium', 200, 1, 'assets/products/globe.png'),
 (4, 2, 'Kid Educational Beads Toy', '35', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum non consectetur a erat nam at lectus. Feugiat nibh sed pulvinar proin. A lacus vestibulum sed arcu non odio euismod. Pretium', 100, 1, 'assets/products/b0625195-2b44-406f-a4c0-93bc09b26822.fd598e72ca1ab19973bf00acc55e4182.webp'),
-(5, 1, 'Birthday Ballons', '125', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum non consectetur a erat nam at lectus. Feugiat nibh sed pulvinar proin. A lacus vestibulum sed arcu non odio euismod. Pretium', 30, 0, 'assets/products/prod2.jpg');
+(5, 1, 'Birthday Ballons', '125', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum non consectetur a erat nam at lectus. Feugiat nibh sed pulvinar proin. A lacus vestibulum sed arcu non odio euismod. Pretium', 30, 0, 'assets/products/prod2.jpg'),
+(6, 2, 'Kid Toy', '10', 'kjshdjkahsdkjhasd', 120, 0, 'assets/products/R (7).jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping`
+--
+
+CREATE TABLE `shipping` (
+  `id` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `price` bigint(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `shipping`
+--
+
+INSERT INTO `shipping` (`id`, `description`, `price`) VALUES
+(1, 'Standard Delivery', 100),
+(2, 'Urgent Delivery', 250);
 
 -- --------------------------------------------------------
 
@@ -254,12 +299,26 @@ ALTER TABLE `conversations`
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `transaction_no_2` (`transaction_no`),
+  ADD KEY `transaction_no` (`transaction_no`);
+
+--
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `shipping`
+--
+ALTER TABLE `shipping`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -289,7 +348,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -316,10 +375,22 @@ ALTER TABLE `orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `order_details`
+--
+ALTER TABLE `order_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `shipping`
+--
+ALTER TABLE `shipping`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

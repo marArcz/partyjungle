@@ -15,6 +15,10 @@
         Notiflix.Report.init({
             backOverlayColor: 'rgba(240,240,240,0.6)',
         });
+        Notiflix.Notify.init({
+            position: 'center-top',
+            closeButton: false,
+        });
     })
 
     const showLoading = () => {

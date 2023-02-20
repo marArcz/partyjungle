@@ -28,7 +28,7 @@
 
                 <!-- categories -->
                 <div class="categories-container mb-4">
-                    <a href="products.php?category=all<?php echo isset($_GET['search']) ? "&search=" . $_GET['search'] : "" ?>" class="link-dark">
+                    <a href="products.php?category=all" class="link-dark">
                         <div class="card category-item <?php echo $category === "all" ? "active" : "" ?>">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
@@ -58,7 +58,7 @@
                     $query = mysqli_query($con, "SELECT * FROM categories WHERE category_name != '$category'");
                     while ($row = $query->fetch_assoc()) {
                     ?>
-                        <a href="products.php?category=<?php echo $row['category_name'] ?><?php echo isset($_GET['search']) ? "&search=" . $_GET['search'] : "" ?>">
+                        <a href="products.php?category=<?php echo $row['category_name'] ?><?php echo isset($_GET['search'])? "&search=".$_GET['search']:"" ?>">
                             <div class="card category-item">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-center align-items-center">
@@ -80,35 +80,13 @@
                     </ol>
                 </nav>
                 <hr>
-                <?php
-                if (isset($_GET['search'])) {
-                ?>
-                    <a href="products.php?category=<?php echo $category ?>" class="btn btn-outline-dark mb-3">
-                        <div class="d-flex align-items-center">
-                            <i class="bx bx-x me-2"></i>
-                            <span>Results found for: <strong><?php echo $_GET['search'] ?></strong></span>
-                        </div>
-                    </a>
-                <?php
-                }
-                ?>
                 <!-- products -->
                 <div class="row gy-3 gx-1 pb-5">
                     <?php
                     if ($category === "all") {
-                        if (isset($_GET['search'])) {
-                            $search = $_GET['search'];
-                            $query = mysqli_query($con, "SELECT products.*, categories.category_name FROM products INNER JOIN categories ON products.category_id = categories.id WHERE products.product_name LIKE '%$search%'");
-                        } else {
-                            $query = mysqli_query($con, "SELECT products.*, categories.category_name FROM products INNER JOIN categories ON products.category_id = categories.id");
-                        }
+                        $query = mysqli_query($con, "SELECT products.*, categories.category_name FROM products INNER JOIN categories ON products.category_id = categories.id");
                     } else {
-                        if (isset($_GET['search'])) {
-                            $search = $_GET['search'];
-                            $query = mysqli_query($con, "SELECT products.*, categories.category_name FROM products INNER JOIN categories ON products.category_id = categories.id WHERE categories.category_name = '$category' AND products.product_name LIKE '%$search%'");
-                        } else {
-                            $query = mysqli_query($con, "SELECT products.*, categories.category_name FROM products INNER JOIN categories ON products.category_id = categories.id WHERE categories.category_name = '$category'");
-                        }
+                        $query = mysqli_query($con, "SELECT products.*, categories.category_name FROM products INNER JOIN categories ON products.category_id = categories.id WHERE categories.category_name = '$category'");
                     }
 
                     while ($row = $query->fetch_assoc()) {
@@ -126,7 +104,7 @@
                                         </div>
                                         <div class="d-flex">
                                             <p class="my-1 product-price">
-                                                ₱ <?php echo $row['price'] ?>
+                                            ₱ <?php echo $row['price'] ?>
                                             </p>
                                         </div>
                                     </div>
@@ -142,11 +120,6 @@
 
                     <?php
                     }
-                    if($query->num_rows == 0){
-                        ?>
-                        <h5 class="text-center">No products to show.</h5>
-                        <?php
-                    }
                     ?>
                 </div>
             </div>
@@ -155,6 +128,9 @@
     </main>
     <?php include './includes/footer.php' ?>
     <?php include './includes/scripts.php' ?>
+    <script>
+
+    </script>
 </body>
 
 </html>

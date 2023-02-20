@@ -11,7 +11,7 @@ $theme-colors: map-merge($map1: $theme-colors, $map2: $custom-map);
 @import '../../bootstrap/scss/bootstrap.scss';
 
 
-*{
+* {
     font-family: 'Poppins', sans-serif;
 }
 
@@ -19,6 +19,22 @@ $theme-colors: map-merge($map1: $theme-colors, $map2: $custom-map);
 //     font-family: 'Parisienne', cursive !important;
 // }
 
-.btn-yellow, .btn-orange{
+.btn-yellow,
+.btn-orange {
     color: white !important;
+}
+
+@each $color,
+$value in $theme-colors {
+    .btn-c-#{$color} {
+        background: rgba($color: $value, $alpha: 0.2);
+        border: 1px solid rgba($color: $value, $alpha: 0.5);
+        color: $value !important;
+
+        &:hover {
+            background: rgba($color: $value, $alpha: 0.3);
+            border: 1px solid rgba($color: $value, $alpha: 0.5);
+
+        }
+    }
 }

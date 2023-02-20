@@ -23,7 +23,7 @@
         return Notiflix.Loading.standard("Please wait");
     }
     const hideLoading = () => {
-        return Notiflix.Loading.remove(1000);
+        return Notiflix.Loading.remove(200);
 
     }
 

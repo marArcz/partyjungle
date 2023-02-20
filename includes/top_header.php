@@ -59,7 +59,18 @@
 							<?php
 							} else {
 							?>
-								<li><a href="#"><img src="assets/images/shopping.png" alt="#" /><span class="badge  bg-danger text-light" style="margin-left:-4vh;margin-bottom:2vh;" id="cart_count">0</span></a> </li>
+								<li>
+									<a href="cart.php">
+										<img src="assets/images/shopping.png" alt="#" />
+										<?php
+										$user_id = Session::getUser()['id'];
+										$cart_items = mysqli_query($con, "SELECT SUM(quantity) FROM cart WHERE user_id=$user_id")->fetch_array()[0];
+										?>
+										<span class="badge bg-danger text-light" style="margin-left:-30px;margin-bottom:2vh;" id="cart_count">
+											<?php echo $cart_items ? $cart_items : 0 ?>
+										</span>
+									</a>
+								</li>
 
 								<a href="./logout.php" class="loginbtn ms-2">Log out</a>
 							<?php
@@ -77,15 +88,15 @@
 				<div class="row">
 					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
 						<nav class="navigation navbar navbar-expand-md navbar-dark ">
-							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+							<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
 								<span class="navbar-toggler-icon"></span>
 							</button>
 							<div class="collapse navbar-collapse" id="navbarsExample04">
 								<ul class="navbar-nav mr-auto">
-									<li class="nav-item <?php echo $active_page == "home" ? "active":"" ?>" id="nav_home">
+									<li class="nav-item <?php echo $active_page == "home" ? "active" : "" ?>" id="nav_home">
 										<a class="nav-link" href="index.php">Home</a>
 									</li>
-									<li class="nav-item <?php echo $active_page == "products" ? "active":"" ?>" id="nav_products">
+									<li class="nav-item <?php echo $active_page == "products" ? "active" : "" ?>" id="nav_products">
 										<a class="nav-link" href="products.php">Products</a>
 									</li>
 
@@ -121,10 +132,17 @@
 					</div>
 					<div class="col-md-4">
 						<div class="search">
-
-							<input class="form_sea" type="text" placeholder="Search" name="search" id="search" onkeypress="searchproducts(this.value)">
-							<button class="seach_icon mt-1"><i class="bx bx-search"></i></button>
-
+							<form action="products.php" method="get">
+								<?php 
+									if(isset($_GET['category'])){
+										?>
+										<input type="hidden" name="category" value="<?php echo $_GET['category'] ?>">
+										<?php
+									}
+								?>
+								<input class="form_sea py-3" type="text" placeholder="Search" name="search" id="search-input" >
+								<button class="seach_icon mt-1" type="submit"><i class="bx bx-search"></i></button>
+							</form>
 						</div>
 					</div>
 				</div>

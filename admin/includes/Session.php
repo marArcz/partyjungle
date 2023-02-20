@@ -3,7 +3,8 @@
 declare(strict_types=1);
 const USER_SESSION_NAME = "party_jungle_admin";
 
-session_start();
+    session_start();
+
 class Session
 {
     public static function redirectTo(string $url)
@@ -21,7 +22,7 @@ class Session
     }
     public static function insertSuccess(string $message)
     {
-        self::insertSession("success",$message);
+        self::insertSession("success", $message);
     }
 
 
@@ -51,7 +52,7 @@ class Session
 
     public static function insertError(string $message = "Something went wrong, please try again later!")
     {
-        self::insertSession("error",$message);
+        self::insertSession("error", $message);
     }
 
     public static function getSession(string $key, bool $remove = true)

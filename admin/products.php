@@ -34,21 +34,15 @@
                         <div class="card-body">
                             <?php
                             // category
-                            if (!isset($_GET['category'])) {
-                                $query = mysqli_query($con, "SELECT * FROM categories ORDER BY id ASC LIMIT 1");
-                            } else {
-                                $category_id = $_GET['category'];
-                                $query = mysqli_query($con, "SELECT * FROM categories WHERE id = $category_id");
-                            }
+                            $category = isset($_GET['category']) ? $_GET['category'] : "All";
 
-                            $category = $query->fetch_assoc();
                             ?>
 
 
                             <div class="text-start">
                                 <!-- <a href="#category-modal" data-bs-toggle="modal" class="link-secondary fw-bold text-decoration-none">
                                     <i class="bx bx-chevron-down"></i>
-                                    <?php echo $category['category_name'] ?>
+                                    <?php echo $category ?>
                                     <i class="bx bx-filter"></i>
                                 </a> -->
                                 <div class="dropdown">
@@ -58,15 +52,18 @@
                                     </button> -->
                                     <a role="button" aria-expanded="false" data-bs-toggle="dropdown" class="link-secondary fw-bold text-decoration-none">
                                         <i class="bx bx-chevron-down"></i>
-                                        <?php echo $category['category_name'] ?>
+                                        <?php echo $category ?>
                                         <i class="bx bx-filter"></i>
                                     </a>
                                     <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="products.php?category=All">All</a>
+                                        </li>
                                         <?php
                                         $query = mysqli_query($con, "SELECT * FROM categories");
                                         while ($row = $query->fetch_assoc()) {
                                         ?>
-                                            <li><a class="dropdown-item" href="products.php?category=<?php echo $row['id'] ?>"><?php echo $row['category_name'] ?></a></li>
+                                            <li><a class="dropdown-item" href="products.php?category=<?php echo $row['category_name'] ?>"><?php echo $row['category_name'] ?></a></li>
                                         <?php
                                         }
                                         ?>
@@ -76,11 +73,22 @@
                                 </div>
                             </div>
                             <div class="alert alert-info mb-4 mt-2 py-2">
-                                <small>Showing products from <strong><?php echo $category['category_name'] ?></strong>
-                                    category.</small>
+                                <?php
+                                if (strtolower($category) != "all") {
+                                ?>
+                                    <small>Showing products from <strong><?php echo $category ?></strong> category.</small>
+                                <?php
+                                } else {
+                                ?>
+                                    <small>Showing all products.</small>
+
+                                <?php
+                                }
+                                ?>
                             </div>
                             <table class="table" id="table">
                                 <thead>
+                                    <th>Photo</th>
                                     <th>Product</th>
                                     <th>Category</th>
                                     <th>Price</th>
@@ -89,18 +97,23 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $category_id = $category['id'];
-                                    $query = mysqli_query($con, "SELECT * FROM products WHERE category_id = $category_id");
+                                    if (strtolower($category) == "all") {
+                                            $query = mysqli_query($con, "SELECT * FROM products");                                    
+                                    } else {
+                                        $query = mysqli_query($con, "SELECT * FROM products WHERE category_id IN (SELECT id FROM categories WHERE category_name='$category')");
+                                    }
                                     while ($row = $query->fetch_assoc()) {
+                                        $cat = mysqli_query($con,"SELECT * FROM categories WHERE id=" . $row['category_id'])->fetch_assoc();
                                     ?>
                                         <tr>
+                                            <td><img width="50" src="../<?php echo $row['photo'] ?>" class="img-fluid img-thumbnail" alt=""></td>
                                             <td><?php echo $row['product_name'] ?></td>
-                                            <td><?php echo $category['category_name'] ?></td>
+                                            <td><?php echo $cat['category_name'] ?></td>
                                             <td><?php echo $row['price'] ?></td>
                                             <td><?php echo $row['stocks'] ?></td>
                                             <td>
-                                                <a href="#manage-modal" data-bs-toggle="modal" class="link-dark">
-                                                    <i class="bx bx-eye"></i>
+                                                <a href="#manage-modal" data-id="<?php echo $row['id'] ?>" data-bs-toggle="modal" class="link-dark">
+                                                    <i class="bx bx-show-alt"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -119,7 +132,30 @@
     <?php include './includes/scripts.php' ?>
     <?php include './includes/alerts.php' ?>
     <script>
+        $("#manage-modal").on("show.bs.modal", function(e) {
+            const id = $(e.relatedTarget).data('id');
 
+            $.ajax({
+                url: "get-product.php",
+                method: "post",
+                data: {
+                    id
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('#edit-name').val(res.product_name)
+                    $('#edit-category').find("option").removeAttr("selected")
+                    $('#edit-category').find("option").filter(function(i, el) {
+                        return $(el).val() == res.category_id
+                    }).attr('selected', true)
+                    $('#edit-price').val(res.price)
+                    $('#edit-stocks').val(res.stocks)
+                    $('#edit-description').val(res.description)
+                    $('#edit-image-preview').attr('src','../'+res.photo)
+                    $(".id-input").val(res.id);
+                }
+            })
+        })
     </script>
 </body>
 

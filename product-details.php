@@ -12,6 +12,14 @@
     <title>Party Jungle Toys & Party Needs</title>
     <?php $active_page = "products" ?>
     <?php include './includes/header.php' ?>
+    <style>
+        body{
+            /* background:url('./assets/images/bg_1.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat; */
+        }
+    </style>
 </head>
 
 <body class="bg-light">
@@ -46,7 +54,7 @@
                         <li class="breadcrumb-item active text-dark" aria-current="page"><?php echo $product['product_name'] ?></li>
                     </ol>
                 </nav>
-                <div class="row">
+                <div class="row gy-3">
                     <div class="col-md-5 col-sm-6">
                         <img src="<?php echo $product['photo'] ?>" class="img-fluid img-thumbnail" alt="">
                         <div class="d-flex p-2 bg-white">
@@ -80,6 +88,7 @@
                                     <p class="mb-4"><?php echo $product['description'] ?></p>
 
                                     <form action="add-to-cart.php" id="add-to-cart-form" method="post">
+                                        <input type="hidden" value="<?php echo $_GET['id'] ?>" name="product_id">
                                         <label for="" class="form-label text-secondary">Quantity:</label>
                                         <input type="number" name="quantity" class="rounded-pill px-3 form-control text-center fw-bold text-orange" value="1" min="1">
                                         <p class="mt-2 fw-bold">Available: <span class="text-dark"><?php echo $available ?></span></p>
