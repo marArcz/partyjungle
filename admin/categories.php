@@ -27,6 +27,9 @@
                         </span>
                         <p class="fs-4 fw-bold my-0"> Categories</p>
                     </div>
+                    <div class="text-end mb-3">
+                        <button type="button" class="btn btn-orange" data-bs-toggle="modal" data-bs-target="#add-modal">Add New</button>
+                    </div>
                     <div class="card rounded-4 shadow-sm border-0">
                         <div class="card-body ">
                             <table class="table " id="table">

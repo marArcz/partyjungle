@@ -134,7 +134,6 @@
     <script>
         $("#manage-modal").on("show.bs.modal", function(e) {
             const id = $(e.relatedTarget).data('id');
-
             $.ajax({
                 url: "get-product.php",
                 method: "post",
@@ -153,6 +152,8 @@
                     $('#edit-description').val(res.description)
                     $('#edit-image-preview').attr('src','../'+res.photo)
                     $(".id-input").val(res.id);
+
+                    $("#delete-btn").attr("href",`delete-product.php?id=${res.id}`);
                 }
             })
         })
