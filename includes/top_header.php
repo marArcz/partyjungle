@@ -109,8 +109,8 @@
 											<a class="nav-link" href="#" onclick="carttab()">Cart</a>
 										</li>
 
-										<li class="nav-item" id="nav_ostat">
-											<a class="nav-link" href="#" onclick="orderstattab()">Status</a>
+										<li class="nav-item <?php echo $active_page == "orders" ? "active" : "" ?>" id="nav_ostat">
+											<a class="nav-link" href="orders.php">Orders</a>
 										</li>
 
 									<?php

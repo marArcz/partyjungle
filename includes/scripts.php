@@ -17,6 +17,8 @@
         Notiflix.Report.init({
             backOverlayColor: 'rgba(240,240,240,0.6)',
         });
+
+        $("#table").DataTable();
     })
 
     const showLoading = () => {

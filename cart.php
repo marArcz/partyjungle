@@ -185,7 +185,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <form action="" method="post" class="mt-3">
+                                <form action="checkout.php" method="post" class="mt-3">
                                     <div class="mb-3">
                                         <label for="" class="form-label">SHIPPING</label>
                                         <select name="shipping_type" class="form-select" id="shipping-type">

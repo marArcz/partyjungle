@@ -84,6 +84,8 @@
                     $("#name").val(res.category_name)
                     $("#id-input").val(res.id)
                     $("#photo").attr('src', "../"+res.category_photo)
+
+                    $("#delete-btn").attr("href",`delete-category.php?id=${res.id}`)
                 },
                 error: function(err) {
                     console.log("Erorr: ", err);

@@ -2,12 +2,9 @@
     include './conn/conn.php';
     include './includes/Session.php';
 
-    $products = $_POST['product_id'];
-    $quantity = $_POST['quantity'];
+    $shipping_type = $_POST['shipping_type'];
 
-    $shipping = $_POST['shipping'];
-
-    $transaction_no = date("M") . "-" . date("y") . "";
+    $transaction_no = date("M") . "-" . date("y") . "-";
     $user_id = Session::getUser()['id'];
 
     $total_price = 0;
@@ -16,12 +13,12 @@
         $total_price += $row['price'] * $row['quantity'];
     }
 
-    $shipping = mysqli_query($con,"SELECT * FROM shipping WHERE id = $shipping");
+    $shipping = mysqli_query($con,"SELECT * FROM shipping WHERE id = $shipping_type")->fetch_assoc();
 
     $query = mysqli_prepare($con,"INSERT INTO orders(user_id,total,shipping_address,shipping_type,shipping_fee) VALUES(?,?,?,?,?)");
 
     $shipping_address = Session::getUser()['address'];
-    $shipping_fee = $shipping['fee'];
+    $shipping_fee = $shipping['price'];
 
     $query->bind_param(
         'issss',
@@ -32,4 +29,22 @@
         $shipping_fee
     );
 
+    if($query->execute()){
+        $id = mysqli_insert_id($con);
+
+        for($i=strlen($id);$i<5;$i++){
+            $transaction_no .= 0;
+        }
+
+        $transaction_no .= $id;
+
+        mysqli_query($con,"UPDATE orders SET transaction_no='$transaction_no' WHERE id = $id");
+
+        Session::insertSuccess("Successfully checked out!");
+        Session::redirectTo("orders.php");
+    }else{
+        Session::insertError();
+        Session::redirectTo("cart.php");
+
+    }
 ?>

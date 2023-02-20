@@ -6,3 +6,4 @@
 <link rel="stylesheet" href="assets\notiflix\dist\notiflix-3.2.6.min.css">
 <link rel="stylesheet" href="assets\styles\css\custom.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pnotify/core@5.2.0/dist/PNotify.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">

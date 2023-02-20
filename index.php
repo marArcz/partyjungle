@@ -33,7 +33,7 @@
             </div>
         </section>
 
-        <section class="categories-containe">
+        <section class="">
             <div class="row gx-0">
                 <?php
                 $query = mysqli_query($con, "SELECT * FROM categories");
