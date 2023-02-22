@@ -86,42 +86,44 @@
                                 }
                                 ?>
                             </div>
-                            <table class="table" id="table">
-                                <thead>
-                                    <th>Photo</th>
-                                    <th>Product</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Stock</th>
-                                    <th>Action</th>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    if (strtolower($category) == "all") {
-                                            $query = mysqli_query($con, "SELECT * FROM products");                                    
-                                    } else {
-                                        $query = mysqli_query($con, "SELECT * FROM products WHERE category_id IN (SELECT id FROM categories WHERE category_name='$category')");
-                                    }
-                                    while ($row = $query->fetch_assoc()) {
-                                        $cat = mysqli_query($con,"SELECT * FROM categories WHERE id=" . $row['category_id'])->fetch_assoc();
-                                    ?>
-                                        <tr>
-                                            <td><img width="50" src="../<?php echo $row['photo'] ?>" class="img-fluid img-thumbnail" alt=""></td>
-                                            <td><?php echo $row['product_name'] ?></td>
-                                            <td><?php echo $cat['category_name'] ?></td>
-                                            <td><?php echo $row['price'] ?></td>
-                                            <td><?php echo $row['stocks'] ?></td>
-                                            <td>
-                                                <a href="#manage-modal" data-id="<?php echo $row['id'] ?>" data-bs-toggle="modal" class="link-dark">
-                                                    <i class="bx bx-show-alt"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
+                            <div class="table-responsive-sm">
+                                <table class="table" id="table">
+                                    <thead>
+                                        <th>Photo</th>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Action</th>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        if (strtolower($category) == "all") {
+                                            $query = mysqli_query($con, "SELECT * FROM products");
+                                        } else {
+                                            $query = mysqli_query($con, "SELECT * FROM products WHERE category_id IN (SELECT id FROM categories WHERE category_name='$category')");
+                                        }
+                                        while ($row = $query->fetch_assoc()) {
+                                            $cat = mysqli_query($con, "SELECT * FROM categories WHERE id=" . $row['category_id'])->fetch_assoc();
+                                        ?>
+                                            <tr>
+                                                <td><img width="50" src="../<?php echo $row['photo'] ?>" class="img-fluid img-thumbnail" alt=""></td>
+                                                <td><?php echo $row['product_name'] ?></td>
+                                                <td><?php echo $cat['category_name'] ?></td>
+                                                <td><?php echo $row['price'] ?></td>
+                                                <td><?php echo $row['stocks'] ?></td>
+                                                <td>
+                                                    <a href="#manage-modal" data-id="<?php echo $row['id'] ?>" data-bs-toggle="modal" class="link-dark">
+                                                        <i class="bx bx-show-alt"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -150,10 +152,10 @@
                     $('#edit-price').val(res.price)
                     $('#edit-stocks').val(res.stocks)
                     $('#edit-description').val(res.description)
-                    $('#edit-image-preview').attr('src','../'+res.photo)
+                    $('#edit-image-preview').attr('src', '../' + res.photo)
                     $(".id-input").val(res.id);
 
-                    $("#delete-btn").attr("href",`delete-product.php?id=${res.id}`);
+                    $("#delete-btn").attr("href", `delete-product.php?id=${res.id}`);
                 }
             })
         })

@@ -11292,4 +11292,116 @@ textarea.form-control-lg {
 .btn-c-brown:hover {
   background: rgba(243, 162, 13, 0.3);
   border: 1px solid rgba(243, 162, 13, 0.5);
+}
+
+.status-list {
+  list-style: none;
+  padding: 0;
+}
+.status-list li {
+  position: relative;
+  padding-left: 40px !important;
+  box-sizing: border-box !important;
+  cursor: not-allowed;
+  padding-top: 5px !important;
+  height: 20vh;
+}
+.status-list li * {
+  color: rgba(0, 0, 0, 0.2);
+}
+.status-list li::after {
+  content: " ";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  box-sizing: border-box;
+  background: #e7e7e7;
+  left: 0;
+  border-radius: 50%;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  font-family: boxicons !important;
+  transition: 300ms all !important;
+  color: white !important;
+}
+.status-list li::before {
+  content: " ";
+  width: 3px;
+  height: 100%;
+  background: #e7e7e7;
+  position: absolute;
+  left: 13px;
+  top: -100%;
+  z-index: 1;
+  transition: 300ms all !important;
+}
+.status-list li.active {
+  cursor: default !important;
+}
+.status-list li.active * {
+  color: rgba(0, 0, 0, 0.8);
+}
+.status-list li.active .title {
+  color: #f3a20d !important;
+  font-weight: bold;
+}
+.status-list li.active::after {
+  text-align: center;
+  background: #f3a20d;
+  border: 2px solid #f3a20d;
+  content: "\edec" !important;
+  color: white !important;
+  transform: scale(1.1);
+}
+.status-list li.active::before {
+  background: #f3a20d !important;
+}
+.status-list li.enabled:hover {
+  cursor: pointer;
+}
+.status-list li.enabled:hover * {
+  color: rgba(0, 0, 0, 0.8);
+}
+.status-list li.enabled:hover::after {
+  content: "\ebd9" !important;
+  background: #f3a20d !important;
+  transform: scale(1.15);
+  box-shadow: 1px 1px 4px rgb(158, 158, 158);
+}
+.status-list li.enabled:hover::before {
+  background: rgb(190, 190, 190) !important;
+}
+.status-list li.checked {
+  cursor: default !important;
+}
+.status-list li.checked * {
+  color: rgba(0, 0, 0, 0.7);
+}
+.status-list li.checked .title {
+  color: black !important;
+}
+.status-list li.checked::after {
+  content: "\ea41" !important;
+  background: #f3a20d;
+}
+.status-list li.checked::before {
+  background: #f3a20d;
+}
+.status-list li:first-child::before {
+  display: none !important;
+}
+
+@media screen and (max-width: 1120px) {
+  .status-list li {
+    height: 30vh !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  .status-list li {
+    height: 15vh !important;
+  }
 }/*# sourceMappingURL=custom.css.map */

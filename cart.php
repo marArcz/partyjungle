@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Party Jungle Toys & Party Needs</title>
-    <?php $active_page = "home" ?>
+    <?php $active_page = "cart" ?>
     <?php include './includes/header.php' ?>
 </head>
 
@@ -26,7 +26,7 @@
                                 <?php
                                 $user_id = Session::getUser()['id'];
                                 // get total items in cart
-                                $total_items = mysqli_query($con, "SELECT SUM(quantity) FROM cart WHERE user_id = $user_id")->fetch_array()[0];
+                                $total_items = mysqli_query($con, "SELECT SUM(quantity) FROM cart WHERE user_id = $user_id AND is_checked_out=0")->fetch_array()[0];
                                 ?>
                                 <div class="d-flex">
                                     <p class="my-1 fw-bold">Shopping Cart</p>
@@ -103,7 +103,7 @@
                                 ?>
                                     <ul class="list-group list-group-flush cart-list">
                                         <?php
-                                        $query = mysqli_query($con, "SELECT * FROM cart WHERE user_id = $user_id ORDER BY id DESC");
+                                        $query = mysqli_query($con, "SELECT * FROM cart WHERE user_id = $user_id AND is_checked_out=0 ORDER BY id DESC");
                                         while ($row = $query->fetch_assoc()) {
                                             $total_price = 0;
                                             $total_price +=  $row['price'] * $row['quantity'];
@@ -185,7 +185,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <form action="checkout.php" method="post" class="mt-3">
+                                <form action="checkout-page.php" method="post" class="mt-3">
                                     <div class="mb-3">
                                         <label for="" class="form-label">SHIPPING</label>
                                         <select name="shipping_type" class="form-select" id="shipping-type">
@@ -213,7 +213,7 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <button <?php echo $total_items == 0 ? "disabled" : "" ?> type="submit" class="btn btn-orange rounded-pill px-4 py-2">
+                                        <button name="submit" <?php echo $total_items == 0 ? "disabled" : "" ?> type="submit" class="btn btn-orange rounded-pill px-4 py-2">
                                             CHECKOUT
                                         </button>
                                     </div>

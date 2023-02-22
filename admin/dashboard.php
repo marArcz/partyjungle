@@ -22,12 +22,12 @@
                 <div class="container-fluid py-3">
                     <!-- <p class="fs-4 fw-bold">Dashboard</p> -->
                     <div class="d-flex align-items-end mb-4">
-                        <span class="card-icon card-icon-sm me-2 shadow-sm">
+                        <span class="card-icon d-none d-lg-block card-icon-sm me-2 shadow-sm">
                             <i class="bx bxs-tachometer bx-sm"></i>
                         </span>
                         <p class="fs-4 fw-bold my-0">Dashboard</p>
                     </div>
-                    <div class="row mt-3 gx-3">
+                    <div class="row mt-3 gx-3 gy-3">
                         <div class="col-md-3">
                             <div class="card rounded-4 border-0">
                                 <div class="card-body py-4 px-3">

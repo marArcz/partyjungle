@@ -7,6 +7,7 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/@pnotify/core@5.2.0/dist/PNotify.min.js"></script>
+<script src="./assets/jquery-ph-locations-master/jquery.ph-locations-v1.0.0.js"></script>
 <script>
     $(function() {
         Notiflix.Loading.init({

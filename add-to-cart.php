@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 
 
     // check if product is already in cart
-    $q = mysqli_query($con, "SELECT * FROM cart WHERE product_id = $product_id && user_id=$user_id");
+    $q = mysqli_query($con, "SELECT * FROM cart WHERE product_id = $product_id && user_id=$user_id AND is_checked_out=0");
     $exists = $q->num_rows > 0;
 
     if ($exists) {

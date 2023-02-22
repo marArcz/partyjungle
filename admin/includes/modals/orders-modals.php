@@ -38,3 +38,23 @@
         </div>
     </div>
 </div>
+
+<!-- status modal -->
+<div class="modal fade" id="update-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title ">Update Status</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p class="fw-bold">Confirm action to update order status?</p>
+                <p class="mt-3 text-secondary">Order status will be set to <strong><span class="text-dark" id="status-txt">STATUS</span></strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="update-order-status.php" id="confirm-btn" class="btn btn-sm btn-orange">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>

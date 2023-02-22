@@ -14,7 +14,7 @@
   top: 0;
   padding: 10px 0;
   background: #FC6603;
-  width: 13vw;
+  width: 15vw;
   box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
@@ -75,8 +75,52 @@
   visibility: visible;
 }
 
+#mobile-sidebar .sidebar .sidebar-nav li {
+  padding: 5px;
+}
+#mobile-sidebar .sidebar .sidebar-nav li .nav-link {
+  color: white !important;
+  display: flex;
+  align-items: center;
+  opacity: 0.6;
+  position: relative;
+  padding-bottom: 0;
+  padding-top: 0;
+  transition: all 200ms;
+}
+#mobile-sidebar .sidebar .sidebar-nav li .nav-link i {
+  margin-right: 5px;
+}
+#mobile-sidebar .sidebar .sidebar-nav li .nav-link span {
+  font-size: 0.8rem !important;
+}
+#mobile-sidebar .sidebar .sidebar-nav li .nav-link::after {
+  content: " ";
+  width: 3px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: white;
+  visibility: hidden;
+  transition: all 100ms;
+  border-radius: 10px;
+}
+#mobile-sidebar .sidebar .sidebar-nav li:not(.active):hover .nav-link {
+  opacity: 1;
+}
+#mobile-sidebar .sidebar .sidebar-nav li:not(.active):hover .nav-link::after {
+  visibility: visible;
+}
+#mobile-sidebar .sidebar .sidebar-nav li.active .nav-link {
+  opacity: 1;
+}
+#mobile-sidebar .sidebar .sidebar-nav li.active .nav-link::after {
+  visibility: visible;
+}
+
 .main-container {
-  margin-left: 13vw;
+  margin-left: 15vw;
 }
 
 .card-icon {
@@ -94,4 +138,22 @@
 .card-icon.card-icon-sm {
   width: 40px;
   height: 40px;
+}
+
+@media screen and (max-width: 1120px) {
+  .sidebar-wrapper {
+    width: 18vw !important;
+    z-index: 3;
+  }
+  .main-container {
+    margin-left: 18vw;
+  }
+}
+@media screen and (max-width: 768px) {
+  .sidebar-wrapper {
+    width: 0 !important;
+  }
+  .main-container {
+    margin-left: 0;
+  }
 }/*# sourceMappingURL=admin.css.map */

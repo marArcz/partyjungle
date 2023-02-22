@@ -64,7 +64,7 @@
 										<img src="assets/images/shopping.png" alt="#" />
 										<?php
 										$user_id = Session::getUser()['id'];
-										$cart_items = mysqli_query($con, "SELECT SUM(quantity) FROM cart WHERE user_id=$user_id")->fetch_array()[0];
+										$cart_items = mysqli_query($con, "SELECT SUM(quantity) FROM cart WHERE user_id=$user_id AND is_checked_out=0")->fetch_array()[0];
 										?>
 										<span class="badge bg-danger text-light" style="margin-left:-30px;margin-bottom:2vh;" id="cart_count">
 											<?php echo $cart_items ? $cart_items : 0 ?>
@@ -99,14 +99,17 @@
 									<li class="nav-item <?php echo $active_page == "products" ? "active" : "" ?>" id="nav_products">
 										<a class="nav-link" href="products.php">Products</a>
 									</li>
+									<li class="nav-item <?php echo $active_page == "services" ? "active" : "" ?>" id="nav_products">
+										<a class="nav-link" href="services.php">Services</a>
+									</li>
 
 									<?php
 
 
-									if (isset($_SESSION["uid"])) {
+									if (Session::getUser() != null) {
 									?>
-										<li class="nav-item" id="nav_cart">
-											<a class="nav-link" href="#" onclick="carttab()">Cart</a>
+										<li class="nav-item <?php echo $active_page == "cart" ? "active" : "" ?>" id="nav_cart">
+											<a class="nav-link" href="cart.php">Cart</a>
 										</li>
 
 										<li class="nav-item <?php echo $active_page == "orders" ? "active" : "" ?>" id="nav_ostat">
@@ -119,9 +122,9 @@
 
 
 
-									<li class="nav-item" id="nav_contact">
+									<!-- <li class="nav-item" id="nav_contact">
 										<a class="nav-link" href="#" onclick="contacttab();">Contact</a>
-									</li>
+									</li> -->
 
 									<li class="nav-item" id="nav_about">
 										<a class="nav-link" href="#" onclick="abouttab();">About</a>

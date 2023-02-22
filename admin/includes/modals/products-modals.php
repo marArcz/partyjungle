@@ -8,7 +8,7 @@
             <form action="add-product.php" enctype="multipart/form-data" method="post">
 
                 <div class="modal-body">
-                    <div class="row">
+                    <div class="row gy-3">
                         <div class="col-md-4 text-center">
                             <img required src="../assets/data/default.png" id="image-preview" class="img-fluid mb-1" alt="">
                             <div class="text-center">
@@ -75,7 +75,7 @@
             <form action="edit-product.php" enctype="multipart/form-data" method="post">
                 <input type="hidden" name="id" class="id-input">
                 <div class="modal-body">
-                    <div class="row">
+                    <div class="row gy-3">
                         <div class="col-md-4 text-center">
                             <img src="../assets/data/default.png" id="edit-image-preview" class="img-fluid mb-1 img-thumbnail" alt="">
                             <div class="text-center">

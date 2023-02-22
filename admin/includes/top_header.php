@@ -1,5 +1,8 @@
 <div class="navbar navbar-light main-navbar bg-white navbar-expand">
-    <div class="container">
+    <div class="container-fluid">
+        <a href="#mobile-sidebar" data-bs-toggle="offcanvas" class="link-secondary d-block d-lg-none">
+            <i class="bx bx-menu bx-sm"></i>
+        </a>
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link link-secondary" data-bs-toggle="dropdown">

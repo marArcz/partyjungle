@@ -1,9 +1,9 @@
 <aside class="sidebar-wrapper">
     <div class="sidebar">
         <div class="sidebar-header">
-            <button class="btn border-0" type="button">
+            <!-- <button class="btn border-0" type="button">
                 <i class="bx bx-menu bx-sm text-light"></i>
-            </button>
+            </button> -->
             <div class="row justify-content-center">
                 <div class="col-md-9">
                     <img src="../assets/images/ban_img1.png" alt="" class="img-fluid">
@@ -97,3 +97,5 @@
         </ul>
     </div>
 </aside>
+
+<?php include './includes/mobile-sidebar.php' ?>

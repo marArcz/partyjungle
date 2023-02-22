@@ -24,6 +24,9 @@ $theme-colors: map-merge($map1: $theme-colors, $map2: $custom-map);
     color: white !important;
 }
 
+
+
+
 @each $color,
 $value in $theme-colors {
     .btn-c-#{$color} {
@@ -37,4 +40,148 @@ $value in $theme-colors {
 
         }
     }
+}
+
+
+.status-list {
+    list-style: none;
+    padding: 0;
+    li {
+        position: relative;
+        padding-left: 40px !important;
+        box-sizing: border-box !important;
+        cursor: not-allowed;
+        padding-top: 5px !important;
+        height: 20vh;
+
+        * {
+            color: rgba(0, 0, 0, 0.2);
+        }
+
+        &::after {
+            $size: 30px;
+            content: " ";
+            position: absolute;
+            width: $size;
+            height: $size;
+            padding: 10px;
+            box-sizing: border-box;
+            background: #e7e7e7;
+            left: 0;
+            border-radius: 50%;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            font-family: boxicons !important;
+            transition: 300ms all !important;
+            color: white !important;
+        }
+
+        &::before {
+            content: " ";
+            width: 3px;
+            height: 100%;
+            background: #e7e7e7;
+            position: absolute;
+            left: 13px;
+            top: -100%;
+            z-index: 1;
+            transition: 300ms all !important;
+        }
+
+        &.active {
+            cursor: default !important;
+
+            * {
+                color: rgba(0, 0, 0, .8);
+            }
+
+            .title {
+                // color: rgb(75, 75, 75) !important;
+                color: $brown !important;
+                font-weight: bold;
+            }
+
+            &::after {
+                text-align: center;
+                // background: rgb(27, 153, 65);
+                background: $brown;
+                border: 2px solid $brown;
+                content: "\edec" !important;
+                color: white !important;
+                transform: scale(1.1);
+            }
+
+            &::before {
+                background: $brown !important;
+            }
+
+        }
+
+        &.enabled:hover {
+            cursor: pointer;
+
+            * {
+                color: rgba(0, 0, 0, .8);
+            }
+
+            &::after {
+                content: "\ebd9" !important;
+                background: $brown !important;
+                transform: scale(1.15);
+                box-shadow: 1px 1px 4px rgb(158, 158, 158);
+            }
+
+            &::before {
+                background: rgb(190, 190, 190) !important;
+            }
+        }
+
+        &.checked {
+            cursor: default !important;
+
+            * {
+                color: rgba(0, 0, 0, 0.7);
+            }
+
+            .title {
+                color: black !important;
+            }
+
+            &::after {
+                content: "\ea41" !important;
+                background: $brown;
+            }
+
+            &::before {
+                background: $brown;
+            }
+        }
+
+        &:first-child {
+            &::before {
+                display: none !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1120px) {
+    .status-list {
+        li{
+            height: 30vh !important;
+        }
+    }
+
+}
+
+@media screen and (max-width:768px) {
+    .status-list {
+        li{
+            height: 15vh !important;
+        }
+    }
+
 }
