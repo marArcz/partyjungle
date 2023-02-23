@@ -172,3 +172,16 @@ main {
         }
     }
 }
+
+.chat-container{
+    position: fixed;
+    bottom: 0;
+    right: 10px;
+
+    .chat-content-container{
+        width: 40vw;
+        height: 50vh;
+        background: white;
+        border: 1px solid rgb(206, 206, 206);
+    }
+}

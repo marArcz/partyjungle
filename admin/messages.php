@@ -53,6 +53,14 @@
                                 ?>
                             </ul>
 
+                            <?php 
+                                if($query->num_rows == 0){
+                                    ?>
+                                    <p class="my-0 text-center text-secondary">No messages to show</p>
+                                    <?php
+                                }
+                            ?>
+
                         </div>
                     </div>
                 </div>
