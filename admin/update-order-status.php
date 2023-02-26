@@ -13,5 +13,5 @@
         Session::insertError();
     }
 
-    Session::redirectTo("manage-order.php?transaction_no=$transaction_no");
+    Session::redirectTo("manage-order.php?transaction_no=$transaction_no&status=$status");
 ?>

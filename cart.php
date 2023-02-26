@@ -294,7 +294,6 @@
 
         $("#shipping-type").on('change',function(e){
             const id = $(this).val();
-
             $.ajax({
                 url:"get-shipping.php",
                 method:"POST",

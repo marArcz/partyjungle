@@ -154,6 +154,8 @@
         <?php include './includes/featured-products.php' ?>
     </main>
     <?php include './includes/footer.php' ?>
+    <?php include './includes/chat.php' ?>
+
     <?php include './includes/scripts.php' ?>
 </body>
 

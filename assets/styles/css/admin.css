@@ -21,6 +21,7 @@
   /* width */
   /* Track */
   /* Handle */
+  transition: 200ms !important;
 }
 .sidebar-wrapper::-webkit-scrollbar {
   width: 5px;
@@ -74,6 +75,28 @@
 .sidebar-wrapper .sidebar .sidebar-nav li.active .nav-link::after {
   visibility: visible;
 }
+.sidebar-wrapper.close {
+  width: 6vw !important;
+}
+.sidebar-wrapper.close .sidebar-header {
+  text-align: center !important;
+}
+.sidebar-wrapper.close .sidebar-header .sidebar-title {
+  display: none;
+}
+.sidebar-wrapper.close li {
+  padding: 0 !important;
+  text-align: center;
+}
+.sidebar-wrapper.close .nav-link {
+  justify-content: center !important;
+}
+.sidebar-wrapper.close .nav-link span {
+  display: none !important;
+}
+.sidebar-wrapper.close .nav-divider-label {
+  display: none !important;
+}
 
 #mobile-sidebar .sidebar .sidebar-nav li {
   padding: 5px;
@@ -119,8 +142,76 @@
   visibility: visible;
 }
 
+.chat-content-container textarea {
+  resize: none;
+  font-size: 0.9rem !important;
+  border: none !important;
+}
+.chat-content-container .nav-toolbar .nav-toolbar-item button {
+  outline: none !important;
+  border: none !important;
+}
+.chat-content-container .nav-toolbar .nav-toolbar-item button:hover {
+  outline: none !important;
+  border: none !important;
+  color: #FC6603 !important;
+}
+.chat-content-container .products-dropdown {
+  width: 20vw !important;
+  height: 35vh !important;
+}
+.chat-content-container .products-dropdown .chat-products-list {
+  height: 23vh;
+  overflow-y: auto !important;
+}
+.chat-content-container .send-images-container {
+  padding-top: 20px !important;
+}
+.chat-content-container .send-images-container button {
+  top: 0;
+  right: 0;
+}
+.chat-content-container .send-images-container .send-images-row {
+  max-width: 100% !important;
+  overflow-x: auto;
+}
+.chat-content-container .send-images-container .send-images-row .send-image-item {
+  position: relative;
+}
+.chat-content-container .send-images-container .send-images-row .send-image-item .send-image-item-close {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background: none !important;
+  justify-content: center;
+  align-items: center;
+  background: transparent !important;
+  border: none !important;
+}
+.chat-content-container .send-images-container .send-images-row .send-image-img {
+  width: 50px !important;
+  height: 50px !important;
+  max-width: none !important;
+}
+.chat-content-container #send-message-btn {
+  border: none !important;
+  outline: none !important;
+}
+.chat-content-container #send-message-btn.disabled {
+  color: rgb(63, 63, 63) !important;
+}
+
 .main-container {
+  transition: 200ms !important;
   margin-left: 15vw;
+}
+.main-container.sidebar-closed {
+  margin-left: 6vw !important;
 }
 
 .card-icon {
@@ -140,20 +231,72 @@
   height: 40px;
 }
 
+.custom-nav li.active .nav-link {
+  border-bottom: 2px solid #FC6603;
+}
+
+.conversation-photo {
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px rgb(190, 190, 190);
+  border: 1px solid rgb(255, 255, 255);
+}
+
+.conversation-text-photo {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(214, 214, 214);
+  border-radius: 50%;
+}
+
+.chat-container .messages-box {
+  height: 40vh;
+  overflow-y: auto !important;
+  padding: 20px 10px !important;
+}
+.chat-container .chat-footer {
+  background: rgb(240, 240, 240);
+  padding: 20px;
+  border: 1px solid rgb(200, 200, 200);
+}
+
+img.view-photo, div.view-photo {
+  cursor: pointer !important;
+}
+
 @media screen and (max-width: 1120px) {
   .sidebar-wrapper {
     width: 18vw !important;
     z-index: 3;
   }
+  .sidebar-wrapper.close {
+    width: 10vw !important;
+  }
   .main-container {
-    margin-left: 18vw;
+    margin-left: 18vw !important;
+  }
+  .main-container.sidebar-closed {
+    margin-left: 10vw !important;
   }
 }
 @media screen and (max-width: 768px) {
   .sidebar-wrapper {
     width: 0 !important;
   }
+  .sidebar-wrapper.close {
+    width: 0 !important;
+  }
   .main-container {
-    margin-left: 0;
+    margin-left: 0 !important;
+  }
+  .main-container.sidebar-closed {
+    margin-left: 0 !important;
   }
 }/*# sourceMappingURL=admin.css.map */

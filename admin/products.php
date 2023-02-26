@@ -17,7 +17,7 @@
         $active_page = "products";
         include './includes/sidebar.php'
         ?>
-        <main class="main-container">
+        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state")? (Session::getSession("partyjungle-sidebar-state",false) == "close"? 'sidebar-closed':''):'' ?>">
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">

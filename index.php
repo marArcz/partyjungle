@@ -1,6 +1,7 @@
 <?php include './conn/conn.php' ?>
 <?php include './includes/Session.php' ?>
 <?php include './includes/verifyUserSession.php' ?>
+<?php include './includes/MessageTypes.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,7 +66,6 @@
     </main>
     <?php include './includes/footer.php' ?>
     <?php include './includes/chat.php' ?>
-
     <?php include './includes/scripts.php' ?>
 </body>
 

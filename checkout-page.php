@@ -27,7 +27,9 @@ $user_id = $user['id'];
     <main class="main">
         <section class="cart">
             <div class="container py-4">
-                <p class="fs-4">Checkout</p>
+                <p class="fs-4 mt-3 fw-bold">
+                    <i class='bx bxs-receipt text-orange'></i> Checkout
+                </p>
                 <div class="card border-0 rounded-0 shadow-sm border-top border-orange">
                     <div class="card-body p-4">
                         <?php
@@ -51,7 +53,9 @@ $user_id = $user['id'];
                                 <?php
                                 } else {
                                 ?>
-                                    <span>No Shipping address is added yet.</span>
+                                    <strong id="address-name"></strong>
+                                    <br>
+                                    <span id="address-text" class="fw-light">No Shipping address is added yet.</span>
                                 <?php
                                 }
                                 ?>
@@ -69,9 +73,12 @@ $user_id = $user['id'];
                     </div>
                 </div>
                 <!-- products to be checked out -->
-                <div class="card border-0 shadow-sm mt-4 rounded-1">
+                <div class="card border-0 shadow-sm mt-4 rounded-1 border-top">
                     <div class="card-body py-4">
-                        <p class="fs-5 px-4">Products Ordered</p>
+                        <p class="fs-5 px-3 mt-3 ">
+                            <i class='bx bxs-shopping-bag text-orange'></i>
+                            Products Ordered
+                        </p>
                         <?php
                         // get products from cart
                         $get_cart = mysqli_query($con, "SELECT * FROM cart WHERE user_id = $user_id AND is_checked_out = 0");
@@ -126,7 +133,7 @@ $user_id = $user['id'];
                 </div>
 
                 <!-- payment method -->
-                <div class="card border-0 shadow-sm mt-3">
+                <div class="card border-0 shadow-sm mt-3 border-top border-brown">
                     <div class="card-body">
                         <div class="container-fluid">
                             <?php
@@ -302,7 +309,7 @@ $user_id = $user['id'];
                         $("#add-fullname").val(res.shipping_address.fullname)
                         $("#add-phone").val(res.shipping_address.phone)
 
-                        $("#add-region").find('option').filter((i, option) => $(option).val() == res.shipping_address.region_code).attr("selected",true)
+                        $("#add-region").find('option').filter((i, option) => $(option).val() == res.shipping_address.region_code).attr("selected", true)
 
                         //province
                         // $("#add-province").ph_locations('fetch_list', [{
@@ -414,13 +421,15 @@ $user_id = $user['id'];
                 },
                 dataType: 'json',
                 success: function(res) {
+                    console.log(res)
                     hideLoading();
+                    $("#address-modal").modal('hide')
                     $("#address-name").html(res.fullname)
                     $("#address-text").html(`${res.region} ${res.province} ${res.city} ${res.barangay}`)
                 },
                 error: function(err) {
                     hideLoading();
-                    console.log('err: ', err)
+                    console.log('error in adding address: ', err)
                 }
             })
 

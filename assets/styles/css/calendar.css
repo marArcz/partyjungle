@@ -1,0 +1,93 @@
+/*# sourceMappingURL=calendar.css.map */1px solid rgb(224, 224, 224);
+  box-sizing: border-box;
+  border-radius: 7;
+  background: white;
+}
+.mz-calendar .weekdays-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 14.2857142857%);
+}
+.mz-calendar .weekdays-container .weekday {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  color: #4C9AFF;
+}
+.mz-calendar .calendar-days-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 14.2857142857%);
+  margin-top: 20px;
+}
+.mz-calendar .calendar-days-container .calendar-day {
+  text-align: center;
+  border: 1px solid rgb(235, 235, 235);
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100px;
+  position: relative;
+  color: rgb(97, 97, 97);
+  font-weight: bold;
+}
+.mz-calendar .calendar-days-container .calendar-day.current-day {
+  font-weight: bold;
+  color: black !important;
+}
+.mz-calendar .calendar-days-container .calendar-day.selected span {
+  color: white !important;
+}
+.mz-calendar .calendar-days-container .calendar-day.selected span.dot {
+  background: white !important;
+}
+.mz-calendar .calendar-days-container .calendar-day span.number {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.mz-calendar .calendar-days-container .calendar-day span.dot {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: #6f42c1;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.mz-calendar .calendar-days-container .calendar-day:not(.enabled) {
+  font-weight: lighter;
+}
+.mz-calendar .calendar-days-container .calendar-day.enabled {
+  cursor: pointer;
+}
+.mz-calendar .calendar-header {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.mz-calendar .calendar-header .left {
+  margin-right: auto;
+}
+.mz-calendar .calendar-header #month-year-label {
+  font-size: 1.3rem;
+  margin: 5px;
+  font-weight: bold;
+}
+.mz-calendar .calendar-body {
+  padding: 20px 10px;
+}
+.mz-calendar .control {
+  background: white;
+  border: 1px solid rgb(210, 210, 210);
+  padding: 8px 12px;
+  border-radius: 3px;
+}
+.mz-calendar .calendar-nav {
+  font-weight: bold;
+}/*# sourceMappingURL=calendar.css.map */

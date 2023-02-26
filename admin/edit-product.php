@@ -9,7 +9,7 @@ $price = $_POST['price'];
 $stocks = $_POST['stocks'];
 $description = $_POST['description'];
 
-if (basename($_FILES["photo"]["name"])) {
+if (!empty(basename($_FILES["photo"]["name"]))) {
     $target_dir = "assets/products/";
     $target_file = $target_dir . basename($_FILES["photo"]["name"]);
     move_uploaded_file($_FILES["photo"]["tmp_name"], "../" . $target_file);

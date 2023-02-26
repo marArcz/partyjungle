@@ -12,14 +12,7 @@
     <title>Party Jungle Toys & Party Needs</title>
     <?php $active_page = "products" ?>
     <?php include './includes/header.php' ?>
-    <style>
-        body{
-            /* background:url('./assets/images/bg_1.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            background-repeat: no-repeat; */
-        }
-    </style>
+
 </head>
 
 <body class="bg-light">
@@ -36,14 +29,15 @@
                 Session::redirectTo("products.php");
                 exit();
             }
+            $user_id = Session::getUser()['id'];
             // get product
             $product_id = $_GET['id'];
             $product = mysqli_query($con, "SELECT * FROM products INNER JOIN categories ON products.category_id = categories.id WHERE products.id = $product_id")->fetch_assoc();
             // get available products
             $stocks = $product['stocks'];
             $available = $stocks;
-
-            $in_order = mysqli_query($con, "SELECT COUNT(*) FROM orders WHERE status != " . OrderStatus::$CANCELLED)->fetch_array()[0];
+            $cancelled = OrderStatus::$CANCELLED;
+            $in_order = mysqli_query($con, "SELECT SUM(quantity) FROM order_details WHERE order_id IN (SELECT id FROM orders WHERE status != $cancelled)")->fetch_array()[0];
             $available -= $in_order;
             ?>
             <div class="container my-5">
@@ -90,19 +84,39 @@
                                     <form action="add-to-cart.php" id="add-to-cart-form" method="post">
                                         <input type="hidden" value="<?php echo $_GET['id'] ?>" name="product_id">
                                         <label for="" class="form-label text-secondary">Quantity:</label>
-                                        <input type="number" name="quantity" class="rounded-pill px-3 form-control text-center fw-bold text-orange" value="1" min="1">
-                                        <p class="mt-2 fw-bold">Available: <span class="text-dark"><?php echo $available ?></span></p>
+                                        <input max="<?php echo $available ?>" type="number" name="quantity" class="rounded-pill px-3 form-control text-center fw-bold text-orange" value="1" min="1">
+                                        <?php
+                                        if ($available > 0) {
+                                        ?>
+                                            <p class="mt-2 fw-bold">Available: <span class="text-dark"><?php echo $available ?></span></p>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <p class="mt-2 fs-5 text-danger text-center">Sold Out</p>
+                                        <?php
+                                        }
+                                        ?>
                                         <div class="row align-items-center mt-3">
                                             <div class="col-md">
                                                 <p class="my-1 fs-6 text-secondary">Party Jungle Party Needs and Toys</p>
                                             </div>
                                             <div class="col-md text-end">
-                                                <button class="mt-2 btn btn-yellow px-3 rounded-pill btn-lg mt-3 fs-6" type="submit" name="submit">
-                                                    <small class="text-dark">
-                                                        <span class="bx bxs-cart"></span>
-                                                        Add to cart
-                                                    </small>
-                                                </button>
+                                                <?php
+                                                if ($available > 0) {
+                                                ?>
+                                                    <button class="mt-2 btn btn-yellow px-3 rounded-pill btn-lg mt-3 fs-6" type="submit" name="submit">
+                                                        <small class="text-dark">
+                                                            <span class="bx bxs-cart"></span>
+                                                            Add to cart
+                                                        </small>
+                                                    </button>
+                                                <?php
+                                                }else{
+                                                    ?>
+                                                
+                                                    <?php
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                     </form>
@@ -124,7 +138,7 @@
     <?php include './includes/scripts.php' ?>
     <script>
         // $("#add-to-cart-form").on("submit", function(e) {
-            
+
         // })
     </script>
 </body>

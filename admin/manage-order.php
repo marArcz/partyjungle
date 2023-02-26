@@ -35,12 +35,12 @@ if ($query->num_rows == 0) {
         $active_page = "orders";
         include './includes/sidebar.php'
         ?>
-        <main class="main-container">
+        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state")? (Session::getSession("partyjungle-sidebar-state",false) == "close"? 'sidebar-closed':''):'' ?>">
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
                     <div class="d-flex align-items-end mb-4">
-                        <a href="orders.php" class="card-icon link-light text-decoration-none card-icon-sm me-2 shadow-sm">
+                        <a href="orders.php?status=<?php echo $_GET['status'] ?>" class="card-icon link-light text-decoration-none card-icon-sm me-2 shadow-sm">
                             <i class="bx bx-arrow-back bx-sm"></i>
                         </a>
                         <p class="fs-4 fw-bold my-0"> Manage Order</p>

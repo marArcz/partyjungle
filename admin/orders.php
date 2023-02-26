@@ -1,5 +1,6 @@
 <?php include '../conn/conn.php' ?>
 <?php include './includes/OrderStatus.php' ?>
+<?php include './includes/Session.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +18,7 @@
         $active_page = "orders";
         include './includes/sidebar.php'
         ?>
-        <main class="main-container">
+        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state") ? (Session::getSession("partyjungle-sidebar-state", false) == "close" ? 'sidebar-closed' : '') : '' ?>">
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
@@ -27,22 +28,63 @@
                         </span>
                         <p class="fs-4 fw-bold my-0"> Orders</p>
                     </div>
-                    <div class="card rounded-4 border-0">
+                    <div class="card rounded-0 border-0">
                         <div class="card-body py-4">
                             <?php
-                            $status = isset($_GET['status']) ? $_GET['status'] : OrderStatus::$ORDER_PLACED;
+                            $status = isset($_GET['status']) ? $_GET['status'] : "All";
                             ?>
-                            <div class="text-start">
-                                <a href="#status-modal" data-bs-toggle="modal" class="link-secondary fw-bold text-decoration-none">
-                                    <i class="bx bx-chevron-down"></i>
-                                    <?php echo OrderStatus::getStringStatus($status) ?>
-                                    <i class="bx bx-filter"></i>
-                                </a>
-                            </div>
-                            <!-- <div class="alert alert-info mb-4 mt-2 py-2">
-                                <small>Showing orders with status of <strong><?php echo OrderStatus::getStringStatus($status) ?></strong>.</small>
-                            </div> -->
-                            <div class="table-responsive-sm">
+
+                            <ul class="nav custom-nav border mb-3">
+                                <li class="nav-item <?php echo $status == "All" ? 'active' : '' ?>">
+                                    <a href="orders.php" class="nav-link link-dark d-flex align-items-center py-3 px-4">
+                                        <?php
+                                        $count = mysqli_query($con, "SELECT COUNT(id) FROM orders")->fetch_array()[0];
+                                        ?>
+                                        <span class="me-2"><small>All Orders</small></span>
+                                        <span class="badge text-bg-light text-orange border"><?php echo $count ?></span>
+                                    </a>
+                                </li>
+                                <?php
+                                $get_status = mysqli_query($con, "SELECT * FROM order_status");
+                                while ($row = $get_status->fetch_assoc()) :
+                                ?>
+                                    <li class="nav-item <?php echo $status == $row['status_label'] ? 'active' : '' ?>">
+                                        <a href="orders.php?status=<?php echo $row['status_label'] ?>" class="nav-link link-dark d-flex align-items-center py-3">
+                                            <?php
+                                            $s = $row['status_label'];
+                                            $count = mysqli_query($con, "SELECT COUNT(id) FROM orders WHERE status IN (SELECT status_code FROM order_status WHERE status_label='$s')")->fetch_array()[0];
+                                            ?>
+                                            <span class="me-2"><small><?php echo $s ?></small></span>
+                                            <?php
+                                            if ($count > 0) {
+                                            ?>
+                                                <span class="badge text-bg-light text-orange border"><?php echo $count ?></span>
+                                            <?php
+                                            }
+                                            ?>
+                                        </a>
+                                    </li>
+                                <?php
+                                endwhile
+                                ?>
+                            </ul>
+                            <?php
+                            if ($status != "All") {
+                            ?>
+                                <!-- <a href="orders.php" class="btn btn-outline-dark btn-sm mb-4 rounded-1 ">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span><?php echo $status ?></span>
+                                        <i class="bx bx-x fs-4"></i>
+                                    </div>
+                                </a> -->
+                                <div class="alert alert-brown py-2">
+                                    <small>Showing <strong><?php echo $status ?></strong> orders.</small>
+                                </div>
+                            <?php
+                            }
+                            ?>
+
+                            <div class="table-responsive-md">
                                 <table class="table align-items-center" id="table">
                                     <thead>
                                         <th class="text-secondary">
@@ -58,7 +100,11 @@
                                     <tbody>
                                         <?php
                                         //get orders
-                                        $query = mysqli_query($con, "SELECT orders.*, CONCAT(users.firstname,' ',users.lastname) AS customer FROM orders INNER JOIN users ON orders.user_id = users.id WHERE orders.status = $status");
+                                        if ($status == "All") {
+                                            $query = mysqli_query($con, "SELECT orders.*, CONCAT(users.firstname,' ',users.lastname) AS customer FROM orders INNER JOIN users ON orders.user_id = users.id ORDER BY id DESC, status ASC");
+                                        } else {
+                                            $query = mysqli_query($con, "SELECT orders.*, CONCAT(users.firstname,' ',users.lastname) AS customer FROM orders INNER JOIN users ON orders.user_id = users.id WHERE orders.status IN (SELECT status_code FROM order_status WHERE status_label='$status')");
+                                        }
                                         while ($row = $query->fetch_assoc()) {
                                             //get number of items in the order
                                             $getItems = mysqli_query($con, "SELECT * FROM order_details WHERE order_id=" . $row['id']);
@@ -86,7 +132,7 @@
                                                     <small><?php echo $status_row['status_label'] ?></small>
                                                 </td>
                                                 <td class="py-3">
-                                                    <a href="manage-order.php?transaction_no=<?php echo $row['transaction_no'] ?>" class="btn btn-sm btn-brown text-light rounded-3 ">
+                                                    <a href="manage-order.php?transaction_no=<?php echo $row['transaction_no'] ?>&status=<?php echo $status ?>" class="btn btn-sm btn-brown text-light rounded-3 ">
                                                         <i class="bx bxs-show"></i>
                                                     </a>
                                                 </td>

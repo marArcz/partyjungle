@@ -9,7 +9,7 @@ $shipping = $query->fetch_assoc();
 
 $total_price = 0;
 $user_id = Session::getUser()['id'];
-$query = mysqli_query($con, "SELECT * FROM cart WHERE user_id = $user_id");
+$query = mysqli_query($con, "SELECT * FROM cart WHERE user_id = $user_id AND is_checked_out = 0");
 while ($row = $query->fetch_assoc()) {
     $total_price += $row['price'] * $row['quantity'];
 }

@@ -1,4 +1,6 @@
 <?php include '../conn/conn.php' ?>
+<?php include './includes/Session.php' ?>
+<?php include './includes/MessageTypes.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +18,7 @@
         $active_page = "messages";
         include './includes/sidebar.php'
         ?>
-        <main class="main-container">
+        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state") ? (Session::getSession("partyjungle-sidebar-state", false) == "close" ? 'sidebar-closed' : '') : '' ?>">
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
@@ -32,33 +34,74 @@
                                 Conversations
                             </p>
                             <hr>
-                            <ul class="list-group list-group-flush">
+                            <ul class="list-group list-group-flush conversations-list">
                                 <?php
                                 // get all conversatations
                                 $query = mysqli_query($con, "SELECT * FROM conversations");
                                 while ($row = $query->fetch_assoc()) {
-                                    $user = mysqli_query($con,"SELECT * FROM users WHERE id=" . $row['user_id']);
+                                    $user = mysqli_query($con, "SELECT * FROM users WHERE id=" . $row['user_id'])->fetch_assoc();
+                                    $conversation_id = $row['id'];
+                                    $get_chat = mysqli_query($con, "SELECT * FROM chat WHERE conversation_id = $conversation_id ORDER BY id DESC LIMIT 1");
+                                    $chat = $get_chat->fetch_assoc();
                                 ?>
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <div class="conversation-photo">
-                                                <span><?php echo $user['firstname'][0] . $user['lastname'][0] ?></span>
+                                    <li class="list-group-item <?php echo $chat['status'] == 0 ? 'bg-light' : '' ?>">
+                                        <a href="chats.php?conversation_id=<?php echo $conversation_id ?>" class=" text-decoration-none">
+                                            <div class="row">
+                                                <div class="col-auto">
+
+                                                    <?php
+                                                    if (empty($user['photo'])) {
+                                                    ?>
+                                                        <div class="conversation-text-photo">
+                                                            <span><?php echo $user['firstname'][0] . $user['lastname'][0] ?></span>
+                                                        </div>
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <div class="conversation-photo" data-img="../<?php echo $user['photo'] ?>">
+                                                        </div>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="my-1 fw-bold text-<?php echo $chat['status'] == 0 ? 'dark ' : 'secondary' ?>">
+                                                        <span><?php echo $user['firstname'] . " " . $user['lastname'] ?></span>
+                                                    </p>
+                                                    <p class="my-1 col-12 col-lg-7 text-truncate text-<?php echo $chat['status'] == 0 ? 'dark fw-bold' : 'secondary' ?>">
+                                                        <small>
+                                                            <?php
+                                                            if (empty($chat['message'])) {
+                                                                if ($chat['type'] != MessageTypes::$PRODUCTS) {
+                                                            ?>
+                                                                    <span>
+                                                                        <?php echo $user['firstname'] . " " . $user['lastname'] . " sent image."; ?>
+                                                                    </span>
+                                                                <?php
+                                                                }
+                                                            } else {
+                                                                ?>
+                                                                <span><?php echo $chat['message'] ?></span>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </small>
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                        </a>
+                                    </li>
                                 <?php
                                 }
                                 ?>
                             </ul>
 
-                            <?php 
-                                if($query->num_rows == 0){
-                                    ?>
-                                    <p class="my-0 text-center text-secondary">No messages to show</p>
-                                    <?php
-                                }
+                            <?php
+                            if ($query->num_rows == 0) {
+                            ?>
+                                <p class="my-0 text-center text-secondary">No messages to show</p>
+                            <?php
+                            }
                             ?>
 
                         </div>
@@ -70,7 +113,12 @@
 
     <?php include './includes/scripts.php' ?>
     <script>
-
+        $(function() {
+            $(".conversation-photo").each((index, elem) => {
+                let img = $(elem).data('img')
+                $(elem).css("background-image", `url(${img})`)
+            })
+        })
     </script>
 </body>
 

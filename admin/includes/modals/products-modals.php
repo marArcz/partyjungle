@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="col-md">
-                            <input type="file" required data-img-preview="#edit-image-preview" name="photo" class="d-none" id="edit-file-input">
+                            <input type="file" data-img-preview="#edit-image-preview" name="photo" class="d-none" id="edit-file-input">
                             <div class="mb-3">
                                 <label for="" class="form-label">Product Name:</label>
                                 <input type="text" required class="form-control" name="name" id="edit-name">

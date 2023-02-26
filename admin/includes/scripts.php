@@ -5,6 +5,7 @@
 <script src="..\assets\fontawesome-free-6.3.0-web\js\fontawesome.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js"></script>
 <script>
     $(function() {
         Notiflix.Loading.init({
@@ -19,6 +20,24 @@
             position: 'center-top',
             closeButton: false,
         });
+
+        $(".div-image").each((i, elem) => {
+            let img = $(elem).data("img")
+            $(elem).css("background-image", `url(${img})`)
+        })
+
+        $("img.view-photo").on("click", function(e) {
+            let img = $(this).attr("src");
+
+            $("#view-photo-modal").find("img").attr("src", img);
+            $("#view-photo-modal").modal("show");
+        })
+        $("div.view-photo").on("click", function(e) {
+            let img = $(this).data("img");
+
+            $("#view-photo-modal").find("img").attr("src", img);
+            $("#view-photo-modal").modal("show");
+        })
     })
 
     const showLoading = () => {
@@ -59,7 +78,6 @@
             previewElem.attr("src", URL.createObjectURL(files[0]));
         })
         target.click();
-
     })
 
     $(".file-input").on("change", function(e) {
@@ -67,5 +85,21 @@
         var previewElem = $($(this).data("img-preview"));
 
         previewElem.attr("src", URL.createObjectURL(files[0]));
+    })
+
+    $("#sidebar-collapse-btn").on("click", function(e) {
+        $("#sidebar-wrapper").toggleClass("close");
+        $(".main-container").toggleClass("sidebar-closed");
+        var state = "";
+        if ($("#sidebar-wrapper").hasClass("close")) {
+            state = "close";
+        }
+
+        $.post("update-session-settings.php", {
+            state
+        }, (res) => {
+            console.log('res: ', res)
+        })
+
     })
 </script>

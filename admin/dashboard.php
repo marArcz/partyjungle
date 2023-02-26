@@ -1,4 +1,6 @@
 <?php include '../conn/conn.php' ?>
+<?php include './includes/Session.php' ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +18,7 @@
         $active_page = "dashboard";
         include './includes/sidebar.php'
         ?>
-        <main class="main-container">
+        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state")? (Session::getSession("partyjungle-sidebar-state",false) == "close"? 'sidebar-closed':''):'' ?>">
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
@@ -62,7 +64,12 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <p class="my-1 fw-bold fs-5">5</p>
+                                            <?php
+                                            // get number of products
+                                            $query = mysqli_query($con, "SELECT * FROM products");
+                                            $num_of_products = $query->num_rows;
+                                            ?>
+                                            <p class="my-1 fw-bold fs-5"><?php echo $num_of_products ?></p>
                                             <p class="my-1 text-secondary">
                                                 <small>Products</small>
                                             </p>
@@ -81,7 +88,12 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <p class="my-1 fw-bold fs-5">5</p>
+                                            <?php
+                                            // get number of customers
+                                            $query = mysqli_query($con, "SELECT * FROM orders WHERE status IN (SELECT status_code FROM order_status WHERE status_label='Delivered')");
+                                            $deliveries = $query->num_rows;
+                                            ?>
+                                            <p class="my-1 fw-bold fs-5"><?php echo $deliveries ?></p>
                                             <p class="my-1 text-secondary">
                                                 <small>Total Deliveries</small>
                                             </p>
@@ -111,7 +123,7 @@
                         </div>
                     </div>
 
-                    <div class="card rounded-4 border-0 mt-3">
+                    <div class="card rounded-4 border-0 mt-3" id="chart-card">
                         <div class="card-body">
                             <p class="fs-6">Orders of Year <?php echo date('Y') ?></p>
                             <div class="mt-3">
@@ -126,16 +138,16 @@
 
     <?php include './includes/scripts.php' ?>
     <script>
-        function loadChart() {
+        function loadChart(data) {
             const ctx = document.getElementById('myChart');
 
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     datasets: [{
-                        label: 'Orders count',
-                        data: [12, 19, 3, 5, 2, 3],
+                        label: 'Number of orders',
+                        data: data,
                         borderWidth: 1,
                     }]
                 },
@@ -150,7 +162,16 @@
         }
 
         $(function() {
-            loadChart();
+            $.ajax({
+                url: "get-orders-statistics.php",
+                method: "post",
+                dataType: "json",
+                success: res => {
+                    console.log('res: ', res)
+                    loadChart(res.statistics)
+                }
+
+            })
         })
     </script>
 </body>

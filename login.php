@@ -46,7 +46,7 @@
                                 <input type="password" class="form-control" name="password">
                             </div>
                             <div class="d-grid">
-                                <button class="btn btn-orange" id="submit-btn" type="submit" name="submit">Create Account</button>
+                                <button class="btn btn-orange" id="submit-btn" type="submit" name="submit">Sign In</button>
                             </div>
                             <p class="mt-3 text-center">Dont Have an account yet? <a href="signup.php">Create here!</a></p>
                         </form>

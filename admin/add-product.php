@@ -22,14 +22,16 @@ $query->bind_param(
     $description,
     $target_file
 );
+$category = mysqli_query($con, "SELECT * FROM categories WHERE id = $category_id")->fetch_assoc();
+$category_name = $category['category_name'];
 
 if($query->execute()){
     Session::insertSuccess("Successfully added!");
-    Session::redirectTo("products.php?category=$category_id");
+    Session::redirectTo("products.php?category=$category_name");
     exit();
 }
 else{
     Session::insertError();
-    Session::redirectTo("products.php?category=$category_id");
+    Session::redirectTo("products.php?category=$category_name");
     exit();
 }

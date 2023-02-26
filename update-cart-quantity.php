@@ -18,13 +18,13 @@
     $item = mysqli_query($con,"SELECT * FROM cart WHERE id = $cart_id")->fetch_assoc();
 
     //get cart info
-    $get_cart = mysqli_query($con,"SELECT * FROM cart WHERE user_id = $user_id");
+    $get_cart = mysqli_query($con,"SELECT * FROM cart WHERE user_id = $user_id AND is_checked_out=0");
     $subtotal = 0;
     while($row = $get_cart->fetch_assoc()){
         $subtotal += $row['price'] * $row['quantity'];
     }
     //get total cart items
-    $total_items = mysqli_query($con,"SELECT SUM(quantity) FROM cart WHERE user_id = $user_id")->fetch_array()[0];
+    $total_items = mysqli_query($con,"SELECT SUM(quantity) FROM cart WHERE user_id = $user_id AND is_checked_out=0")->fetch_array()[0];
     //get shipping type
     $shipping = mysqli_query($con,"SELECT * FROm shipping WHERE id = $shipping_id")->fetch_assoc();
     

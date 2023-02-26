@@ -59,7 +59,7 @@
 							<?php
 							} else {
 							?>
-								<li>
+								<li class="align-self-center">
 									<a href="cart.php">
 										<img src="assets/images/shopping.png" alt="#" />
 										<?php
@@ -71,8 +71,43 @@
 										</span>
 									</a>
 								</li>
+								<li class="align-self-center">
+									<div class="dropdown">
+										<a href="account.php" class="mx-2 link-dark" data-bs-toggle="dropdown" role="button">
+											<?php
+											if (empty(Session::getUser()['photo'])) {
+											?>
+												<i class="bx bx-user fs-3"></i>
+											<?php
+											} else {
+											?>
+												<img src="<?php echo Session::getUser()['photo'] ?>" class="shadow-sm account-photo" alt="">
+											<?php
+											}
+											?>
+										</a>
+										<ul class="dropdown-menu dropdown-menu-end mt-3">
+											<li class="py-0">
+												<a class="dropdown-item d-flex align-items-center justify-content-between" href="account.php">
+													<span>Account</span>
 
-								<a href="./logout.php" class="loginbtn ms-2">Log out</a>
+													<i class="bx bxs-user-circle"></i>
+												</a>
+											</li>
+											<li>
+												<hr class="dropdown-divider">
+											</li>
+											<li class="py-0">
+												<a class="dropdown-item d-flex align-items-center justify-content-between" href="logout.php">
+													<span>Logout</span>
+													<i class="bx bx-log-out"></i>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+
+								<!-- <a href="./logout.php" class="loginbtn ms-2">Log out</a> -->
 							<?php
 							}
 
@@ -108,6 +143,7 @@
 
 									if (Session::getUser() != null) {
 									?>
+
 										<li class="nav-item <?php echo $active_page == "cart" ? "active" : "" ?>" id="nav_cart">
 											<a class="nav-link" href="cart.php">Cart</a>
 										</li>
@@ -136,14 +172,14 @@
 					<div class="col-md-4">
 						<div class="search">
 							<form action="products.php" method="get">
-								<?php 
-									if(isset($_GET['category'])){
-										?>
-										<input type="hidden" name="category" value="<?php echo $_GET['category'] ?>">
-										<?php
-									}
+								<?php
+								if (isset($_GET['category'])) {
 								?>
-								<input class="form_sea py-3" type="text" placeholder="Search" name="search" id="search-input" >
+									<input type="hidden" name="category" value="<?php echo $_GET['category'] ?>">
+								<?php
+								}
+								?>
+								<input class="form_sea py-3" type="text" placeholder="Search" name="search" id="search-input">
 								<button class="seach_icon mt-1" type="submit"><i class="bx bx-search"></i></button>
 							</form>
 						</div>

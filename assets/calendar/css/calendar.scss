@@ -1,0 +1,122 @@
+.mz-calendar {
+    width: 100%;
+    border: 1px solid rgb(224, 224, 224);
+    box-sizing: border-box;
+    border-radius: 7;
+    background: white;
+
+    .weekdays-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(7, calc(100% / 7));
+
+        .weekday {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            color: #4C9AFF;
+        }
+
+    }
+
+    .calendar-days-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(7, calc(100% / 7));
+        margin-top: 20px;
+
+        .calendar-day {
+            text-align: center;
+            border: 1px solid rgb(235, 235, 235);
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            height: 100px;
+            position: relative;
+            color: rgb(97, 97, 97);
+            font-weight: bold;
+
+            &.current-day {
+                font-weight: bold;
+                color: black !important;
+            }
+
+            &.selected {
+                span {
+                    color: white !important;
+
+                }
+
+                span.dot {
+                    background: white !important;
+                }
+
+            }
+
+            span.number {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+
+            }
+
+            span.dot {
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+                background: #6f42c1;
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+
+            }
+
+            &:not(.enabled) {
+                font-weight: lighter;
+            }
+
+            &.enabled {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .calendar-header {
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        padding: 10px 15px;
+        box-sizing: border-box;
+        flex-wrap: wrap;
+        align-items: center;
+
+        .left {
+            margin-right: auto;
+        }
+
+        .right {}
+
+        #month-year-label {
+            font-size: 1.3rem;
+            margin: 5px;
+            font-weight: bold;
+        }
+    }
+
+    .calendar-body {
+        padding: 20px 10px;
+
+    }
+
+    .control {
+        background: white;
+        border: 1px solid rgb(210, 210, 210);
+        padding: 8px 12px;
+        border-radius: 3px;
+    }
+
+    .calendar-nav {
+        font-weight: bold;
+    }
+}

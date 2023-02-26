@@ -1,4 +1,5 @@
 <?php include '../conn/conn.php' ?>
+<?php include './includes/Session.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +17,7 @@
         $active_page = "dashboard";
         include './includes/sidebar.php'
         ?>
-        <main class="main-container">
+        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state")? (Session::getSession("partyjungle-sidebar-state",false) == "close"? 'sidebar-closed':''):'' ?>">
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
