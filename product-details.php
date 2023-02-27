@@ -29,7 +29,6 @@
                 Session::redirectTo("products.php");
                 exit();
             }
-            $user_id = Session::getUser()['id'];
             // get product
             $product_id = $_GET['id'];
             $product = mysqli_query($con, "SELECT * FROM products INNER JOIN categories ON products.category_id = categories.id WHERE products.id = $product_id")->fetch_assoc();

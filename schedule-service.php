@@ -55,7 +55,7 @@
                                     <div class="card-body">
                                         <form action="add-service-reservation.php" method="post">
                                             <input type="hidden" class="form-control" name="date" id="date">
-                                            <input type="hidden" class="form-control" name="service_id" value="<?php echo $service_id ?>">
+                                            <input type="hidden" class="form-control" id="service-id" name="service_id" value="<?php echo $service_id ?>">
                                             <input type="hidden" class="form-control" name="option_id" value="<?php echo $option_id ?>">
 
                                             <div class="mb-3">
@@ -79,9 +79,10 @@
 
             </div>
         </section>
-      
+
     </main>
     <!-- footer -->
+    <?php include './includes/service-modals.php' ?>
     <?php include './includes/footer.php' ?>
     <?php include './includes/scripts.php' ?>
     <script>
@@ -98,12 +99,19 @@
                     console.log('reservations: ', res)
                     calendar.eventList = res.reservations
                     calendar.loadDays()
-                    calendar.setOnSelectDate((date) => {
+                    calendar.setOnSelectDate((date, day) => {
+                        if (day.events == 0) {
+                            const formatNum = (num) => num < 10 ? "0" + num : num
+                            let strDate = date.getFullYear() + "-" + formatNum(date.getMonth() + 1) + "-" + formatNum(date.getDate());
+                            $("#date").val(strDate);
+                            $("#text-date").val(strDate);
+                        }else{
+                            if(day.events[0].owned){
+                                //if event is owned
+                                $("#service-modal").modal("show")
+                            }
+                        }
 
-                        const formatNum = (num) => num < 10 ? "0" + num : num
-                        let strDate = date.getFullYear() + "-" + formatNum(date.getMonth() + 1) + "-" + formatNum(date.getDate());
-                        $("#date").val(strDate);
-                        $("#text-date").val(strDate);
                     })
                 })
         })
@@ -113,6 +121,9 @@
                 url: "get-reservations.php",
                 method: "post",
                 dataType: "json",
+                data: {
+                    service_id: $("#service-id").val()
+                },
                 success: res => res,
                 error: err => err
             })

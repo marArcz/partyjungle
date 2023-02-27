@@ -162,8 +162,8 @@
 										<a class="nav-link" href="#" onclick="contacttab();">Contact</a>
 									</li> -->
 
-									<li class="nav-item" id="nav_about">
-										<a class="nav-link" href="#" onclick="abouttab();">About</a>
+									<li class="nav-item <?php echo $active_page == "reservations" ? "active" : "" ?> " id="nav_about">
+										<a class="nav-link" href="service-reservations.php">Service reservations</a>
 									</li>
 								</ul>
 							</div>

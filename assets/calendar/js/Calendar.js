@@ -1,5 +1,5 @@
 class Calendar {
-    constructor({ element, events = [], activeColor = "rgb(74 161 233)", disableDateWithEvents=false,eventLabel="" }) {
+    constructor({ element, events = [], activeColor = "rgb(74 161 233)", disableDateWithEvents = false, eventLabel = "" }) {
         this.element = $(element)
         this.events = events
         this.days = []
@@ -15,7 +15,8 @@ class Calendar {
         this.activeColor = activeColor;
         this.onSelectDate = null
         this.disableDateWithEvents = disableDateWithEvents,
-        this.eventLabel = eventLabel
+            this.eventLabel = eventLabel,
+            this.currentDays = []
     }
 
     createCalendar() {
@@ -107,18 +108,14 @@ class Calendar {
     loadDays() {
         let prevDate = this.selected
 
-        if (this.selected.getMonth()  === new Date().getMonth()) {
+        if (this.selected.getMonth() === new Date().getMonth()) {
             this.btnPrev.attr("disabled", true)
-        }else{
+        } else {
             this.btnPrev.removeAttr("disabled", true)
         }
 
         console.log('loading days')
-        if (this.onSelectDate !== null) {
-            console.log('onSelectDate')
 
-            this.onSelectDate(this.selected)
-        }
         $("#month-year-label").html(this.strMonths[this.selected.getMonth()] + ", " + this.selected.getFullYear());
 
         const firstDayOfMonth = new Date(this.selected.getFullYear(), this.selected.getMonth(), 1);
@@ -149,7 +146,9 @@ class Calendar {
                 passed: false,
                 isSunday: firstDayOfMonth.getDay() === 0,
                 day: firstDayOfMonth.getDay(),
-                events: []
+                events: [],
+                strDate: `${firstDayOfMonth.getFullYear()}-${firstDayOfMonth.getMonth() + 1}-${firstDayOfMonth.getDate()}`
+
             }
             let passed = false;
             if (firstDayOfMonth.getDate() < today.getDate() && firstDayOfMonth.getMonth() === today.getMonth()) {
@@ -173,8 +172,10 @@ class Calendar {
                         month: day.month,
                         year: day.year,
                         time: `${event.time}`,
+                        owned: event.owned,
                         passed: day.month <= today.getMonth() ? (day.number < today.getDate() ? true : false) : false
                     }
+                    newEvent = {...newEvent,data:event}
                     day.events = [...day.events, newEvent]
                 }
             }
@@ -185,6 +186,19 @@ class Calendar {
     }
 
     displayDays(currentDays) {
+        if (this.onSelectDate !== null) {
+            console.log('onSelectDate')
+            let selectedDay = {}
+            for(let day of currentDays){
+                if(day.strDate == `${this.selected.getFullYear()}-${this.selected.getMonth() + 1}-${this.selected.getDate()}`){
+                    selectedDay = day;
+                    break;
+                }
+            }
+            this.onSelectDate(this.selected, selectedDay)
+        }
+        this.currentDays = currentDays
+        console.log('currentdays: ', this.currentDays)
         let calendar = this.element.find('.calendar-days-container');
         calendar.html("");
         for (let day of currentDays) {
@@ -197,9 +211,9 @@ class Calendar {
                 calendar.append(calendarDay)
             } else {
                 let calendarDay = `
-                        <div data-date="${day.year}-${day.month + 1}-${day.number}" class=" ${day.events.length > 0 ? "reserved":"enabled"} calendar-day ${day.currentMonth ? "current-day" : ""} ${day.isSelected ? "selected" : ""}">
+                        <div data-date="${day.year}-${day.month + 1}-${day.number}" class="${day.events.length > 0 && day.events[0].owned ? 'owned' : ''} ${day.events.length > 0 ? "reserved" : "enabled"} calendar-day ${day.currentMonth ? "current-day" : ""} ${day.isSelected ? "selected" : ""}">
                                 <span class="number">${day.number}</span>
-                                <span class="number mt-5">${day.events.length > 0 ? "<i class='bx bxs-flag'></i> Booked":""}</span>
+                                <span class="number mt-5">${day.events.length > 0 ? (day.events[0].owned ? "<i class='bx bxs-flag'></i> You" : "<i class='bx bxs-flag'></i> Booked") : ""}</span>
                                 ${day.events.length > 0 ? `<span class="dot"></span>` : ""}
                         </div>
                     `;
@@ -212,14 +226,29 @@ class Calendar {
     }
 
     setHandlers() {
-        var onSelect = (date) => {
+        var onSelect = (date, strDate) => {
             this.selected = date
             this.loadDays()
-            this.onSelectDate(date)
+            let day = {};
+
+            for (let d of this.currentDays) {
+                if (d.strDate == strDate) {
+                    day = d
+                    break;
+                }
+            }
+            console.log('day: ', day)
+            this.onSelectDate(date, day)
         }
         $(".calendar-day.enabled").on("click", function (e) {
             let date = new Date($(e.currentTarget).data('date'));
-            onSelect(date)
+            let strDate = $(e.currentTarget).data('date');
+            onSelect(date, strDate)
+        })
+        $(".calendar-day.owned").on("click", function (e) {
+            let date = new Date($(e.currentTarget).data('date'));
+            let strDate = $(e.currentTarget).data('date');
+            onSelect(date, strDate)
         })
 
     }
