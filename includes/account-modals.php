@@ -28,6 +28,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="info-modal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content rounded-1">
