@@ -3,7 +3,8 @@
 declare(strict_types=1);
 const USER_SESSION_NAME = "party_jungle_admin";
 
-    session_start();
+session_start();
+include_once '../conn/conn.php';
 
 class Session
 {
@@ -33,12 +34,13 @@ class Session
 
     public static function getUser()
     {
-        if (isset($_SESSION[USER_SESSION_NAME])) {
+        global $con;
+        if (!isset($_SESSION[USER_SESSION_NAME])) {
             return null;
         }
-        require '../conn/conn.php';
         //get user
         $user_id = $_SESSION[USER_SESSION_NAME];
+
         $query = mysqli_query($con, "SELECT * FROM admin WHERE id = $user_id");
 
         if ($query->num_rows == 0) {
@@ -73,5 +75,11 @@ class Session
     public static function getError(bool $remove = true)
     {
         return self::getSession("error", $remove);
+    }
+    public static function destroyUserSession()
+    {
+        if (self::getUser() !== null) {
+            self::removeSession(USER_SESSION_NAME);
+        }
     }
 }

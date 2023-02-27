@@ -27,9 +27,9 @@
                         </span>
                         <p class="fs-4 fw-bold my-0"> Service Reservations</p>
                     </div>
-                    <div class="card">
+                    <div class="card border-0 shadow-sm rounded-4">
                         <div class="card-body">
-                            <div class="table-responsive-md">
+                            <div class="table-responsive-md mt-2">
                                 <table class="table align-middle" id="table">
                                     <thead>
                                         <th>Customer</th>
@@ -37,7 +37,7 @@
                                         <th>Option</th>
                                         <th>Price</th>
                                         <th>Date</th>
-                                        <th>time</th>
+                                        <th>Time</th>
                                         <th>Action</th>
                                     </thead>
                                     <tbody>

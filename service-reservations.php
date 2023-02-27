@@ -16,6 +16,8 @@
 <body class="">
     <?php include './includes/top_header.php' ?>
     <?php
+    $status = !isset($_GET['status']) ? "All" : $_GET['status'];
+
     $query = mysqli_query($con, "SELECT * FROM categories LIMIT 1");
     $category_row = $query->fetch_assoc();
     $category = isset($_GET['category']) ? $_GET['category'] : "all";
@@ -26,17 +28,89 @@
 
                 <h4 class="text-dark fw-light">Service Reservations</h4>
                 <hr>
+                <ul class="nav mb-4 custom-nav">
+                    <li class="nav-item me-3 <?php echo $status == "All" ? 'active' : '' ?>">
+                        <a href="service-reservations.php?status=All" class="nav-link link-dark fw-light">
+                            All
+                        </a>
+                    </li>
+                    <?php
+                    $query = mysqli_query($con, "SELECT * FROM reservation_status");
+                    while ($row = $query->fetch_assoc()) {
+                    ?>
+                        <li class="nav-item me-3 <?php echo $status == $row['status_label'] ? 'active' : '' ?>">
+                            <a href="service-reservations.php?status=<?php echo $row['status_label'] ?>" class="nav-link link-dark fw-light ">
+                                <?php echo $row['status_label'] ?>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+                <?php
+                if ($status != "All") {
+                ?>
+                    <div class="alert alert-brown py-2">
+                        <i class="bx bx-info-circle"></i> <small><?php echo $status ?> Reservations</small>
+                    </div>
+                <?php
+                }
+                ?>
                 <?php
                 $user_id = Session::getUser()['id'];
-                $query = mysqli_query($con, "SELECT * FROM service_reservations WHERE user_id = $user_id");
+                if ($status != "All") {
+                    $query = mysqli_query($con, "SELECT service_reservations.*, reservation_status.status_code,reservation_status.status_label FROM service_reservations INNER JOIN reservation_status ON service_reservations.status = reservation_status.status_code WHERE user_id = $user_id AND status IN (SELECT status_code FROM reservation_status WHERE status_label = '$status')");
+                }else{
+                    $query = mysqli_query($con, "SELECT service_reservations.*, reservation_status.status_code,reservation_status.status_label FROM service_reservations INNER JOIN reservation_status ON service_reservations.status = reservation_status.status_code WHERE user_id = $user_id ");
+
+                }
                 while ($row = $query->fetch_assoc()) {
                     $option = mysqli_query($con, "SELECT * FROM service_options WHERE id = " . $row['service_option_id'])->fetch_assoc();
                     $service = mysqli_query($con, "SELECT * FROM services WHERE id = " . $row['service_id'])->fetch_assoc();
                 ?>
 
-                    <div class="card border-0 shadow rounded-1">
+                    <div class="card border-0 shadow rounded-1 mb-3">
                         <div class="card-body p-4">
-                            Status
+                            <p class="text-secondary my-1">
+                                <small class="">Status: <span class="text-dark"><?php echo $row['status_label'] ?></span></small>
+                            </p>
+                            <div class="mt-4">
+                                <div class="row mt-2 mb-3">
+                                    <div class="col-md-4">
+                                        <p class="text-secondary fs-5"><?php echo $service['name'] ?></p>
+                                        <p class="my-1"><?php echo $option['label'] ?> - <span class="text-orange">₱<?php echo $option['price'] ?></span></p>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="d-flex flex-wrap">
+                                            <p class="me-3"><i class="bx bx-calendar bx-lg"></i></p>
+                                            <div>
+                                                <p class="my-1"><span class=" text-secondary fw-light">Date:</span> <?php echo $row['date'] ?></p>
+                                                <p class="my-1"><span class=" text-secondary fw-light">Time:</span> <?php echo date('h:i a', strtotime($row['time'])) ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <!-- <a href="#details-modal" data-bs-toggle="modal" data-id="<?php echo $row['id'] ?>" class="btn btn-orange btn-sm me-1">
+                                    <i class="bx bx-info-circle"></i> Details
+                                </a> -->
+                                <?php
+                                if ($row['status'] == 0) {
+                                ?>
+                                    <a href="cancel-reservation.php?id=<?php echo $row['id'] ?>" data-bs-toggle="modal" data-="" class="btn btn-light border btn-sm">
+                                        Cancel
+                                    </a>
+                                <?php
+                                } else {
+                                ?>
+                                    <a href="#details-modal" data-bs-toggle="modal" data-="" class="btn btn-light text-danger border btn-sm">
+                                        Delete
+                                    </a>
+                                <?php
+                                }
+                                ?>
+                            </div>
                         </div>
                     </div>
                 <?php
@@ -50,6 +124,7 @@
         ?>
     </main>
     <?php include './includes/footer.php' ?>
+    <?php include './includes/reservation-modal.php' ?>
     <?php include './includes/scripts.php' ?>
 </body>
 

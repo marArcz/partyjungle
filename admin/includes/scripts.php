@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios@1.3.4/dist/axios.min.js"></script>
 <script>
     $(function() {
+
         Notiflix.Loading.init({
             backgroundColor: 'rgba(240,240,240,0.6)',
             svgColor: '#FC6603',
@@ -22,7 +23,7 @@
         });
 
         $(".div-image").each((i, elem) => {
-            let img = $(elem).data("img")
+            let img = $(elem).data("image")
             $(elem).css("background-image", `url(${img})`)
         })
 

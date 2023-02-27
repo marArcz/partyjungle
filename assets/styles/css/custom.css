@@ -11460,6 +11460,10 @@ textarea.form-control-lg {
     max-width: 50vw !important;
   }
 }
+.custom-nav li.active .nav-link {
+  border-bottom: 2px solid #FC6603;
+}
+
 .div-image {
   background-position: center;
   background-size: cover;

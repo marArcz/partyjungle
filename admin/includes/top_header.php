@@ -10,7 +10,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
                     <li><a class="dropdown-item d-flex align-items-center" href="account.php"><i class="bx bx-user-circle me-2 fs-5"></i> <span>Account Settings</span></a></li>
-                    <li><a class="dropdown-item d-flex align-items-center" href="#"><i class="bx bx-log-out me-2 fs-5"></i> <span>Log Out</span></a></li>
+                    <li><a class="dropdown-item d-flex align-items-center" href="logout.php"><i class="bx bx-log-out me-2 fs-5"></i> <span>Log Out</span></a></li>
                 </ul>
             </li>
         </ul>

@@ -173,19 +173,22 @@ $value in $theme-colors {
 }
 
 @keyframes spin {
-    20%{
+    20% {
         border-top: 1px solid white;
     }
-    40%{
+
+    40% {
         border-top: 1px solid white;
         border-right: 1px solid white;
     }
-    60%{
+
+    60% {
         border-top: 1px solid white;
         border-right: 1px solid white;
         border-bottom: 1px solid white;
     }
-    80%{
+
+    80% {
         border-top: 1px solid white;
         border-right: 1px solid white;
         border-bottom: 1px solid white;
@@ -252,6 +255,7 @@ $value in $theme-colors {
     .chat-item {
         .chat-content {
             max-width: 70%;
+
             .attachment-row {
                 max-width: 50vw !important;
             }
@@ -260,6 +264,13 @@ $value in $theme-colors {
 
 }
 
+.custom-nav {
+    li.active {
+        .nav-link {
+            border-bottom: 2px solid $orange;
+        }
+    }
+}
 
 $div-image-sizes: (
     "sm":50px,
