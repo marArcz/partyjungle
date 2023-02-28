@@ -127,14 +127,14 @@
 								<span class="navbar-toggler-icon"></span>
 							</button>
 							<div class="collapse navbar-collapse" id="navbarsExample04">
-								<ul class="navbar-nav mr-auto">
-									<li class="nav-item <?php echo $active_page == "home" ? "active" : "" ?>" id="nav_home">
-										<a class="nav-link" href="index.php">Home</a>
+								<ul class="navbar-nav mr-auto align-items-center d-flex ">
+									<li class="nav-item h-100 <?php echo $active_page == "home" ? "active" : "" ?>" id="nav_home">
+										<a class="nav-link h-100" href="index.php">Home</a>
 									</li>
-									<li class="nav-item <?php echo $active_page == "products" ? "active" : "" ?>" id="nav_products">
+									<li class="nav-item h-100 <?php echo $active_page == "products" ? "active" : "" ?>" id="nav_products">
 										<a class="nav-link" href="products.php">Products</a>
 									</li>
-									<li class="nav-item <?php echo $active_page == "services" ? "active" : "" ?>" id="nav_products">
+									<li class="nav-item h-100 <?php echo $active_page == "services" ? "active" : "" ?>" id="nav_products">
 										<a class="nav-link" href="services.php">Services</a>
 									</li>
 
@@ -149,7 +149,7 @@
 										</li>
 
 										<li class="nav-item <?php echo $active_page == "orders" ? "active" : "" ?>" id="nav_ostat">
-											<a class="nav-link" href="orders.php">Orders</a>
+											<a class="nav-link " href="orders.php">Orders</a>
 										</li>
 
 									<?php
