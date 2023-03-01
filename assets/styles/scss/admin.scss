@@ -317,7 +317,26 @@ $sidebar-w-closed: 6vw;
 }
 
 
+.photos-row{
+    display: flex;
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+    .item{
+        width: 80px;
+        position: relative;
+        margin: 10px;
+        img{
+            width: 100%;
+            max-width: 100%;
+        }
+        .remove-btn{
+            position: absolute;
+            right:0;
+            top: 0;
+        }
+    }
 
+}
 
 .conversation-photo {
     $size: 50px;

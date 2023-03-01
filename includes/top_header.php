@@ -151,7 +151,9 @@
 										<li class="nav-item <?php echo $active_page == "orders" ? "active" : "" ?>" id="nav_ostat">
 											<a class="nav-link " href="orders.php">Orders</a>
 										</li>
-
+										<li class="nav-item <?php echo $active_page == "reservations" ? "active" : "" ?> " id="nav_about">
+										<a class="nav-link" href="service-reservations.php">Service reservations</a>
+									</li>
 									<?php
 									}
 									?>
@@ -162,9 +164,7 @@
 										<a class="nav-link" href="#" onclick="contacttab();">Contact</a>
 									</li> -->
 
-									<li class="nav-item <?php echo $active_page == "reservations" ? "active" : "" ?> " id="nav_about">
-										<a class="nav-link" href="service-reservations.php">Service reservations</a>
-									</li>
+									
 								</ul>
 							</div>
 						</nav>

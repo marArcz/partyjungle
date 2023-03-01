@@ -231,6 +231,26 @@
   height: 40px;
 }
 
+.photos-row {
+  display: flex;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+}
+.photos-row .item {
+  width: 80px;
+  position: relative;
+  margin: 10px;
+}
+.photos-row .item img {
+  width: 100%;
+  max-width: 100%;
+}
+.photos-row .item .remove-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 .conversation-photo {
   background-position: center !important;
   background-size: cover !important;

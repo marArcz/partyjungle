@@ -27,6 +27,13 @@
                     </div>
                     <div class="col-md-6">
                         <form action="login_submit.php" method="post">
+                            <?php 
+                                if(isset($_GET['source'])){
+                                    ?>
+                                    <input type="hidden" name="source" value="<?php echo $_GET['source'] ?>">
+                                    <?php
+                                }
+                            ?>
                             <p class="mt-1 mb-5 fs-3 ">Sign In</p>
                             <?php 
                                 if(Session::hasSession("error")){

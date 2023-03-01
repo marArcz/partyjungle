@@ -106,9 +106,10 @@
                                                 <td><?php echo $row['status_label'] ?></td>
 
                                                 <td>
-                                                    <a href="#details-modal" data-bs-toggle="modal" class="btn btn-sm btn-brown">
+                                                    <a data-id="<?php echo $row['id'] ?>" href="#manage-modal" data-bs-toggle="modal" class="btn btn-sm btn-brown">
                                                         <i class="bx bxs-show text-light"></i>
                                                     </a>
+
                                                 </td>
                                             </tr>
                                         <?php
@@ -124,9 +125,45 @@
         </main>
     </div>
     <?php include './includes/modals/reservation-modals.php' ?>
+    <?php include './includes/alerts.php' ?>
     <?php include './includes/scripts.php' ?>
     <script>
+        $("#manage-modal").on("show.bs.modal", function(e) {
+            let id = $(e.relatedTarget).data("id");
+            $.ajax({
+                url: "get-reservation.php",
+                method: "POST",
+                data: {
+                    id
+                },
+                dataType: "json",
+                success: function(res) {
+                    console.log('res: ', res)
+                    $("#service-name").html(res.service.name)
+                    $("#option-label").html(`${res.option.label} - ${res.option.price}`)
+                    $("#reservation-date").html(`${res.reservation.str_date}`)
+                    $("#reservation-time").html(`${res.reservation.str_time}`)
+                    var link = `update-reservation-status.php?id=${id}`
+                    if (res.reservation.status_label == "Pending") {
+                        $("#danger-btn").removeClass("d-none").html("Decline").removeAttr("disabled")
+                            .attr("href", `${link}&status=Declined`)
+                        // success btn
+                        $("#success-btn").removeClass("d-none").html("Approve").removeAttr("disabled")
+                            .attr("href", `${link}&status=Approved`)
+                    } else {
+                        $("#danger-btn").addClass("d-none")
 
+                        if (res.reservation.status_label == "Approved") {
+                            $("#success-btn").html("Complete").removeAttr("disabled")
+                                .attr("href", `${link}&status=Completed`)
+                        }else{
+                            $("#success-btn").addClass("d-none")
+                        }
+                    }
+                },
+                error:(err)=> console.log('error: ', err)
+            })
+        })
     </script>
 </body>
 

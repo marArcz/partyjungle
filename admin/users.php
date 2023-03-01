@@ -49,7 +49,7 @@
                                                     <?php
                                                     if (!empty($row['photo'])) {
                                                     ?>
-                                                        <div class="div-image border shadow-sm border-3 view-photo rounded-circle div-image-sm" data-img="<?php echo "../" . $row['photo'] ?>"></div>
+                                                        <div class="div-image border shadow-sm border-3 view-photo rounded-circle div-image-sm" data-image="<?php echo "../" . $row['photo'] ?>"></div>
 
                                                     <?php
                                                     } else {

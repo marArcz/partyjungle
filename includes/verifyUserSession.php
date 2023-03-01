@@ -9,4 +9,5 @@
             Session::redirectTo("send-verification.php");
         }
     }
+   
 ?>

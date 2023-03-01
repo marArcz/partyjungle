@@ -34,7 +34,7 @@
             $("#view-photo-modal").modal("show");
         })
         $("div.view-photo").on("click", function(e) {
-            let img = $(this).data("img");
+            let img = $(this).data("image");
 
             $("#view-photo-modal").find("img").attr("src", img);
             $("#view-photo-modal").modal("show");

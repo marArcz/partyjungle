@@ -1,11 +1,11 @@
 <div class="modal fade" id="add-modal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="add-product.php" enctype="multipart/form-data" method="post">
+            <form action="add-product.php" id="add-product-form" enctype="multipart/form-data" method="post">
 
                 <div class="modal-body">
                     <div class="row gy-3">
@@ -22,11 +22,11 @@
                             <input type="file" data-img-preview="#image-preview" name="photo" class="d-none" id="file-input">
                             <div class="mb-3">
                                 <label for="" class="form-label">Product Name:</label>
-                                <input required type="text" class="form-control" name="name">
+                                <input required type="text" id="add-name" class="form-control" name="name">
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Category:</label>
-                                <select required name="category_id" id="" class="form-select">
+                                <select required name="category_id" id="add-category" class="form-select">
                                     <option value="">Select one</option>
                                     <?php
                                     $query = mysqli_query($con, "SELECT * FROM categories");
@@ -43,18 +43,34 @@
 
                             <div class="mb-3">
                                 <label for="" class="form-label">Price:</label>
-                                <input required type="number" name="price" class="form-control">
+                                <input required type="number" id="add-price" name="price" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Stocks:</label>
-                                <input required type="number" name="stocks" class="form-control">
+                                <input required type="number" id="add-stocks" name="stocks" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Product Description:</label>
-                                <textarea name="description" class="form-control" rows="5"></textarea>
+                                <textarea name="description" id="add-description" class="form-control" rows="5"></textarea>
+                            </div>
+                            <div class="my-4">
+                                <hr>
+                                <p class="form-text">Product Photos</p>
+                                <input type="file" multiple id="add-photo-input" class="d-none">
+                                <div class="text-end mb-3">
+                                    <button class="btn btn-brown btn-sm file-input-toggler" data-target="#add-photo-input" type="button">Add Photo</button>
+                                </div>
+                                <div class="photos-row" id="add-photos-row">
+                                    <?php
+                                    // $get_photos = mysqli_query($con,"SELECT * FROM product_photos WHERE product_id")
+                                    ?>
+
+
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -119,6 +135,21 @@
                             <div class="mb-3">
                                 <label for="" class="form-label">Product Description:</label>
                                 <textarea required name="description" class="form-control" rows="5" id="edit-description"></textarea>
+                            </div>
+                            <div class="my-4">
+                                <hr>
+                                <p class="form-text">Product Photos</p>
+                                <input type="file" multiple id="edit-photo-input" class="d-none">
+                                <div class="text-end mb-3">
+                                    <button class="btn btn-brown btn-sm file-input-toggler" data-target="#edit-photo-input" type="button">Add Photo</button>
+                                </div>
+                                <div class="photos-row" id="edit-photos-row">
+                                    <?php
+                                    // $get_photos = mysqli_query($con,"SELECT * FROM product_photos WHERE product_id")
+                                    ?>
+
+
+                                </div>
                             </div>
                         </div>
                     </div>

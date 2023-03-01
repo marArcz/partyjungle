@@ -2,6 +2,12 @@
 <?php include './includes/Session.php' ?>
 <?php include './includes/verifyUserSession.php' ?>
 <?php include './admin/includes/OrderStatus.php' ?>
+<?php 
+    if(Session::getUser() == null){
+        $url = $_SERVER['REQUEST_URI'];
+        Session::redirectTo("login.php?source=$url");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 

@@ -47,7 +47,7 @@ if (!$query) {
 
 
 if (!empty($_FILES['photos']['name'])) {
-    $target_dir = "assets/products/";
+    $target_dir = "assets/chats/";
     $query = mysqli_prepare($con, "INSERT INTO chat_attachments(chat_id,photo) VALUES(?,?)");
     $photos_count = count($_FILES['photos']['name']);
 

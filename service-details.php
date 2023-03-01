@@ -22,7 +22,6 @@
                 Session::redirectTo("services.php");
                 exit();
             }
-            $user_id = Session::getUser()['id'];
             // get product
             $service_id = $_GET['id'];
             $service = mysqli_query($con, "SELECT * FROM services WHERE id = $service_id")->fetch_assoc();
