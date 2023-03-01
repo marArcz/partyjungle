@@ -279,6 +279,33 @@ $div-image-sizes: (
     "xl":200px
 );
 
+.photos-row {
+
+    /* width */
+    &::-webkit-scrollbar {
+        width: 3px;
+        height: 5px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #e7e7e7;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: $orange;
+    }
+}
+
+.btn-no-outline{
+    outline: none !important;
+    &:hover{
+        outline: none !important;
+        border: none !important;
+    }
+}
+
 .div-image {
     background-position: center;
     background-size: cover;

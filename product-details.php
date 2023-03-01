@@ -13,10 +13,11 @@
     <?php $active_page = "products" ?>
     <?php include './includes/header.php' ?>
     <style>
-        #product-image-preview{
-            width: 400px !important;
+        #product-image-preview {
+            width: 100% !important;
             height: 400px !important;
             border: 4px solid white !important;
+            background-size: contain !important;
         }
     </style>
 </head>
@@ -55,16 +56,16 @@
                 </nav>
                 <div class="row gy-3">
                     <div class="col-md-5 col-sm-6">
-                    <div data-image="<?php echo $product['photo'] ?>" id="product-image-preview" class="div-image xl mb-2 border border-light border-3" alt=""></div>
-                        <div class="d-flex p-2 bg-white photos-row flex-wrap">
+                        <div data-image="<?php echo $product['photo'] ?>" id="product-image-preview" class="div-image xl mb-2 border border-light border-3" alt=""></div>
+                        <div class="d-flex p-2 bg-white photos-row w-100 overflow-scroll">
                             <img src="<?php echo $product['photo'] ?>" class="img-thumbnail my-2 mx-2 product-image" width="60" height="60" alt="">
-                            <?php 
-                                $query = mysqli_query($con,"SELECT * FROM product_photos WHERE product_id = $product_id");
-                                while($row = $query->fetch_assoc()){
-                                    ?>
-                                        <img src="<?php echo $row['photo'] ?>" alt="" class="img-thumbnail my-2 mx-2 product-image" width="60" height="60">
-                                    <?php
-                                }
+                            <?php
+                            $query = mysqli_query($con, "SELECT * FROM product_photos WHERE product_id = $product_id");
+                            while ($row = $query->fetch_assoc()) {
+                            ?>
+                                <img src="<?php echo $row['photo'] ?>" alt="" class="img-thumbnail my-2 mx-2 product-image" width="60" height="60">
+                            <?php
+                            }
                             ?>
                         </div>
                     </div>
@@ -96,6 +97,39 @@
 
                                     <form action="add-to-cart.php" id="add-to-cart-form" method="post">
                                         <input type="hidden" value="<?php echo $_GET['id'] ?>" name="product_id">
+
+                                        <!-- variations -->
+                                        <?php
+                                        // get variations
+                                        $get_variations = mysqli_query($con, "SELECT * FROM variations WHERE product_id = $product_id");
+                                        if ($get_variations->num_rows > 0) {
+                                        ?>
+                                            <p class="mt-1 mb-3 text-secondary">Variation:</p>
+                                            <select name="variation_id" class="form-select mb-3" required id="">
+                                                <?php
+
+                                                while ($variation = $get_variations->fetch_assoc()) {
+                                                    $variation_id = $variation['id'];
+                                                    $get_property_values = mysqli_query($con, "SELECT property_values.value, properties.property_name FROM property_values INNER JOIN properties ON property_values.property_id = properties.id WHERE variation_id = $variation_id AND properties.property_name != 'Image' AND properties.property_name != 'Price' ORDER BY properties.property_name DESC");
+                                                    $count = $get_property_values->num_rows;
+                                                    $i = 0;
+                                                    $val = "";
+                                                    while ($property = $get_property_values->fetch_assoc()) {
+                                                        $val .= $property['value'] . ($i + 1 == $count ? '' : ', ');
+                                                        $i++;
+                                                    }
+
+                                                    // display val
+                                                    ?>
+                                                    <option value="<?php echo $variation['id'] ?>"><?php echo $val ?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        <?php
+                                        }
+                                        ?>
+                                        <!-- quantity -->
                                         <label for="" class="form-label text-secondary">Quantity:</label>
                                         <input max="<?php echo $available ?>" type="number" name="quantity" class="rounded-pill px-3 form-control text-center fw-bold text-orange" value="1" min="1">
                                         <?php
@@ -124,10 +158,10 @@
                                                         </small>
                                                     </button>
                                                 <?php
-                                                }else{
-                                                    ?>
-                                                
-                                                    <?php
+                                                } else {
+                                                ?>
+
+                                                <?php
                                                 }
                                                 ?>
                                             </div>
@@ -150,10 +184,10 @@
     <?php include './includes/footer.php' ?>
     <?php include './includes/scripts.php' ?>
     <script>
-        $(".product-image").on("click",function(e){
+        $(".product-image").on("click", function(e) {
             let img = $(this).attr("src");
 
-            $("#product-image-preview").css("background-image",img);
+            $("#product-image-preview").css("background-image", `url(${img})`);
         })
     </script>
 </body>

@@ -21,16 +21,18 @@
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
-                    <div class="d-flex align-items-end mb-4">
-                        <span class="card-icon card-icon-sm me-2 shadow-sm">
-                            <i class="bx bxs-package bx-sm"></i>
-                        </span>
-                        <p class="fs-4 fw-bold my-0"> Products</p>
+                    <div class="d-flex align-items-center ">
+                        <div class="d-flex align-items-end mb-4">
+                            <span class="card-icon card-icon-sm me-2 shadow-sm">
+                                <i class="bx bxs-package bx-sm"></i>
+                            </span>
+                            <p class="fs-4 fw-bold my-0"> Products</p>
+                        </div>
+                        <div class="ms-auto">
+                            <a href="add-product-page.php" class="btn btn-orange"><i class="bx bx-plus"></i> New Product </a>
+                        </div>
                     </div>
-                    <div class="text-end mb-3">
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#add-modal" class="btn btn-orange">Add Product </button>
-                    </div>
-                    <div class="card rounded-4 border-0 shadow-sm">
+                    <div class="card rounded-3 border-0 shadow-sm">
                         <div class="card-body">
                             <?php
                             // category
@@ -86,11 +88,11 @@
                                 }
                                 ?>
                             </div>
-                            <div class="table-responsive-sm">
-                                <table class="table" id="table">
+                            <div class="table-responsive-md">
+                                <table class="table table-hover align-middle" id="table">
                                     <thead>
                                         <th>Photo</th>
-                                        <th>Product</th>
+                                        <th>Name</th>
                                         <th>Category</th>
                                         <th>Price</th>
                                         <th>Stock</th>
@@ -107,13 +109,13 @@
                                             $cat = mysqli_query($con, "SELECT * FROM categories WHERE id=" . $row['category_id'])->fetch_assoc();
                                         ?>
                                             <tr>
-                                                <td><img width="50" src="../<?php echo $row['photo'] ?>" class="img-fluid img-thumbnail" alt=""></td>
+                                                <td><img height="50" width="50" src="../<?php echo $row['photo'] ?>" class=" border-2 border border-light shadow-sm" alt=""></td>
                                                 <td><?php echo $row['product_name'] ?></td>
                                                 <td><?php echo $cat['category_name'] ?></td>
                                                 <td><?php echo $row['price'] ?></td>
                                                 <td><?php echo $row['stocks'] ?></td>
                                                 <td>
-                                                    <a href="manage-product.php?id=<?php echo $row['id'] ?>" data-id="<?php echo $row['id'] ?>"  class="link-dark">
+                                                    <a href="manage-product.php?product_id=<?php echo $row['id'] ?>" data-id="<?php echo $row['id'] ?>" class="link-dark">
                                                         <i class="bx bx-show-alt"></i>
                                                     </a>
                                                 </td>
