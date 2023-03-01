@@ -12,7 +12,13 @@
     <title>Party Jungle Toys & Party Needs</title>
     <?php $active_page = "products" ?>
     <?php include './includes/header.php' ?>
-
+    <style>
+        #product-image-preview{
+            width: 400px !important;
+            height: 400px !important;
+            border: 4px solid white !important;
+        }
+    </style>
 </head>
 
 <body class="bg-light">
@@ -49,9 +55,17 @@
                 </nav>
                 <div class="row gy-3">
                     <div class="col-md-5 col-sm-6">
-                        <img src="<?php echo $product['photo'] ?>" class="img-fluid img-thumbnail" alt="">
-                        <div class="d-flex p-2 bg-white">
-                            <img src="<?php echo $product['photo'] ?>" class="img-fluid img-thumbnail" width="80" alt="">
+                    <div data-image="<?php echo $product['photo'] ?>" id="product-image-preview" class="div-image xl mb-2 border border-light border-3" alt=""></div>
+                        <div class="d-flex p-2 bg-white photos-row flex-wrap">
+                            <img src="<?php echo $product['photo'] ?>" class="img-thumbnail my-2 mx-2 product-image" width="60" height="60" alt="">
+                            <?php 
+                                $query = mysqli_query($con,"SELECT * FROM product_photos WHERE product_id = $product_id");
+                                while($row = $query->fetch_assoc()){
+                                    ?>
+                                        <img src="<?php echo $row['photo'] ?>" alt="" class="img-thumbnail my-2 mx-2 product-image" width="60" height="60">
+                                    <?php
+                                }
+                            ?>
                         </div>
                     </div>
                     <div class="col">
@@ -136,9 +150,11 @@
     <?php include './includes/footer.php' ?>
     <?php include './includes/scripts.php' ?>
     <script>
-        // $("#add-to-cart-form").on("submit", function(e) {
+        $(".product-image").on("click",function(e){
+            let img = $(this).attr("src");
 
-        // })
+            $("#product-image-preview").css("background-image",img);
+        })
     </script>
 </body>
 
