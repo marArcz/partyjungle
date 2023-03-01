@@ -95,7 +95,6 @@
                                             // $get_photos = mysqli_query($con,"SELECT * FROM product_photos WHERE product_id")
                                             ?>
 
-
                                         </div>
                                     </div>
                                 </div>
