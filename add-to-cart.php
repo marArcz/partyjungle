@@ -31,8 +31,20 @@ if (isset($_POST['submit'])) {
         $quantity += $cart['quantity'];
         $query = mysqli_query($con, "UPDATE cart SET quantity=$quantity WHERE id = $cart_id");
     } else {
+        // get category
+        $category = mysqli_query($con,"SELECT * FROM categories WHERE id = $category_id")->fetch_assoc();
+        $variation_id = null;
+        if(isset($_POST['variation_id'])){
+            $variation_id = $_POST['variation_id'];
+        }
+        $instruction = "";
+        if(isset($_POST['instruction'])){
+            $instruction = $_POST['instruction'];
+        }
+
         //add to cart
-        $query = mysqli_query($con, "INSERT INTO cart(product_id, product_name,product_photo,category_id,price,quantity,user_id) VALUES($product_id,'$product_name','$photo',$category_id,'$price',$quantity,$user_id)");
+        $query = mysqli_query($con, "INSERT INTO cart(product_id, product_name,product_photo,category_id,price,quantity,user_id,variation_id,instruction) VALUES($product_id,'$product_name','$photo',$category_id,'$price',$quantity,$user_id,$variation_id,'$instruction')");
+        
     }
 
 

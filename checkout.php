@@ -61,16 +61,20 @@ if ($query->execute()) {
         $product_photo = $row['product_photo'];
         $price = $row['price'];
         $quantity = $row['quantity'];
+        $variant_id = $row['variant_id'];
+        $instruction = $row['instruction'];
 
-        $add_details = mysqli_prepare($con, "INSERT INTO order_details(order_id,product_id,product_name,product_photo,price,quantity) VALUES(?,?,?,?,?,?)");
+        $add_details = mysqli_prepare($con, "INSERT INTO order_details(order_id,product_id,product_name,product_photo,price,quantity,variant_id,instruction) VALUES(?,?,?,?,?,?,?,?)");
         $add_details->bind_param(
-            "iisssi",
+            "iisssiss",
             $order_id,
             $product_id,
             $product_name,
             $product_photo,
             $price,
-            $quantity
+            $quantity,
+            $variant_id,
+            $instruction
         );
         if (!$add_details->execute()) { //if failed
             mysqli_query($con, "DELETE FROM orders WHERE id = $order_id"); //remove order

@@ -27,4 +27,4 @@ if ($query) {
 
 $category = mysqli_query($con, "SELECT * FROM categories WHERE id = $category_id")->fetch_assoc();
 $category_name = $category['category_name'];
-Session::redirectTo("manage-product.php?id=$id");
+Session::redirectTo("manage-product.php?product_id=$id");

@@ -105,7 +105,7 @@
                                         if ($get_variations->num_rows > 0) {
                                         ?>
                                             <p class="mt-1 mb-3 text-secondary">Variation:</p>
-                                            <select name="variation_id" class="form-select mb-3" required id="">
+                                            <select name="variation_id" class="form-select mb-3" required id="select-variation">
                                                 <?php
 
                                                 while ($variation = $get_variations->fetch_assoc()) {
@@ -188,6 +188,20 @@
             let img = $(this).attr("src");
 
             $("#product-image-preview").css("background-image", `url(${img})`);
+        })
+
+        $("#select-variation").on("change",function(e){
+            let variation_id = $(this).val();
+
+            $.ajax({
+                url:"get-variation.php",
+                method:"GET",
+                data:{variation_id},
+                dataType:'json',
+                success:function(response){
+                    console.log('response: ', response);
+                }
+            })
         })
     </script>
 </body>

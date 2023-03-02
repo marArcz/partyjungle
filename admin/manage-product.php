@@ -55,10 +55,83 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                                     </li>
                                 </ul>
                             </div>
-                            <div class="tab">
-                                <a href="add-variation-row.php?product_id=<?php echo $product_id ?>" class="btn btn-light btn-sm fw-bold text-dark p-2 rounded mb-3 border">
-                                    <small>Add Variation</small>
-                                </a>
+                            <!-- details tab -->
+                            <div class="tab <?php echo $tab == "Details" ? '' : 'd-none' ?>">
+                                <div class="text-end mb-3">
+                                    <a href="delete-product.php?id=<?php echo $_GET['product_id'] ?>" class="btn btn-sm btn-danger"><i class="bx bx-trash"></i></a>
+                                </div>
+                                <form action="edit-product.php" method="post" enctype="multipart/form-data">
+                                    <!-- GET PRODUCT -->
+                                    <?php
+                                    // get product
+                                    $product_id = $_GET['product_id'];
+                                    $product = mysqli_query($con, "SELECT products.*,categories.category_name FROM products INNER JOIN categories ON products.category_id = categories.id WHERE products.id = $product_id")->fetch_assoc();
+
+                                    ?>
+                                    <input type="hidden" name="id" value="<?php echo $product_id ?>">
+                                    <div class="row gy-3">
+                                        <div class="col-md-4 text-center">
+                                            <img src="../<?php echo $product['photo'] ?>" id="edit-image-preview" class="img-fluid mb-1 img-thumbnail" alt="">
+                                            <div class="text-center">
+                                                <p class=" text-secondary mt-1 mb-2">
+                                                    <small>Main Photo</small>
+                                                </p>
+                                                <button class="btn btn-orange file-input-toggler" data-target="#edit-file-input" type="button">Change Image</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md">
+                                            <input type="file" data-img-preview="#edit-image-preview" name="photo" class="d-none" id="edit-file-input">
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">Product Name:</label>
+                                                <input type="text" required class="form-control" name="name" value="<?php echo $product['product_name'] ?>" id="edit-name">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">Category:</label>
+                                                <select required name="category_id" class="form-select" id="edit-category">
+                                                    <option value="">Select one</option>
+                                                    <?php
+                                                    $query = mysqli_query($con, "SELECT * FROM categories");
+                                                    while ($row = $query->fetch_assoc()) {
+                                                    ?>
+                                                        <option value="<?php echo $row['id'] ?>" <?php echo $product['category_id'] == $row['id'] ? 'selected' : '' ?>>
+                                                            <?php echo $row['category_name'] ?>
+                                                        </option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">Price:</label>
+                                                <input required type="number" name="price" id="edit-price" class="form-control" value="<?php echo $product['price'] ?>">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">Stocks:</label>
+                                                <input required type="number" name="stocks" class="form-control" id="edit-stocks" value="<?php echo $product['stocks'] ?>">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">Product Description:</label>
+                                                <textarea required name="description" class="form-control" rows="5" id="edit-description"><?php echo $product['description'] ?></textarea>
+                                            </div>
+                                            <div class="text-end mb-4">
+                                                <button class="btn btn-sm btn-orange" type="submit">Save Changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- variations tab -->
+                            <div class="tab <?php echo $tab == "Variations" ? '' : 'd-none' ?>">
+                                <div class="d-flex flex-wrap align-items-baseline">
+                                    <a href="add-variation-row.php?product_id=<?php echo $product_id ?>" class="btn btn-light btn-sm fw-bold text-dark p-2 rounded mb-3 border">
+                                        <small>Add Variation</small>
+                                    </a>
+                                    <div class="form-check form-switch ms-auto">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Enable Variations</label>
+                                    </div>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered align-middle" id="variation-table">
                                         <thead>
@@ -90,7 +163,7 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                                             <!-- <th><small>Image</small></th>
                                             <th><small>Price</small></th> -->
                                             <th class="text-end">
-                                                <a href="#property-modal" data-bs-toggle="modal" class="link-primary text-decoration-none">
+                                                <a disabled href="#property-modal" data-bs-toggle="modal" class="link-primary disable text-decoration-none disabled">
                                                     <small> <i class="bx bx-plus"></i> Add property</small>
                                                 </a>
                                             </th>
@@ -205,6 +278,8 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                                     </table>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
