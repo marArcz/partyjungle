@@ -56,25 +56,29 @@ if ($query->execute()) {
 
     $get_cart = mysqli_query($con, "SELECT * FROM cart WHERE user_id = $user_id AND is_checked_out = 0");
     while ($row = $get_cart->fetch_assoc()) {
-        $product_id = $row['id'];
+        $product_id = $row['product_id'];
         $product_name = $row['product_name'];
         $product_photo = $row['product_photo'];
         $price = $row['price'];
         $quantity = $row['quantity'];
-        $variant_id = $row['variant_id'];
+        $variation_id = $row['variation_id'];
         $instruction = $row['instruction'];
+        $variation = $row['variation'];
+        $category_id = $row['category_id'];
 
-        $add_details = mysqli_prepare($con, "INSERT INTO order_details(order_id,product_id,product_name,product_photo,price,quantity,variant_id,instruction) VALUES(?,?,?,?,?,?,?,?)");
+        $add_details = mysqli_prepare($con, "INSERT INTO order_details(order_id,product_id,product_name,product_photo,price,quantity,variation_id,instruction,variation,category_id) VALUES(?,?,?,?,?,?,?,?,?,?)");
         $add_details->bind_param(
-            "iisssiss",
+            "iisssisssi",
             $order_id,
             $product_id,
             $product_name,
             $product_photo,
             $price,
             $quantity,
-            $variant_id,
-            $instruction
+            $variation_id,
+            $instruction,
+            $variation,
+            $category_id
         );
         if (!$add_details->execute()) { //if failed
             mysqli_query($con, "DELETE FROM orders WHERE id = $order_id"); //remove order

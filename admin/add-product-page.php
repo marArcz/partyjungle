@@ -81,7 +81,7 @@
                                             <label for="" class="form-label">Product Description:</label>
                                             <textarea name="description" id="add-description" class="form-control" rows="5"></textarea>
                                         </div>
-                                        <div class="mt-4 text-start">
+                                        <div class="mt-4 text-start mb-3">
                                             <div class="card border">
                                                 <div class="card-body">
                                                     <input type="file" multiple id="add-photo-input" class="d-none">
@@ -98,35 +98,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <hr>
-
-                                    <div class="d-flex align-items-center mb-2">
-                                        <div>
-                                            <p class="form-text text-secondary">
-                                                <small>Product Variations</small>
-                                            </p>
-                                        </div>
-                                        <button class="btn btn-sm btn-primary ms-auto" id="add-variation-btn" type="button">Add Variation</button>
-                                    </div>
-                                    <div class="card" id="product-variations">
-                                        <div class="card-body">
-                                            <label for="" class="form-label">Variation name: </label>
-                                            <input type="text" class="form-control form-control-sm">
-                                            <div class="d-flex mt-4 mb-1">
-                                                <div>
-                                                    <p class="form-text my-0">Options under this variations</p>
-                                                </div>
-                                                <button class="btn btn-sm btn-secondary ms-auto" type="button">
-                                                    <i class="bx bx-plus"></i>
-                                                </button>
-                                            </div>
-                                            <div class="mb-3">
-                                                <input type="text" name="quantity" class="form-control">
+                                        <div class="mt-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="1" name="is_featured" id="featured">
+                                                <label class="form-check-label text-orange" for="featured">
+                                                    Feature this product
+                                                </label>
                                             </div>
                                         </div>
-                                    </div> -->
-
-
                                     </div>
                                 </div>
 
@@ -248,9 +227,9 @@
             showLoading();
             axios.post("add-product.php", formData, config)
                 .then(res => {
-                    if(res.data.category == "Balloons"){
+                    if (res.data.category == "Balloons") {
                         window.location.href = `manage-product.php?product_id=${res.data.product_id}`
-                    }else{
+                    } else {
                         window.location.href = `add-success-session.php?route=products.php&message=Successfully added!`
 
                     }

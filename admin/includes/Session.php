@@ -76,6 +76,10 @@ class Session
     {
         return self::getSession("error", $remove);
     }
+    public static function removeSession($key)
+    {
+        unset($_SESSION[$key]);
+    }
     public static function destroyUserSession()
     {
         if (self::getUser() !== null) {

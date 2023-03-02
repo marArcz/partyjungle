@@ -12,9 +12,10 @@ $service_id = $reservation['service_id'];
 $service_option_id = $reservation['service_option_id'];
 $service = mysqli_query($con, "SELECT * FROM services WHERE id = $service_id")->fetch_assoc();
 $option = mysqli_query($con, "SELECT * FROM service_options WHERE id = $service_option_id")->fetch_assoc();
-
+$status = mysqli_query($con,"SELECT * FROM reservation_status WHERE status_code = ". $reservation['status'])->fetch_assoc();
 echo json_encode([
     'reservation' => $reservation,
     'service' => $service,
-    'option' => $option
+    'option' => $option,
+    'status'=>$status
 ]);

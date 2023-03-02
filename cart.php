@@ -118,7 +118,19 @@
                                                     <div class="col">
                                                         <div class="row align-items-center">
                                                             <div class="col-md">
+                                                                <?php
+                                                                if ($category['category_name'] == 'Balloons') {
+                                                                ?>
+                                                                    <a href="#instruction-modal" data-bs-toggle="modal" data-instruction="<?php echo $row['instruction'] ?>">
+                                                                        <i class="bx bx-info-circle"></i>
+                                                                    </a>
+                                                                <?php
+                                                                }
+                                                                ?>
                                                                 <p class="my-1"><small><?php echo $row['product_name'] ?></small></p>
+                                                                <p class="my-0 text-secondary">
+                                                                    <small><?php echo $row['variation'] ?></small>
+                                                                </p>
                                                                 <p class="my-1 text-orange"><small><strong>₱</strong> <?php echo $row['price'] ?></small></p>
                                                             </div>
                                                             <div class="col-md">
@@ -229,6 +241,7 @@
         ?>
     </main>
     <?php include './includes/footer.php' ?>
+    <?php include './includes/cart-modals.php' ?>
     <?php include './includes/scripts.php' ?>
 
     <script>
@@ -292,17 +305,24 @@
             }
         })
 
-        $("#shipping-type").on('change',function(e){
+        $("#shipping-type").on('change', function(e) {
             const id = $(this).val();
             $.ajax({
-                url:"get-shipping.php",
-                method:"POST",
-                data:{id},
-                dataType:"json",
-                success:function(res){
+                url: "get-shipping.php",
+                method: "POST",
+                data: {
+                    id
+                },
+                dataType: "json",
+                success: function(res) {
                     $("#total-price").html(res.total_price)
                 }
             })
+        })
+
+        $("#instruction-modal").on("show.bs.modal", function(e) {
+            let text = $(e.relatedTarget).data("instruction");
+            $("#instructions-text").html(text)
         })
     </script>
 </body>

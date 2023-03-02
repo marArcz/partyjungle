@@ -26,9 +26,16 @@ if (!isset($_GET['transaction_no'])) {
     <main class="main">
         <section class="">
             <div class="container my-5">
-                <h3 class="text-dark my-0 fw-light">
-                    Track Order
-                </h3>
+                <div class="d-flex flex-wrap">
+                    <div>
+                        <a href="orders.php" class="btn btn-sm btn-brown me-2 text-light rounded-circle">
+                            <i class="bx bx-arrow-back"></i>
+                        </a>
+                    </div>
+                    <h3 class="text-dark my-0 fw-light">
+                        Track Order
+                    </h3>
+                </div>
                 <hr class="mt-1">
                 <div>
                     <?php
@@ -68,6 +75,8 @@ if (!isset($_GET['transaction_no'])) {
                                         <?php
                                         while ($details = $get_details->fetch_assoc()) :
                                             $subtotal += $details['price'] * $details['quantity'];
+                                            $category = mysqli_query($con, "SELECT * FROM categories WHERE id=" . $details['category_id'])->fetch_assoc();
+
                                         ?>
                                             <li class="list-group-item">
                                                 <div class="row mt-3 align-items-center">
@@ -77,7 +86,19 @@ if (!isset($_GET['transaction_no'])) {
                                                     <div class="col">
                                                         <div class="row">
                                                             <div class="col-md">
+                                                                <?php
+                                                                if ($category['category_name'] == 'Balloons') {
+                                                                ?>
+                                                                    <a href="#instruction-modal" data-bs-toggle="modal" data-instruction="<?php echo $details['instruction'] ?>">
+                                                                        <i class="bx bx-info-circle"></i>
+                                                                    </a>
+                                                                <?php
+                                                                }
+                                                                ?>
                                                                 <p class="my-1 fw-bold"><?php echo $details['product_name'] ?></p>
+                                                                <p class="my-1 text-secondary">
+                                                                    <?php echo $details['variation'] ?>
+                                                                </p>
                                                                 <div class="text-secondary">
                                                                     <p>Qty: <?php echo $details['quantity'] ?></p>
 
@@ -159,7 +180,7 @@ if (!isset($_GET['transaction_no'])) {
                                         $query = mysqli_query($con, "SELECT * FROM order_status WHERE status_code != -1 AND status_code != 5 ORDER BY id ASC");
                                         while ($status = $query->fetch_assoc()) {
                                         ?>
-                                            <li class="<?php echo $row['status'] == $status['status_code']? ($row['status'] == 4?'checked':'active'):($row['status'] > $status['status_code']?'checked':'') ?>">
+                                            <li class="<?php echo $row['status'] == $status['status_code'] ? ($row['status'] == 4 ? 'checked' : 'active') : ($row['status'] > $status['status_code'] ? 'checked' : '') ?>">
                                                 <p class="title"><?php echo $status['status_label'] ?></p>
                                                 <p class="my-1">
                                                     <small>
@@ -185,7 +206,14 @@ if (!isset($_GET['transaction_no'])) {
         ?>
     </main>
     <?php include './includes/footer.php' ?>
+    <?php include './includes/details-modals.php' ?>
     <?php include './includes/scripts.php' ?>
+    <script>
+        $("#instruction-modal").on("show.bs.modal", function(e) {
+            let text = $(e.relatedTarget).data("instruction");
+            $("#instructions-text").html(text)
+        })
+    </script>
 </body>
 
 </html>

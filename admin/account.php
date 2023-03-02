@@ -102,7 +102,7 @@
                                     </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="#password-modal" class="link-dark" data-bs-toggle="modal">
+                                    <a href="#password-modal" class="link-dark text-decoration-none" data-bs-toggle="modal">
                                         <div class="row mt-3">
                                             <div class="col-md-2">
                                                 <p class="my-1 text-secondary">Password</p>
@@ -123,7 +123,9 @@
         </main>
     </div>
 
+    <?php include './includes/modals/account-modals.php' ?>
     <?php include './includes/scripts.php' ?>
+    <?php include './includes/alerts.php' ?>
     <script>
         $("#info-modal").on("show.bs.modal", function(e) {
             Notiflix.Block.circle('#info-modal form');
@@ -176,7 +178,8 @@
                         Notiflix.Block.remove('#password-modal form', 1000);
 
                     }
-                }
+                },
+                error:err=>console.log('err: ',err)
             })
         })
     </script>

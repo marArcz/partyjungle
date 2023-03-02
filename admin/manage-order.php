@@ -35,7 +35,7 @@ if ($query->num_rows == 0) {
         $active_page = "orders";
         include './includes/sidebar.php'
         ?>
-        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state")? (Session::getSession("partyjungle-sidebar-state",false) == "close"? 'sidebar-closed':''):'' ?>">
+        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state") ? (Session::getSession("partyjungle-sidebar-state", false) == "close" ? 'sidebar-closed' : '') : '' ?>">
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
@@ -59,9 +59,39 @@ if ($query->num_rows == 0) {
                     $get_details = mysqli_query($con, "SELECT * FROM order_details WHERE order_id = $order_id");
                     $num_of_products = mysqli_query($con, "SELECT COUNT(*) FROM order_details WHERE order_id = $order_id")->fetch_array()[0];
 
+                    $user = mysqli_query($con, "SELECT * FROM users WHERE id=" . $order['user_id'])->fetch_assoc();
                     ?>
                     <div class="row gy-3">
                         <div class="col-md">
+                            <div class="card border-0 shadow-sm mb-2">
+                                <div class="card-body py-4">
+                                    <p class=" shadow-sm text-bg-light badge rounded-pill py-2 px-3 fw-bold text-dark">
+                                        Customer
+                                    </p>
+                                    <div class="mt-2">
+                                        <div class="row align-items-center">
+                                            <div class=" col-md-auto">
+                                                <div class="div-image div-image-md rounded-circle border-dark border-2 shadow view-photo" data-image="../<?php echo $user['photo'] ?>"></div>
+                                            </div>
+                                            <div class="col-md">
+                                                <div class="row align-items-center">
+                                                    <div class="col">
+                                                        <p class="fs-6 fw-bold my-1"><?php echo $user['firstname'] ?> <?php echo $user['lastname'] ?></p>
+                                                        <p class="my-1 text-secondary">
+                                                            <?php echo $user['address'] ?>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-auto text-end">
+                                                        <a href="open-chat.php?user_id=<?php echo $user['id'] ?>" class="link-orange me-2">
+                                                            <i class="bx bx-chat fs-4"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card border-0 shadow-sm">
                                 <div class="card-body py-4">
                                     <p class=" shadow-sm text-bg-light badge rounded-pill py-2 px-3 fw-bold text-secondary">
@@ -95,7 +125,29 @@ if ($query->num_rows == 0) {
                                                     <div class="col">
                                                         <div class="row">
                                                             <div class="col-md">
-                                                                <p class="my-1 fw-bold"><?php echo $details['product_name'] ?></p>
+                                                                <?php
+                                                                //check if product still exist
+                                                                $get_product = mysqli_query($con, "SELECT id FROM products WHERE id=" . $details['product_id']);
+                                                                if ($get_product->num_rows > 0) {
+                                                                ?>
+                                                                    <a href="manage-product.php?product_id=<?php echo $details['product_id'] ?>" class=" text-decoration- link-dark ">
+                                                                        <p class="my-1 fw-bold"><?php echo $details['product_name'] ?></p>
+                                                                    </a>
+                                                                <?php
+                                                                } else {
+                                                                ?>
+                                                                    <p class="my-1 fw-bold"><?php echo $details['product_name'] ?></p>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                                <div>
+                                                                    <p class="my-1 text-secondary">
+                                                                        <span class="">Variation:</span>
+                                                                        <span class="fw-bold text-orange">
+                                                                            <?php echo $details['variation'] ?>
+                                                                        </span>
+                                                                    </p>
+                                                                </div>
                                                                 <div class="text-secondary">
                                                                     <p>Qty: <?php echo $details['quantity'] ?></p>
 
@@ -175,7 +227,7 @@ if ($query->num_rows == 0) {
                                         $query = mysqli_query($con, "SELECT * FROM order_status WHERE status_code != -1 AND status_code != 5 ORDER BY id ASC");
                                         while ($status = $query->fetch_assoc()) {
                                         ?>
-                                            <li class="<?php echo $order['status'] + 1 == $status['status_code'] ? 'enabled' : '' ?> <?php echo $order['status'] == $status['status_code'] ? ($order['status'] == 4?'checked':'active') : ($order['status'] > $status['status_code'] ? 'checked' : '') ?>">
+                                            <li class="<?php echo $order['status'] + 1 == $status['status_code'] ? 'enabled' : '' ?> <?php echo $order['status'] == $status['status_code'] ? ($order['status'] == 4 ? 'checked' : 'active') : ($order['status'] > $status['status_code'] ? 'checked' : '') ?>">
                                                 <?php
                                                 if ($order['status'] + 1 == $status['status_code']) :
                                                 ?>
@@ -213,6 +265,7 @@ if ($query->num_rows == 0) {
         </main>
     </div>
     <?php include './includes/modals/orders-modals.php' ?>
+    <?php include './includes/modals/photo-modal.php' ?>
     <?php include './includes/scripts.php' ?>
     <?php include './includes/alerts.php' ?>
     <script>
@@ -226,12 +279,12 @@ if ($query->num_rows == 0) {
             }
         })
 
-        $("#update-modal").on("show.bs.modal",function(e){
+        $("#update-modal").on("show.bs.modal", function(e) {
             const status = $($(e.relatedTarget)).data("status")
             const statusText = $($(e.relatedTarget)).data("status-text")
             const transactionNo = $($(e.relatedTarget)).data('transaction-no');
             $("#status-txt").html(statusText);
-            $("#confirm-btn").attr("href",`update-order-status.php?status=${status}&transaction_no=${transactionNo}`)
+            $("#confirm-btn").attr("href", `update-order-status.php?status=${status}&transaction_no=${transactionNo}`)
         })
     </script>
 </body>

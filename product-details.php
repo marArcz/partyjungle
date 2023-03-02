@@ -39,6 +39,8 @@
             // get product
             $product_id = $_GET['id'];
             $product = mysqli_query($con, "SELECT * FROM products INNER JOIN categories ON products.category_id = categories.id WHERE products.id = $product_id")->fetch_assoc();
+            // get category
+            $category = mysqli_query($con, "SELECT * FROM categories WHERE id=" . $product['category_id'])->fetch_assoc();
             // get available products
             $stocks = $product['stocks'];
             $available = $stocks;
@@ -67,6 +69,25 @@
                             <?php
                             }
                             ?>
+
+                            <?php
+                            if ($product['is_variation_enabled'] == 1) {
+                                $get_variations = mysqli_query($con, "SELECT * FROM variations WHERE product_id = $product_id");
+
+                                while ($variation = $get_variations->fetch_assoc()) {
+                                    $variation_id = $variation['id'];
+                                    $get_property_values = mysqli_query($con, "SELECT property_values.value, properties.property_name FROM property_values INNER JOIN properties ON property_values.property_id = properties.id WHERE property_values.variation_id = $variation_id AND properties.property_name = 'Image'");
+
+                                    while ($property = $get_property_values->fetch_assoc()) {
+                                        if ($property['value'] != $product['photo']) {
+                            ?>
+                                            <img src="<?php echo $property['value'] ?>" alt="" class="img-thumbnail my-2 mx-2 product-image" width="60" height="60">
+                            <?php
+                                        }
+                                    }
+                                }
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="col">
@@ -87,7 +108,27 @@
                                         </p>
                                     </div>
                                     <div class="col-md text-end">
-                                        <h4 class="text-orange"><strong>₱</strong> <?php echo $product['price'] ?></h4>
+                                        <?php
+                                        // check if product has enabled variation
+                                        if ($product['is_variation_enabled'] == 1) {
+                                            // get min and max price
+                                            $price_text = "";
+                                            $get_prices = mysqli_query($con, "SELECT MIN(CAST(value AS SIGNED)) AS min_price,  MAX(CAST(value AS SIGNED)) AS max_price FROM property_values WHERE property_id IN (SELECT id FROM properties WHERE product_id = $product_id AND property_name='Price')");
+                                            if ($get_prices->num_rows > 0) {
+                                                $prices = $get_prices->fetch_assoc();
+                                                if ($prices['min_price'] == $prices['max_price']) {
+                                                    $price_text = $prices['min_price'];
+                                                } else {
+                                                    $price_text = $prices['min_price'] . "-" . $prices['max_price'];
+                                                }
+                                            } else {
+                                                $price_text = $product['price'];
+                                            }
+                                        } else {
+                                            $price_text = $product['price'];
+                                        }
+                                        ?>
+                                        <h4 class="text-orange"><strong>₱</strong> <span id="text-price"><?php echo $price_text ?></span></h4>
                                     </div>
                                 </div>
                                 <hr>
@@ -102,10 +143,11 @@
                                         <?php
                                         // get variations
                                         $get_variations = mysqli_query($con, "SELECT * FROM variations WHERE product_id = $product_id");
-                                        if ($get_variations->num_rows > 0) {
+                                        if ($product['is_variation_enabled'] == 1 && $get_variations->num_rows > 0) {
                                         ?>
                                             <p class="mt-1 mb-3 text-secondary">Variation:</p>
                                             <select name="variation_id" class="form-select mb-3" required id="select-variation">
+                                                <option value="">Select Variation</option>
                                                 <?php
 
                                                 while ($variation = $get_variations->fetch_assoc()) {
@@ -120,15 +162,17 @@
                                                     }
 
                                                     // display val
-                                                    ?>
+                                                ?>
                                                     <option value="<?php echo $variation['id'] ?>"><?php echo $val ?></option>
-                                                    <?php
+                                                <?php
                                                 }
                                                 ?>
                                             </select>
+                                            <input type="hidden" name="variation" id="input-variation" value="">
                                         <?php
                                         }
                                         ?>
+
                                         <!-- quantity -->
                                         <label for="" class="form-label text-secondary">Quantity:</label>
                                         <input max="<?php echo $available ?>" type="number" name="quantity" class="rounded-pill px-3 form-control text-center fw-bold text-orange" value="1" min="1">
@@ -140,6 +184,14 @@
                                         } else {
                                         ?>
                                             <p class="mt-2 fs-5 text-danger text-center">Sold Out</p>
+                                        <?php
+                                        }
+                                        ?>
+                                        <?php
+                                        if ($category['category_name'] == "Balloons") {
+                                        ?>
+                                            <label for="" class="form-label text-orange fw-bold">Instructions:</label>
+                                            <textarea name="instruction" placeholder="Enter your instruction for customization here." required class="form-control" id="" rows="5"></textarea>
                                         <?php
                                         }
                                         ?>
@@ -190,17 +242,26 @@
             $("#product-image-preview").css("background-image", `url(${img})`);
         })
 
-        $("#select-variation").on("change",function(e){
+        $("#select-variation").on("change", function(e) {
             let variation_id = $(this).val();
-
+            let val = $(this).find('option:selected').html()
+            showLoading();
             $.ajax({
-                url:"get-variation.php",
-                method:"GET",
-                data:{variation_id},
-                dataType:'json',
-                success:function(response){
-                    console.log('response: ', response);
-                }
+                url: "get-variation.php",
+                method: "GET",
+                data: {
+                    variation_id
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $("#text-price").html(res.price)
+                    $("#product-image-preview").css("background-image", `url(${res.image})`);
+                    console.log('res: ', res)
+                    hideLoading()
+                    
+                    $("#input-variation").val(val)
+                },
+                error: err => console.log("error: ", err)
             })
         })
     </script>

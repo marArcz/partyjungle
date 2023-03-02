@@ -42,7 +42,9 @@
                                     $user = mysqli_query($con, "SELECT * FROM users WHERE id=" . $row['user_id'])->fetch_assoc();
                                     $conversation_id = $row['id'];
                                     $get_chat = mysqli_query($con, "SELECT * FROM chat WHERE conversation_id = $conversation_id ORDER BY id DESC LIMIT 1");
-                                    $chat = $get_chat->fetch_assoc();
+                                    if ($get_chat->num_rows > 0) {
+                                        $chat = $get_chat->fetch_assoc();
+                                    }
                                 ?>
                                     <li class="list-group-item <?php echo $chat['status'] == 0 ? 'bg-light' : '' ?>">
                                         <a href="chats.php?conversation_id=<?php echo $conversation_id ?>" class=" text-decoration-none">
@@ -71,18 +73,20 @@
                                                     <p class="my-1 col-12 col-lg-7 text-truncate text-<?php echo $chat['status'] == 0 ? 'dark fw-bold' : 'secondary' ?>">
                                                         <small>
                                                             <?php
-                                                            if (empty($chat['message'])) {
-                                                                if ($chat['type'] != MessageTypes::$PRODUCTS) {
+                                                            if ($get_chat->num_rows > 0) {
+                                                                if (empty($chat['message'])) {
+                                                                    if ($chat['type'] != MessageTypes::$PRODUCTS) {
                                                             ?>
-                                                                    <span>
-                                                                        <?php echo $user['firstname'] . " " . $user['lastname'] . " sent image."; ?>
-                                                                    </span>
-                                                                <?php
-                                                                }
-                                                            } else {
-                                                                ?>
-                                                                <span><?php echo $chat['message'] ?></span>
+                                                                        <span>
+                                                                            <?php echo $user['firstname'] . " " . $user['lastname'] . " sent image."; ?>
+                                                                        </span>
+                                                                    <?php
+                                                                    }
+                                                                } else {
+                                                                    ?>
+                                                                    <span><?php echo $chat['message'] ?></span>
                                                             <?php
+                                                                }
                                                             }
                                                             ?>
                                                         </small>

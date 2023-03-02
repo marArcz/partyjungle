@@ -168,4 +168,10 @@ while ($row = $query->fetch_assoc()) {
     }
     $i++;
 }
+
+if($query->num_rows == 0){
+    ?>
+    <p class="text-center">No messages to show.</p>
+    <?php
+}
 ?>

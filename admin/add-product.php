@@ -7,7 +7,7 @@ $category_id = $_POST['category_id'];
 $price = $_POST['price'];
 $stocks = $_POST['stocks'];
 $description = $_POST['description'];
-
+$is_featured = isset($_POST['is_featured']) ? $_POST['is_featured'] : 0;
 $target_dir = "assets/products/";
 $target_file = $target_dir . basename($_FILES["photo"]["name"]);
 move_uploaded_file($_FILES["photo"]["tmp_name"], "../" . $target_file);

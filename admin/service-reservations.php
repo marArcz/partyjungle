@@ -140,6 +140,7 @@
                 success: function(res) {
                     console.log('res: ', res)
                     $("#service-name").html(res.service.name)
+                    $("#status-text").html(res.status.status_label)
                     $("#option-label").html(`${res.option.label} - ${res.option.price}`)
                     $("#reservation-date").html(`${res.reservation.str_date}`)
                     $("#reservation-time").html(`${res.reservation.str_time}`)

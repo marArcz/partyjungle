@@ -84,8 +84,10 @@
     $(".file-input").on("change", function(e) {
         let files = e.target.files;
         var previewElem = $($(this).data("img-preview"));
+        var divElem = $($(this).data("div-preview"));
 
         previewElem.attr("src", URL.createObjectURL(files[0]));
+        divElem.css("background-image", `url(${URL.createObjectURL(files[0])})`);
     })
 
     $("#sidebar-collapse-btn").on("click", function(e) {

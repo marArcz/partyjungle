@@ -1,5 +1,5 @@
 <?php 
-    include './conn/conn.php';
+    include '../conn/conn.php';
     include './includes/Session.php';
 
     $new_pass = password_hash(trim($_POST['new_pass']),PASSWORD_BCRYPT);
@@ -9,7 +9,7 @@
     $user_id = Session::getUser()['id'];
     
     if(password_verify($current_pass,$user_pass)){
-        $query = mysqli_query($con,"UPDATE users SET password = '$new_pass' WHERE id = $user_id");
+        $query = mysqli_query($con,"UPDATE admin SET password = '$new_pass' WHERE id = $user_id");
         if(!$query){
             echo json_encode([
                 "success"=>false,

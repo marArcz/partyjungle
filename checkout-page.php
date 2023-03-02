@@ -102,6 +102,9 @@ $user_id = $user['id'];
                                                     <p class="my-1 text-truncate col-12">
                                                         <?php echo $cart['product_name'] ?>
                                                     </p>
+                                                    <p class="my-1 text-truncate col-12 text-secondary">
+                                                        <?php echo $cart['variation'] ?>
+                                                    </p>
                                                     <div class="my-1 badge text-bg-brown text-light">
                                                         <?php echo $category['category_name'] ?>
                                                     </div>

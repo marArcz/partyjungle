@@ -45,9 +45,12 @@
                     $query = mysqli_query($con, "SELECT id FROM conversations");
                     while ($row = $query->fetch_assoc()) {
                         $conversation_id = $row['id'];
-                        $latest_chat = mysqli_query($con, "SELECT status, is_admin FROM chat WHERE conversation_id = $conversation_id ORDER BY id DESC LIMIT 1")->fetch_assoc();
-                        if ($latest_chat['is_admin'] == 0  && $latest_chat['status'] == 0) {
-                            $count++;
+                        $get_chats = mysqli_query($con, "SELECT * FROM chat WHERE conversation_id=$conversation_id");
+                        if ($get_chats->num_rows > 0) {
+                            $latest_chat = mysqli_query($con, "SELECT status, is_admin FROM chat WHERE conversation_id = $conversation_id ORDER BY id DESC LIMIT 1")->fetch_assoc();
+                            if ($latest_chat['is_admin'] == 0  && $latest_chat['status'] == 0) {
+                                $count++;
+                            }
                         }
                     }
                     ?>
@@ -102,7 +105,7 @@
                     </span>
                 </a>
             </li>
-            <li class="nav-item w-100 mb-4 <?php echo $active_page == "personnel" ? "active" : "" ?>">
+            <!-- <li class="nav-item w-100 mb-4 <?php echo $active_page == "personnel" ? "active" : "" ?>">
                 <a href="dashboard.php" class="nav-link">
                     <i class='bx bxs-truck bx-sm'></i>
                     <span class="label">
@@ -110,7 +113,7 @@
                     </span>
 
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item px-4 text-light nav-divider-label opacity-50 mb-2">
                 <small>SYSTEM</small>
             </li>
@@ -123,14 +126,14 @@
 
                 </a>
             </li>
-            <li class="nav-item w-100 mb-4 <?php echo $active_page == "settings" ? "active" : "" ?>">
+            <!-- <li class="nav-item w-100 mb-4 <?php echo $active_page == "settings" ? "active" : "" ?>">
                 <a href="settings.php" class="nav-link">
                     <i class='bx bxs-cog bx-sm'></i>
                     <span class="label">
                         System Settings
                     </span>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </aside>

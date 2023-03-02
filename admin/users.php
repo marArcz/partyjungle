@@ -74,7 +74,7 @@
                                                     <?php echo $row['address'] ?>
                                                 </td>
                                                 <td>
-                                                    <a href="#manage-modal" class="btn btn-sm btn-brown text-light rounded-3">
+                                                    <a href="view-user.php?id=<?php echo $row['id'] ?>" class="btn btn-sm btn-brown text-light rounded-3">
                                                         <i class="bx bxs-show"></i>
                                                     </a>
                                                 </td>

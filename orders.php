@@ -57,6 +57,7 @@
                                 <ul class="list-group list-group-flush">
                                     <?php
                                     while ($details = $get_details->fetch_assoc()) :
+                                        $category = mysqli_query($con, "SELECT * FROM categories WHERE id=" . $details['category_id'])->fetch_assoc();
                                     ?>
                                         <li class="list-group-item">
                                             <div class="row mt-3 align-items-center">
@@ -66,7 +67,19 @@
                                                 <div class="col">
                                                     <div class="row">
                                                         <div class="col-md">
+                                                            <?php
+                                                            if ($category['category_name'] == 'Balloons') {
+                                                            ?>
+                                                                <a href="#instruction-modal" data-bs-toggle="modal" data-instruction="<?php echo $details['instruction'] ?>">
+                                                                    <i class="bx bx-info-circle"></i>
+                                                                </a>
+                                                            <?php
+                                                            }
+                                                            ?>
                                                             <p class="my-1 fw-bold"><?php echo $details['product_name'] ?></p>
+                                                            <p class="my-1 text-secondary">
+                                                                <?php echo $details['variation'] ?>
+                                                            </p>
                                                             <div class="text-secondary">
                                                                 <p>Qty: <?php echo $details['quantity'] ?></p>
 
@@ -113,7 +126,14 @@
         ?>
     </main>
     <?php include './includes/footer.php' ?>
+    <?php include './includes/order-modals.php' ?>
     <?php include './includes/scripts.php' ?>
+    <script>
+        $("#instruction-modal").on("show.bs.modal", function(e) {
+            let text = $(e.relatedTarget).data("instruction");
+            $("#instructions-text").html(text)
+        })
+    </script>
 </body>
 
 </html>

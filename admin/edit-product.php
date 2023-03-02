@@ -20,6 +20,12 @@ if (!empty(basename($_FILES["photo"]["name"]))) {
 
 
 if ($query) {
+    if(isset($_POST['is_featured'])){
+        $is_featured = $_POST['is_featured'];
+        mysqli_query($con,"UPDATE products SET is_featured = 1 WHERE id =$id");
+    }else{
+        mysqli_query($con,"UPDATE products SET is_featured = 0 WHERE id =$id");
+    }
     Session::insertSuccess("Successfully updated!");
 } else {
     Session::insertError();

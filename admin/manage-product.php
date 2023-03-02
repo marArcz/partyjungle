@@ -21,7 +21,7 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
 <body class="bg-gray">
     <div class="wrapper">
         <?php
-        $active_page = "dashboard";
+        $active_page = "products";
         include './includes/sidebar.php'
         ?>
 
@@ -29,6 +29,7 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
+
                     <div class="d-flex align-items-end mb-4">
                         <a href="products.php" class="text-decoration-none">
                             <span class="card-icon card-icon-sm me-2 shadow-sm">
@@ -58,7 +59,7 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                             <!-- details tab -->
                             <div class="tab <?php echo $tab == "Details" ? '' : 'd-none' ?>">
                                 <div class="text-end mb-3">
-                                    <a href="delete-product.php?id=<?php echo $_GET['product_id'] ?>" class="btn btn-sm btn-danger"><i class="bx bx-trash"></i></a>
+                                    <a href="delete-product.php?id=<?php echo $_GET['product_id'] ?>" class="btn btn-sm btn-danger delete-product"><i class="bx bx-trash"></i></a>
                                 </div>
                                 <form action="edit-product.php" method="post" enctype="multipart/form-data">
                                     <!-- GET PRODUCT -->
@@ -114,26 +115,73 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                                                 <label for="" class="form-label">Product Description:</label>
                                                 <textarea required name="description" class="form-control" rows="5" id="edit-description"><?php echo $product['description'] ?></textarea>
                                             </div>
-                                            <div class="text-end mb-4">
-                                                <button class="btn btn-sm btn-orange" type="submit">Save Changes</button>
+                                            <div class="my-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" <?php echo $product['is_featured'] == 1 ? "checked" : "" ?> type="checkbox" value="1" name="is_featured" id="featured">
+                                                    <label class="form-check-label text-orange" for="featured">
+                                                        Feature this product
+                                                    </label>
+                                                </div>
                                             </div>
+                                            <div class="text-end mb-4">
+                                                <button class="btn btn-orange" type="submit">Save Changes</button>
+                                            </div>
+
+                                            <div class="card border shadow-sm my-3">
+                                                <div class="card-body">
+                                                    <div class="">
+                                                        <p class="form-text">Product Photos</p>
+                                                        <input type="file" multiple id="edit-photo-input" class="d-none">
+                                                        <div class="text-end mb-3">
+                                                            <button class="btn btn-brown btn-sm file-input-toggler" data-target="#edit-photo-input" type="button">Add Photo</button>
+                                                        </div>
+                                                        <div class="photos-row" id="edit-photos-row">
+                                                            <?php
+                                                            $query = mysqli_query($con, "SELECT * FROM product_photos WHERE product_id = $product_id");
+                                                            while ($photo_row = $query->fetch_assoc()) {
+                                                            ?>
+                                                                <div class="item">
+                                                                    <img src="../<?php echo $photo_row['photo'] ?>" class=" img-thumbnail" alt="">
+                                                                    <button type="button" data-id="<?php echo $photo_row['id'] ?>" class="btn btn-light btn-sm border text-dark remove-btn">
+                                                                        <i class="bx bx-x"></i>
+                                                                    </button>
+                                                                </div>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
                             <!-- variations tab -->
                             <div class="tab <?php echo $tab == "Variations" ? '' : 'd-none' ?>">
                                 <div class="d-flex flex-wrap align-items-baseline">
-                                    <a href="add-variation-row.php?product_id=<?php echo $product_id ?>" class="btn btn-light btn-sm fw-bold text-dark p-2 rounded mb-3 border">
+                                    <a href="add-variation-row.php?product_id=<?php echo $product_id ?>" class="btn btn-light btn-sm fw-bold text-dark p-2 rounded mb-3 border <?php echo $product['is_variation_enabled'] == 0 ? 'disabled' : '' ?>">
                                         <small>Add Variation</small>
                                     </a>
                                     <div class="form-check form-switch ms-auto">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                                        <label class="form-check-label" for="flexSwitchCheckDefault">Enable Variations</label>
+                                        <input class="form-check-input" <?php echo $product['is_variation_enabled'] == 1 ? "checked" : "" ?> type="checkbox" role="switch" id="variation-switch">
+                                        <label class="form-check-label" for="variation-switch">Enable Variations</label>
                                     </div>
                                 </div>
+                                <?php
+                                if ($product['is_variation_enabled'] == 0) {
+                                ?>
+                                    <div class="alert alert-warning ">
+                                        <small><i class=" bx bx-info-circle"></i> Products variations is disabled.</small>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered align-middle" id="variation-table">
+                                    <table class="table table-bordered align-middle text-secondary" id="variation-table">
                                         <thead>
                                             <?php
                                             // get product variations
@@ -163,9 +211,21 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                                             <!-- <th><small>Image</small></th>
                                             <th><small>Price</small></th> -->
                                             <th class="text-end">
-                                                <a disabled href="#property-modal" data-bs-toggle="modal" class="link-primary disable text-decoration-none disabled">
-                                                    <small> <i class="bx bx-plus"></i> Add property</small>
-                                                </a>
+                                                <?php
+                                                if ($product['is_variation_enabled'] == 1) {
+                                                ?>
+                                                    <a href="#property-modal" data-bs-toggle="modal" class="link-primary text-decoration-none">
+                                                        <small> <i class="bx bx-plus"></i> Add property</small>
+                                                    </a>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <span class=" text-secondary">
+                                                        <small> <i class="bx bx-plus"></i> Add property</small>
+                                                    </span>
+                                                <?php
+                                                }
+                                                ?>
                                             </th>
                                         </thead>
                                         <tbody>
@@ -234,19 +294,19 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                                                     <td class="text-end">
                                                         <div class="edit-btn-group">
                                                             <div class="btn-group btn-group-sm" role="group" aria-label="Default button group">
-                                                                <button data-row="#table-row-<?php echo $variation['id'] ?>" type="button" class="edit-btn btn btn-outline-dark">
+                                                                <button <?php echo $product['is_variation_enabled'] == 0 ? 'disabled' : '' ?> data-row="#table-row-<?php echo $variation['id'] ?>" type="button" class="edit-btn btn btn-outline-dark">
                                                                     <i class='bx bx-pencil'></i>
                                                                 </button>
-                                                                <button data-row="#table-row-<?php echo $variation['id'] ?>" type="button" class="delete-btn btn btn-outline-dark">
+                                                                <button <?php echo $product['is_variation_enabled'] == 0 ? 'disabled' : '' ?> data-row="#table-row-<?php echo $variation['id'] ?>" type="button" class="delete-btn btn btn-outline-dark">
                                                                     <i class='bx bx-trash'></i>
                                                                 </button>
                                                             </div>
                                                         </div>
                                                         <div class="save-btn-group d-none">
-                                                            <button class="btn my-1 btn-light border cancel-btn btn-sm" data-row="#table-row-<?php echo $variation['id'] ?>" type="button">
+                                                            <button <?php echo $product['is_variation_enabled'] == 0 ? 'disabled' : '' ?> class="btn my-1 btn-light border cancel-btn btn-sm" data-row="#table-row-<?php echo $variation['id'] ?>" type="button">
                                                                 <small>Cancel</small>
                                                             </button>
-                                                            <button class="btn my-1 btn-brown save-btn btn-sm" data-row="#table-row-<?php echo $variation['id'] ?>" type="button">
+                                                            <button <?php echo $product['is_variation_enabled'] == 0 ? 'disabled' : '' ?> class="btn my-1 btn-brown save-btn btn-sm" data-row="#table-row-<?php echo $variation['id'] ?>" type="button">
                                                                 <small class="text">Save</small>
                                                                 <span class="d-none spinner-border mx-2 spinner-border-sm" role="status" aria-hidden="true"></span>
                                                             </button>
@@ -293,6 +353,15 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
     <?php include './includes/alerts.php' ?>
 
     <script>
+        $("#variation-switch").on("change", function(e) {
+            console.log('enabled: ', $(this).is(":checked"));
+
+            let status = $(this).is(":checked") ? 1 : 0
+            let product_id = "<?php echo $product_id ?>"
+            window.location.href = `update-variation-status.php?status=${status}&product_id=${product_id}`;
+
+        })
+
         var image = null;
         // add property form
         $("#add-property-form").on("submit", function(e) {
@@ -455,6 +524,103 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
             row.find("img").attr('src', '../' + val)
             image = null;
 
+        })
+
+
+        var photos = [];
+        var editPhotos = [];
+        var photoCounter = 0;
+        var editPhotoCounter = 0;
+        var mainPhoto = "";
+        var editMainPhoto = "";
+        $(".remove-btn").on("click", function(e) {
+            let id = $(this).data("id");
+            const item = $(this).parent();
+            showLoading();
+            $.ajax({
+                url: "remove-photo.php",
+                method: "POST",
+                data: {
+                    id
+                },
+                dataType: 'json',
+                success: (res) => {
+                    console.log('res: ', res);
+                    hideLoading();
+                    item.remove()
+                }
+            })
+        })
+
+        $("#edit-photo-input").on("change", function(e) {
+            let files = e.target.files
+            const formData = new FormData();
+            showLoading();
+            for (let file of files) {
+                let photo = {
+                    index: editPhotoCounter,
+                    file
+                }
+                editPhotos.push(photo);
+                formData.append("product_photos[]", file);
+                let item = `<div class="item">
+                                        <img src="${URL.createObjectURL(file)}" class="img-thumbnail" alt="">
+                                        <button data-index="${editPhotoCounter}" class="btn btn-sm btn-light text-dark border remove-btn" type="button">
+                                            <i class="bx bx-x"></i>
+                                        </button>
+                                    </div>`
+                $("#edit-photos-row").append(item)
+                editPhotoCounter++;
+            }
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            }
+            formData.append("product_id", "<?php echo $product_id ?>")
+
+            axios.post("add-product-photo.php", formData, config)
+                .then(res => {
+                    hideLoading();
+                    console.log('response: ', res);
+                })
+            console.log('edit photos: ', editPhotos)
+
+            $(".remove-btn").on("click", function(e) {
+                let id = $(this).data("id");
+                const item = $(this).parent();
+                showLoading();
+                $.ajax({
+                    url: "remove-photo.php",
+                    method: "POST",
+                    data: {
+                        id
+                    },
+                    dataType: 'json',
+                    success: (res) => {
+                        console.log('res: ', res);
+                        hideLoading();
+                        item.remove()
+                    }
+                })
+            })
+
+        })
+
+        $(".delete-product").on("click", function(e) {
+            e.preventDefault();
+            let url = $(this).attr("href");
+
+            Notiflix.Confirm.show(
+                'Confirm',
+                'Delete this product?',
+                'Yes',
+                'No',
+                function okCb() {
+                    window.location.href = url;
+                },
+                function cancelCb() {}, {},
+            );
         })
     </script>
 </body>
