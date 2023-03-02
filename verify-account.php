@@ -40,7 +40,7 @@
                                     <input type="hidden" name="code" id="input-code">
                                     <div class="text-center fw-light mb-3">
                                         <p class="my-1 fw-light text-secondary">We sent a verification code to your email address.</p>
-                                        <p class="my-1 text-secondary">johndoe@gmail.com</p>
+                                        <p class="my-1 text-secondary"><?php echo Session::getUser()['email'] ?></p>
                                     </div>
                                     <?php
                                     if (Session::hasSession("error")) {
