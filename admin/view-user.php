@@ -41,9 +41,8 @@
                             </p>
                             <div class="row align-items-">
                                 <div class="col-md-auto">
-                                    <!-- <div class="div-image rounded-circle" data-image="../<?php echo $user['photo'] ?>"></div> -->
                                     <?php
-                                    if (!empty($user['photo'])) {
+                                    if (!empty($user['photo']) || $user['photo'] == '../') {
                                     ?>
                                         <div class="div-image div-image-md rounded-circle border-dark border-2 shadow view-photo" data-image="../<?php echo $user['photo'] ?>"></div>
                                     <?php
