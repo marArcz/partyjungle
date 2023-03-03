@@ -47,7 +47,7 @@
                                             <tr>
                                                 <td>
                                                     <?php
-                                                    if (!empty($row['photo'])) {
+                                                    if (!empty($row['photo']) || $row['photo'] == '../') {
                                                     ?>
                                                         <div class="div-image border shadow-sm border-3 view-photo rounded-circle div-image-sm" data-image="<?php echo "../" . $row['photo'] ?>"></div>
 
