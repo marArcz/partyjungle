@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 
     if ($query->execute()) {
         Session::insertSuccess("You successfully created an account!");
-        Session::redirectTo("dashboard.php");
+        Session::redirectTo("index.php");
     } else {
         Session::insertError();
     }
