@@ -78,7 +78,7 @@ if ($query->num_rows == 0) {
                                                 <?php
                                                 } else {
                                                 ?>
-                                                <div class="user-text-photo"><?php echo $user['firstname'][0] . $user['lastname'][0] ?></div>
+                                                    <div class="user-text-photo"><?php echo $user['firstname'][0] . $user['lastname'][0] ?></div>
                                                 <?php
                                                 }
                                                 ?>
@@ -136,6 +136,15 @@ if ($query->num_rows == 0) {
                                                         <div class="row">
                                                             <div class="col-md">
                                                                 <?php
+                                                                $category = mysqli_query($con, "SELECT * FROM categories WHERE id=" . $details['category_id'])->fetch_assoc();
+
+                                                                if ($category['category_name'] == 'Balloons') {
+                                                                ?>
+                                                                    <a href="#instruction-modal" data-bs-toggle="modal" data-instruction="<?php echo $details['instruction'] ?>">
+                                                                        <i class="bx bx-info-circle"></i>
+                                                                    </a>
+                                                                <?php
+                                                                }
                                                                 //check if product still exist
                                                                 $get_product = mysqli_query($con, "SELECT id FROM products WHERE id=" . $details['product_id']);
                                                                 if ($get_product->num_rows > 0) {
@@ -279,6 +288,10 @@ if ($query->num_rows == 0) {
     <?php include './includes/scripts.php' ?>
     <?php include './includes/alerts.php' ?>
     <script>
+        $("#instruction-modal").on("show.bs.modal", function(e) {
+            let text = $(e.relatedTarget).data("instruction");
+            $("#instructions-text").html(text)
+        })
         $(".collapse-toggler").on("click", function(e) {
             var expanded = $(this).attr("aria-expanded");
             console.log('expanded: ', expanded)

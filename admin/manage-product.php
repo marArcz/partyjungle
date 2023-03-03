@@ -382,7 +382,6 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                     console.log('res: ', res)
                     const property = res.property;
                     const lastTableHead = $("#variation-table").find("thead th:last")
-
                 }
             })
         })
