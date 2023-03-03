@@ -17,7 +17,7 @@
         $active_page = "categories";
         include './includes/sidebar.php'
         ?>
-        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state")? (Session::getSession("partyjungle-sidebar-state",false) == "close"? 'sidebar-closed':''):'' ?>">
+        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state") ? (Session::getSession("partyjungle-sidebar-state", false) == "close" ? 'sidebar-closed' : '') : '' ?>">
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
@@ -78,14 +78,20 @@
                 data: {
                     id
                 },
-                dataType:'json',
+                dataType: 'json',
                 success: function(res) {
                     console.log(res);
                     $("#name").val(res.category_name)
                     $("#id-input").val(res.id)
-                    $("#photo").attr('src', "../"+res.category_photo)
-
-                    $("#delete-btn").attr("href",`delete-category.php?id=${res.id}`)
+                    $("#photo").attr('src', "../" + res.category_photo)
+                    if (res.category_name == "Balloons") {
+                        $("#name").attr("disabled", true)
+                        $("#delete-btn").attr("href", "#").attr('disabled', true).addClass("disabled")
+                    } else {
+                        $("#name").removeAttr("disabled")
+                        $("#delete-btn").removeAttr('disabled').removeClass("disabled")
+                        $("#delete-btn").attr("href", `delete-category.php?id=${res.id}`)
+                    }
                 },
                 error: function(err) {
                     console.log("Erorr: ", err);

@@ -272,6 +272,16 @@
   border-radius: 50%;
 }
 
+.user-text-photo {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(214, 214, 214);
+  border-radius: 50%;
+}
+
 .chat-container .messages-box {
   height: 40vh;
   overflow-y: auto !important;

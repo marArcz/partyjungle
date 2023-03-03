@@ -141,7 +141,7 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                                                             while ($photo_row = $query->fetch_assoc()) {
                                                             ?>
                                                                 <div class="item">
-                                                                    <img src="../<?php echo $photo_row['photo'] ?>" class=" img-thumbnail" alt="">
+                                                                    <img src="../<?php echo $photo_row['photo'] ?>" width="80" height="80" class="border-light border-3 border shadow" alt="">
                                                                     <button type="button" data-id="<?php echo $photo_row['id'] ?>" class="btn btn-light btn-sm border text-dark remove-btn">
                                                                         <i class="bx bx-x"></i>
                                                                     </button>
@@ -563,13 +563,7 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                 }
                 editPhotos.push(photo);
                 formData.append("product_photos[]", file);
-                let item = `<div class="item">
-                                        <img src="${URL.createObjectURL(file)}" class="img-thumbnail" alt="">
-                                        <button data-index="${editPhotoCounter}" class="btn btn-sm btn-light text-dark border remove-btn" type="button">
-                                            <i class="bx bx-x"></i>
-                                        </button>
-                                    </div>`
-                $("#edit-photos-row").append(item)
+
                 editPhotoCounter++;
             }
             const config = {
@@ -583,27 +577,37 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                 .then(res => {
                     hideLoading();
                     console.log('response: ', res);
+                    for (let photoRow of res.data.photos) {
+                        let item = `<div class="item">
+                                        <img src="../${photoRow.photo}" width="80" height="80" class="border-light border-3 border shadow" alt="">
+                                        <button data-id="${photoRow.id}" class="btn btn-sm btn-light text-dark border remove-btn" type="button">
+                                            <i class="bx bx-x"></i>
+                                        </button>
+                                    </div>`
+                        $("#edit-photos-row").append(item)
+                    }
+                    $(".remove-btn").on("click", function(e) {
+                        let id = $(this).data("id");
+                        const item = $(this).parent();
+                        showLoading();
+                        $.ajax({
+                            url: "remove-photo.php",
+                            method: "POST",
+                            data: {
+                                id
+                            },
+                            dataType: 'json',
+                            success: (res) => {
+                                console.log('res: ', res);
+                                hideLoading();
+                                item.remove()
+                            }
+                        })
+                    })
                 })
             console.log('edit photos: ', editPhotos)
 
-            $(".remove-btn").on("click", function(e) {
-                let id = $(this).data("id");
-                const item = $(this).parent();
-                showLoading();
-                $.ajax({
-                    url: "remove-photo.php",
-                    method: "POST",
-                    data: {
-                        id
-                    },
-                    dataType: 'json',
-                    success: (res) => {
-                        console.log('res: ', res);
-                        hideLoading();
-                        item.remove()
-                    }
-                })
-            })
+
 
         })
 

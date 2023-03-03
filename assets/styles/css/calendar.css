@@ -1,4 +1,6 @@
-/*# sourceMappingURL=calendar.css.map */1px solid rgb(224, 224, 224);
+.mz-calendar {
+  width: 100%;
+  border: 1px solid rgb(224, 224, 224);
   box-sizing: border-box;
   border-radius: 7;
   background: white;
