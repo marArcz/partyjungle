@@ -370,7 +370,11 @@ $sidebar-w-closed: 6vw;
     align-items: center;
     background: rgb(214, 214, 214);
     border-radius: 50%;
-
+    &.sm{
+        $size: 30px;
+        width: $size;
+        height: $size;
+    }
 }
 
 .chat-container {

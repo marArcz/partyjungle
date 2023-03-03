@@ -281,6 +281,10 @@
   background: rgb(214, 214, 214);
   border-radius: 50%;
 }
+.user-text-photo.sm {
+  width: 30px;
+  height: 30px;
+}
 
 .chat-container .messages-box {
   height: 40vh;
