@@ -54,7 +54,7 @@
                                                     <?php
                                                     } else {
                                                     ?>
-                                                        <div class="user-text-photo">
+                                                        <div class="user-text-photo sm">
                                                             <span><?php echo $row['firstname'][0] . $row['lastname'][0] ?></span>
                                                         </div>
                                                     <?php
