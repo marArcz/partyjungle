@@ -227,12 +227,14 @@
             showLoading();
             axios.post("add-product.php", formData, config)
                 .then(res => {
-                    if (res.data.category == "Balloons") {
-                        window.location.href = `manage-product.php?product_id=${res.data.product_id}`
-                    } else {
-                        window.location.href = `add-success-session.php?route=products.php&message=Successfully added!`
+                    // if (res.data.category == "Balloons") {
+                    //     window.location.href = `manage-product.php?product_id=${res.data.product_id}`
+                    // } else {
+                    //     window.location.href = `add-success-session.php?route=products.php&message=Successfully added!`
 
-                    }
+                    // }
+                    window.location.href = `manage-product.php?product_id=${res.data.product_id}`
+
                     console.log('res: ', res)
                 })
                 .catch(err => console.log('error: ', err))

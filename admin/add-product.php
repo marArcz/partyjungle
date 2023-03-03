@@ -28,7 +28,7 @@ $category_name = $category['category_name'];
 
 if ($query->execute()) {
     $product_id = mysqli_insert_id($con);
-    if (!empty(basename($_FILES['product_photos']['name'][0]))) {
+    if (isset($_FILES['product_photos']) && !empty(basename($_FILES['product_photos']['name'][0]))) {
         $target_dir = "assets/products/";
         $query = mysqli_prepare($con, "INSERT INTO product_photos(product_id,photo) VALUES(?,?)");
         $photos_count = count($_FILES['product_photos']['name']);
@@ -59,7 +59,7 @@ if ($query->execute()) {
         $add_property->execute();
         $property_id = mysqli_insert_id($con);
         $value = $property[1];
-        $add_value = mysqli_query($con,"INSERT INTO property_values(property_id,value,variation_)id) VALUES($property_id,'$value',$variation_id)");
+        $add_value = mysqli_query($con,"INSERT INTO property_values(property_id,value,variation_id) VALUES($property_id,'$value',$variation_id)");
     }
     // Session::insertSuccess("Successfully added!");
     // Session::redirectTo("products.php?category=$category_name");
