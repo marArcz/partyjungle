@@ -45,8 +45,8 @@
             $stocks = $product['stocks'];
             $available = $stocks;
             $cancelled = OrderStatus::$CANCELLED;
-            $in_order = mysqli_query($con, "SELECT SUM(quantity) FROM order_details WHERE order_id IN (SELECT id FROM orders WHERE status != $cancelled)")->fetch_array()[0];
-            $available -= $in_order;
+            $in_order = mysqli_query($con, "SELECT SUM(quantity) FROM order_details WHERE product_id = $product_id AND order_id IN (SELECT id FROM orders WHERE status != $cancelled)")->fetch_array()[0];
+            // $available -= $in_order;
             ?>
             <div class="container my-5">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -136,7 +136,7 @@
                                     <p class="fs-6 mb-3 text-secondary mb-0">Product Details</p>
                                     <p class="mb-4"><?php echo $product['description'] ?></p>
 
-                                    <form action="add-to-cart.php" id="add-to-cart-form" method="post">
+                                    <form action="<?php echo $available > 0 ? 'add-to-cart.php' : 'add-reservation.php' ?>" id="add-to-cart-form" method="post">
                                         <input type="hidden" value="<?php echo $_GET['id'] ?>" name="product_id">
 
                                         <!-- variations -->
@@ -175,14 +175,16 @@
 
                                         <!-- quantity -->
                                         <label for="" class="form-label text-secondary">Quantity:</label>
-                                        <input max="<?php echo $available ?>" type="number" name="quantity" class="rounded-pill px-3 form-control text-center fw-bold text-orange" value="1" min="1">
+
                                         <?php
                                         if ($available > 0) {
                                         ?>
+                                            <input max="<?php echo $available ?>" type="number" name="quantity" class="rounded-pill px-3 form-control text-center fw-bold text-orange" value="1" min="1">
                                             <p class="mt-2 fw-bold">Available: <span class="text-dark"><?php echo $available ?></span></p>
                                         <?php
                                         } else {
                                         ?>
+                                            <input type="number" name="quantity" class="rounded-pill px-3 form-control text-center fw-bold text-orange" value="1" min="1">
                                             <p class="mt-2 fs-5 text-danger text-center">Sold Out</p>
                                         <?php
                                         }
@@ -212,7 +214,12 @@
                                                 <?php
                                                 } else {
                                                 ?>
-
+                                                    <button class="mt-2 btn btn-yellow px-3 rounded-pill btn-lg mt-3 fs-6" type="submit" name="submit">
+                                                        <small class="text-dark">
+                                                            <span class="bx bxs-time"></span>
+                                                            Reserve
+                                                        </small>
+                                                    </button>
                                                 <?php
                                                 }
                                                 ?>
@@ -258,7 +265,7 @@
                     $("#product-image-preview").css("background-image", `url(${res.image})`);
                     console.log('res: ', res)
                     hideLoading()
-                    
+
                     $("#input-variation").val(val)
                 },
                 error: err => console.log("error: ", err)

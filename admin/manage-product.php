@@ -428,7 +428,7 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
                     console.log('res: ', res)
                     // hideLoading();
                     btn.find(".text").removeClass('d-none')
-                    btn.find(".spinner").addClass('d-none')
+                    btn.find(".spinner-border").addClass('d-none')
                     //data
                     let datas = res.data.properties;
                     let img = "";

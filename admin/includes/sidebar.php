@@ -89,6 +89,14 @@
                     </span>
                 </a>
             </li>
+            <li class="nav-item w-100 mb-4 <?php echo $active_page == "product_reservations" ? "active" : "" ?>">
+                <a href="reservations.php" class="nav-link">
+                <i class='bx bx-notepad bx-sm'></i>
+                    <span class="label">
+                        Product Reservations
+                    </span>
+                </a>
+            </li>
             <li class="nav-item w-100 mb-4 <?php echo $active_page == "categories" ? "active" : "" ?>">
                 <a href="categories.php" class="nav-link">
                     <i class='bx bxs-category bx-sm'></i>
