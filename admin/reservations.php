@@ -17,7 +17,7 @@
         $active_page = "product_reservations";
         include './includes/sidebar.php'
         ?>
-        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state")? (Session::getSession("partyjungle-sidebar-state",false) == "close"? 'sidebar-closed':''):'' ?>">
+        <main class="main-container <?php echo Session::hasSession("partyjungle-sidebar-state") ? (Session::getSession("partyjungle-sidebar-state", false) == "close" ? 'sidebar-closed' : '') : '' ?>">
             <?php include './includes/top_header.php' ?>
             <section class="main-content">
                 <div class="container-fluid py-3">
@@ -30,28 +30,48 @@
                     <div class="card border-0 shadow-sm">
                         <div class="card-body">
                             <div class="table-responsive-md">
-                                <table class="table" id="table">
+                                <table class="table align-middle" id="table">
                                     <thead>
                                         <th>Customer</th>
                                         <th>Product</th>
                                         <th>Quantity</th>
                                     </thead>
                                     <tbody>
-                                        <?php 
-                                            $query = mysqli_query($con,"SELECT * FROM reservations");
-                                            while($row = $query->fetch_assoc()){    
-                                                $product_id = $row['product_id'];
-                                                $user_id = $row['user_id'];
-                                                $product = mysqli_query($con,"SELECT * FROM products WHERE id = $product_id")->fetch_assoc();
-                                                $customer = mysqli_query($con,"SELECT * FROM users WHERE id = $user_id")->fetch_assoc();
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $customer['firstname'] . ' '. $customer['lastname'] ?></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                                <?php
-                                            }
+                                        <?php
+                                        $query = mysqli_query($con, "SELECT * FROM reservations");
+                                        while ($row = $query->fetch_assoc()) {
+                                            $product_id = $row['product_id'];
+                                            $user_id = $row['user_id'];
+                                            $product = mysqli_query($con, "SELECT * FROM products WHERE id = $product_id")->fetch_assoc();
+                                            $customer = mysqli_query($con, "SELECT * FROM users WHERE id = $user_id")->fetch_assoc();
+                                        ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <?php
+                                                        if (!empty($customer['photo']) || $customer['photo'] == '../') {
+                                                        ?>
+                                                            <div class="div-image border shadow-sm border-3 view-photo rounded-circle div-image-sm" data-image="<?php echo "../" . $customer['photo'] ?>"></div>
+
+                                                        <?php
+                                                        } else {
+                                                        ?>
+                                                            <div class="user-text-photo sm">
+                                                                <span><?php echo $customer['firstname'][0] . $customer['lastname'][0] ?></span>
+                                                            </div>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                        <p class="my-1 ms-2"><?php echo $customer['firstname'] . ' ' . $customer['lastname'] ?> </p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="my-1"><?php echo $product['product_name'] ?> / <?php echo $row['variation'] ?></p>
+                                                </td>
+                                                <td><?php echo $row['quantity'] ?></td>
+                                            </tr>
+                                        <?php
+                                        }
                                         ?>
                                     </tbody>
                                 </table>
