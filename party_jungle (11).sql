@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 02, 2023 at 07:48 PM
+-- Generation Time: Mar 04, 2023 at 10:30 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -66,6 +66,14 @@ CREATE TABLE `cart` (
   `instruction` varchar(255) NOT NULL,
   `variation` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `product_id`, `product_name`, `product_photo`, `category_id`, `price`, `quantity`, `user_id`, `is_checked_out`, `variation_id`, `instruction`, `variation`) VALUES
+(1, 22, 'Superman Balloons', 'assets/products/prod3.jpg', 1, 25, 1, 10, 1, 37, 'Blue Color', 'Small, 10pcs'),
+(2, 5, 'Birthday Ballons', 'assets/products/prod2.jpg', 1, 125, 1, 10, 0, 42, 'sgsdfgsdfsdfsdfs', 'Small, 10 pcs');
 
 -- --------------------------------------------------------
 
@@ -177,6 +185,13 @@ CREATE TABLE `orders` (
   `payment_method` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `transaction_no`, `ordered_at`, `status`, `total`, `shipping_address`, `shipping_id`, `shipping_fee`, `user_id`, `payment_method`) VALUES
+(1, 'PJMAR230000000001', '2023-03-03 09:03:24', 4, 25, 'REGION V (BICOL REGION) CATANDUANES VIRAC (Capital) 4800 Gogon Centro PUROK 4 333', 1, 100, 10, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -196,6 +211,13 @@ CREATE TABLE `order_details` (
   `variation` varchar(255) NOT NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `product_name`, `product_photo`, `price`, `quantity`, `variation_id`, `instruction`, `variation`, `category_id`) VALUES
+(1, 1, 22, 'Superman Balloons', 'assets/products/prod3.jpg', 25, 1, 37, 'Blue Color', 'Small, 10pcs', 1);
 
 -- --------------------------------------------------------
 
@@ -266,13 +288,19 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `product_name`, `price`, `description`, `stocks`, `is_featured`, `photo`, `is_variation_enabled`) VALUES
-(2, 2, 'Blue Motor', '1500', 'Blue motor \r\nbattery', 15, 1, 'assets/products/prod8.jpg', 0),
-(5, 1, 'Birthday Ballons', '125', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum non consectetur a erat nam at lectus. Feugiat nibh sed pulvinar proin. A lacus vestibulum sed arcu non odio euismod. Pretium', 30, 1, 'assets/products/prod2.jpg', 0),
+(2, 2, 'Blue Motor', '1500', 'Blue motor \r\nbattery', 0, 1, 'assets/products/prod8.jpg', 1),
+(5, 1, 'Birthday Ballons', '125', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum non consectetur a erat nam at lectus. Feugiat nibh sed pulvinar proin. A lacus vestibulum sed arcu non odio euismod. Pretium', 30, 1, 'assets/products/prod2.jpg', 1),
 (6, 2, 'Baby Doll Toy Set', '250', 'kjshdjkahsdkjhasd', 120, 0, 'assets/products/prod12.jpg', 0),
 (8, 2, 'Car', '2000', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut morbi tincidunt augue interdum velit euismod.', 200, 0, 'assets/products/prod4.jpg', 0),
 (11, 2, 'Trucks set toy ', '250', 'dfhdfdfhdfhdfhdfhdfh', 200, 0, 'assets/products/prod13.jpg', 0),
 (19, 1, 'Balloons', '10', 'sdgsdgs', 222, 0, 'assets/products/prod1.jpg', 0),
-(22, 1, 'Superman Balloons', '150', 'ikjhkjhkjh', 500, 0, 'assets/products/prod3.jpg', 1);
+(22, 1, 'Superman Balloons', '150', 'ikjhkjhkjh', 500, 1, 'assets/products/prod3.jpg', 1),
+(25, 2, 'Toy helmet', '100', 'dfhgdfgdfgdgf', 222, 0, 'assets/products/helbet.png', 0),
+(26, 2, 'Banners', '45', 'fgjfgjfgjfgjfj', 5545, 0, 'assets/products/prod9.jpg', 0),
+(27, 3, 'fthjrt', '436', 'gykgh', 54, 0, 'assets/products/piece-of-cake.png', 0),
+(29, 4, 'Party Loot Bag', '1', 'pkk', 98, 0, 'assets/products/lootbag_1.jpg', 0),
+(30, 4, 'Party Loot Bag', '122', 'dfhdhdfhdfhdd', 200, 0, 'assets/products/lootbag_1.jpg', 0),
+(31, 4, 'Party Loot Bag', '120', 'zlksjc ajas jasd as', 200, 1, 'assets/products/lootbag_1.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -355,10 +383,13 @@ INSERT INTO `product_photos` (`id`, `product_id`, `photo`) VALUES
 (29, 21, 'assets/products/labeled.png'),
 (30, 21, 'assets/products/Annotation 2022-10-18 202714.png'),
 (31, 22, 'assets/products/prod1.jpg'),
-(32, 2, 'assets/products/icon_car.png'),
-(33, 2, 'assets/products/prod4.jpg'),
-(34, 2, 'assets/products/prod8.jpg'),
-(35, 22, 'assets/products/prod5.jpg');
+(35, 22, 'assets/products/prod5.jpg'),
+(46, 2, 'assets/products/331099331_509615721109193_1624576246502108598_n.jpg'),
+(47, 2, 'assets/products/20190411-tagowalnen-weaving-fg-1.jpg'),
+(71, 24, 'assets/products/639778b4e54d4fa37418a0b9e498fdf4.jpg'),
+(72, 25, 'assets/products/jakit.png'),
+(73, 26, 'assets/products/prod7.jpg'),
+(74, 27, 'assets/products/cake.png');
 
 -- --------------------------------------------------------
 
@@ -384,7 +415,21 @@ INSERT INTO `properties` (`id`, `product_id`, `property_name`) VALUES
 (42, 5, 'Image'),
 (43, 5, 'Price'),
 (44, 5, 'Size'),
-(45, 5, 'Quantity');
+(45, 5, 'Quantity'),
+(51, 25, 'Image'),
+(52, 26, 'Image'),
+(53, 27, 'Image'),
+(54, 27, 'Price'),
+(57, 29, 'Image'),
+(58, 29, 'Price'),
+(59, 30, 'Image'),
+(60, 30, 'Price'),
+(61, 31, 'Image'),
+(62, 31, 'Price'),
+(63, 31, 'Design'),
+(64, 2, 'Image'),
+(65, 2, 'Price'),
+(66, 2, 'Color');
 
 -- --------------------------------------------------------
 
@@ -415,7 +460,52 @@ INSERT INTO `property_values` (`id`, `property_id`, `value`, `variation_id`) VAL
 (78, 36, 'assets/products/prod3.jpg', 37),
 (79, 37, '25', 37),
 (80, 39, 'Small', 37),
-(81, 41, '10pcs', 37);
+(81, 41, '10pcs', 37),
+(94, 42, 'assets/products/prod2.jpg', 42),
+(95, 43, '125', 42),
+(96, 44, 'Small', 42),
+(97, 45, '10 pcs', 42),
+(98, 42, 'assets/products/prod2.jpg', 43),
+(99, 43, '125', 43),
+(102, 53, 'assets/products/piece-of-cake.png', 49),
+(103, 54, '436', 49),
+(106, 57, 'assets/products/lootbag_1.jpg', 51),
+(107, 58, '1', 51),
+(108, 59, 'assets/products/lootbag_1.jpg', 52),
+(109, 60, '122', 52),
+(110, 61, 'assets/products/lootbags_e94accfb-3bc3-47fb-9582-67624a6ff8fa_1024x1024.webp', 53),
+(111, 62, '120', 53),
+(112, 63, 'Plastic Bag', 53),
+(113, 61, 'assets/products/lootbag_1.jpg', 54),
+(114, 62, '200', 54),
+(115, 63, 'Paper Bag', 54),
+(118, 64, 'assets/products/prod8.jpg', 56),
+(119, 65, '1500', 56),
+(120, 66, 'Blue', 56);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reservations`
+--
+
+CREATE TABLE `reservations` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `variation_id` int(11) DEFAULT NULL,
+  `instruction` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `variation` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reservations`
+--
+
+INSERT INTO `reservations` (`id`, `product_id`, `variation_id`, `instruction`, `quantity`, `created_at`, `variation`, `user_id`) VALUES
+(1, 2, 56, '', 1, '2023-03-04 15:48:23', 'Blue', 10);
 
 -- --------------------------------------------------------
 
@@ -548,6 +638,13 @@ CREATE TABLE `shipping_address` (
   `barangay_code` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `shipping_address`
+--
+
+INSERT INTO `shipping_address` (`id`, `user_id`, `region`, `province`, `city`, `barangay`, `street_name`, `house_no`, `zip_code`, `fullname`, `phone`, `region_code`, `province_code`, `city_code`, `barangay_code`) VALUES
+(7, 10, 'REGION V (BICOL REGION)', 'CATANDUANES', 'VIRAC (Capital)', 'Gogon Centro', 'PUROK 4', '333', '4800', 'Marlo Arcilla Zafe', '09637266066', '05', '0520', '052011', '052011026');
+
 -- --------------------------------------------------------
 
 --
@@ -573,7 +670,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstname`, `middlename`, `lastname`, `email`, `address`, `contact`, `username`, `password`, `is_verified`, `photo`) VALUES
-(10, 'John', 'Dee', 'Doe', 'marlozafe13@gmail.com', 'Philippines', '09691624065', 'marlozafe', '$2y$10$J7jKaSp/6NMIzupepq02lOOTrfrRAgAS0QF.T7wiQB6BLo7fnCaU6', 0, '');
+(10, 'John', 'Dee', 'Doe', 'marlozafe13@gmail.com', 'Philippines', '09691624065', 'marlozafe', '$2y$10$J7jKaSp/6NMIzupepq02lOOTrfrRAgAS0QF.T7wiQB6BLo7fnCaU6', 1, 'assets/products/OIP.jpg'),
+(11, 'John', 'Dee', 'Doe', 'juanpedrodelacruz@gmail.com', 'Philippines', '09691624065', 'juangarcia', '$2y$10$UzoYviuaM2q1w9egX2ZDo.U5AwHXYlQzXEuoNDouvGP6HypI6Hni6', 0, '');
 
 -- --------------------------------------------------------
 
@@ -635,9 +733,19 @@ CREATE TABLE `variations` (
 --
 
 INSERT INTO `variations` (`id`, `product_id`) VALUES
+(56, 2),
+(42, 5),
+(43, 5),
 (35, 22),
 (36, 22),
-(37, 22);
+(37, 22),
+(47, 25),
+(48, 26),
+(49, 27),
+(51, 29),
+(52, 30),
+(53, 31),
+(54, 31);
 
 -- --------------------------------------------------------
 
@@ -659,7 +767,8 @@ CREATE TABLE `verification_codes` (
 --
 
 INSERT INTO `verification_codes` (`id`, `code`, `user_id`, `createdAt`, `status`, `expiry`) VALUES
-(14, '62998B', 10, '2023-03-03 02:43:35', 0, '2023-03-03 02:53:35');
+(14, '62998B', 10, '2023-03-03 02:43:35', 0, '2023-03-03 02:53:35'),
+(15, 'B2800D', 10, '2023-03-03 09:01:00', 0, '2023-03-03 09:11:00');
 
 --
 -- Indexes for dumped tables
@@ -785,6 +894,12 @@ ALTER TABLE `property_values`
   ADD KEY `variation_id` (`variation_id`);
 
 --
+-- Indexes for table `reservations`
+--
+ALTER TABLE `reservations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `reservation_status`
 --
 ALTER TABLE `reservation_status`
@@ -864,7 +979,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -900,13 +1015,13 @@ ALTER TABLE `message_types`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `order_status`
@@ -924,7 +1039,7 @@ ALTER TABLE `payment_method`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `product_chats`
@@ -948,19 +1063,25 @@ ALTER TABLE `product_options_group`
 -- AUTO_INCREMENT for table `product_photos`
 --
 ALTER TABLE `product_photos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `properties`
 --
 ALTER TABLE `properties`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `property_values`
 --
 ALTER TABLE `property_values`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+
+--
+-- AUTO_INCREMENT for table `reservations`
+--
+ALTER TABLE `reservations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reservation_status`
@@ -996,13 +1117,13 @@ ALTER TABLE `shipping`
 -- AUTO_INCREMENT for table `shipping_address`
 --
 ALTER TABLE `shipping_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_log`
@@ -1014,13 +1135,13 @@ ALTER TABLE `user_log`
 -- AUTO_INCREMENT for table `variations`
 --
 ALTER TABLE `variations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `verification_codes`
 --
 ALTER TABLE `verification_codes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
