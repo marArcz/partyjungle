@@ -422,7 +422,7 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : "Details";
             // showLoading();
             const btn = $(this);
             btn.find(".text").addClass('d-none')
-            btn.find(".spinner").removeClass('d-none')
+            btn.find(".spinner-border").removeClass('d-none')
             axios.post('add-variation.php', formData, config)
                 .then(res => {
                     console.log('res: ', res)
