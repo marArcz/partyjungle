@@ -127,7 +127,7 @@
 								<span class="navbar-toggler-icon"></span>
 							</button>
 							<div class="collapse navbar-collapse" id="navbarsExample04">
-								<ul class="navbar-nav mr-auto align-items-center d-flex ">
+								<ul class="navbar-nav mr-auto align-items-center d-flex flex-wrap">
 									<li class="nav-item h-100 <?php echo $active_page == "home" ? "active" : "" ?>" id="nav_home">
 										<a class="nav-link h-100" href="index.php">Home</a>
 									</li>
@@ -152,19 +152,20 @@
 											<a class="nav-link " href="orders.php">Orders</a>
 										</li>
 										<li class="nav-item <?php echo $active_page == "reservations" ? "active" : "" ?> " id="nav_about">
-										<a class="nav-link" href="service-reservations.php">Service reservations</a>
-									</li>
+											<a class="nav-link" href="service-reservations.php">Services Ordered</a>
+										</li>
+										<li class="nav-item <?php echo $active_page == "product_reservations" ? "active" : "" ?> " id="nav_about">
+											<a class="nav-link" href="reservations.php">Reservations</a>
+										</li>
+
 									<?php
 									}
 									?>
-
-
-
 									<!-- <li class="nav-item" id="nav_contact">
 										<a class="nav-link" href="#" onclick="contacttab();">Contact</a>
 									</li> -->
 
-									
+
 								</ul>
 							</div>
 						</nav>

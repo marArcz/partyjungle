@@ -17,6 +17,7 @@
 @media (min-width: 992px) and (max-width: 1199px) {
     .navigation.navbar-dark .navbar-nav .nav-link {
         padding: 30px 15px;
+        font-size: 0.7rem !important;
     }
     .banner_main {
         min-height: 566px;
@@ -54,8 +55,9 @@
         max-width: 28.3%;
     }
     .navigation.navbar-dark .navbar-nav .nav-link {
-        padding: 30px 8px;
-        font-size: 14px;
+        padding: 30px 15px;
+        font-size: 0.7rem !important;
+
     }
     .banner_main {
         min-height: 459px;

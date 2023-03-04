@@ -530,9 +530,9 @@ ul.right_icon li img {
 }
 
 .navigation.navbar-dark .navbar-nav .nav-link {
-     padding: 30px 24px;
+     padding: 30px 10px;
      color: #ffffff;
-     font-size: 17px;
+     font-size: 1rem !important;
      line-height: 20px;
      font-weight: 400;
      text-transform: uppercase;
