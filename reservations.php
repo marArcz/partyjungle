@@ -33,7 +33,7 @@
                 <div class="card border-0 shadow-sm bg-white">
                     <div class="card-body p-4">
                         <div class="table-responsive-md">
-                            <table class="table" >
+                            <table class="table">
                                 <thead>
                                     <th>Product</th>
                                     <th>Category</th>
