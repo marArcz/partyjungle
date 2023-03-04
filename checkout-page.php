@@ -159,7 +159,7 @@ $user_id = $user['id'];
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-sm text-end">
-                                    <a href="#payment-modal" data-bs-toggle="modal" class=" link-primary">CHANGE</a>
+                                    <!-- <a href="#payment-modal" data-bs-toggle="modal" class=" link-primary">CHANGE</a> -->
                                 </div>
                             </div>
                             <hr>
