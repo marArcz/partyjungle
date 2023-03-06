@@ -40,13 +40,13 @@
                 $query = mysqli_query($con, "SELECT * FROM categories");
                 $i = 1;
                 while ($row = $query->fetch_assoc()) {
+                
                 ?>
                     <div class="col-6 col-md-3 text-center">
                         <a href="products.php?category=<?php echo $row['category_name'] ?>" class="link-light">
                             <div class="card border-0 rounded-0 <?php echo $i % 2 == 0 ? "bg-yellow" : "bg-orange" ?>">
                                 <div class="card-body text-center">
-                                    <img src="<?php echo $row['category_photo'] ?>" alt="" class="img-fluid mb-3">
-
+                                    <img src="<?php echo $row['category_photo'] ?>" width="100" alt="" class="img-fluid mb-3">
                                     <p class="text-light my-0">
                                         <?php echo $row['category_name'] ?>
                                     </p>
@@ -55,7 +55,7 @@
                         </a>
                     </div>
                 <?php
-                    $i++;
+                    $i = $i % 4 == 0 ? 0: $i + 1;
                 }
                 ?>
             </div>
