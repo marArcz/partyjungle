@@ -30,45 +30,49 @@
 
                 <h4 class="text-dark fw-light">Service Reservations</h4>
                 <hr>
-                <ul class="nav mb-4 custom-nav">
-                    <li class="nav-item me-3 <?php echo $status == "All" ? 'active' : '' ?>">
-                        <a href="service-reservations.php?status=All" class="nav-link link-dark fw-light">
+                <div class="card border rounded-1 shadow-sm bg-white mb-3">
+                    <div class="card-body">
+                        <ul class="nav custom-nav">
+                            <li class="nav-item me-3 <?php echo $status == "All" ? 'active' : '' ?>">
+                                <a href="service-reservations.php?status=All" class="nav-link link-dark fw-light">
+                                    <?php
+                                    // get number of reservations
+                                    $count = mysqli_query($con, "SELECT COUNT(id) FROM service_reservations WHERE user_id = $user_id")->fetch_array()[0];
+                                    ?>
+                                    <span>All</span>
+                                    <?php
+                                    if ($count > 0) {
+                                    ?>
+                                        <span class="text-bg-light badge border text-orange"><?php echo $count ?></span>
+                                    <?php
+                                    }
+                                    ?>
+
+                                </a>
+                            </li>
                             <?php
-                            // get number of reservations
-                            $count = mysqli_query($con, "SELECT COUNT(id) FROM service_reservations WHERE user_id = $user_id")->fetch_array()[0];
+                            $query = mysqli_query($con, "SELECT * FROM reservation_status");
+                            while ($row = $query->fetch_assoc()) {
+                                $count = mysqli_query($con, "SELECT count(id) FROM service_reservations WHERE user_id = $user_id AND status =" . $row['status_code'])->fetch_array()[0];
                             ?>
-                            <span>All</span>
-                            <?php
-                            if ($count > 0) {
-                            ?>
-                                <span class="text-bg-light badge border text-orange"><?php echo $count ?></span>
+                                <li class="nav-item me-3 <?php echo $status == $row['status_label'] ? 'active' : '' ?>">
+                                    <a href="service-reservations.php?status=<?php echo $row['status_label'] ?>" class="nav-link link-dark fw-light ">
+                                        <?php echo $row['status_label'] ?>
+                                        <?php
+                                        if ($count > 0) {
+                                        ?>
+                                            <span class="text-bg-light badge border text-orange"><?php echo $count ?></span>
+                                        <?php
+                                        }
+                                        ?>
+                                    </a>
+                                </li>
                             <?php
                             }
                             ?>
-
-                        </a>
-                    </li>
-                    <?php
-                    $query = mysqli_query($con, "SELECT * FROM reservation_status");
-                    while ($row = $query->fetch_assoc()) {
-                        $count = mysqli_query($con, "SELECT count(id) FROM service_reservations WHERE user_id = $user_id AND status =" . $row['status_code'])->fetch_array()[0];
-                    ?>
-                        <li class="nav-item me-3 <?php echo $status == $row['status_label'] ? 'active' : '' ?>">
-                            <a href="service-reservations.php?status=<?php echo $row['status_label'] ?>" class="nav-link link-dark fw-light ">
-                                <?php echo $row['status_label'] ?>
-                                <?php
-                                if ($count > 0) {
-                                ?>
-                                    <span class="text-bg-light badge border text-orange"><?php echo $count ?></span>
-                                <?php
-                                }
-                                ?>
-                            </a>
-                        </li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                        </ul>
+                    </div>
+                </div>
                 <?php
                 if ($status != "All") {
                 ?>
