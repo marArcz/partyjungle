@@ -38,6 +38,8 @@
                                     <th>Product</th>
                                     <th>Category</th>
                                     <th>Quantity</th>
+                                    <th>Status</th>
+
                                     <th>Action</th>
                                 </thead>
                                 <tbody>
@@ -52,9 +54,38 @@
                                             <td><?php echo $product['category_name'] ?></td>
                                             <td><?php echo $row['quantity'] ?></td>
                                             <td>
-                                                <a href="remove-reservation.php?id=<?php echo $row['id'] ?>" class="link-danger">
-                                                    <i class="bx bx-trash"></i>
-                                                </a>
+                                                <?php
+                                                if ($row['status'] == 0) {
+                                                ?>
+                                                    <span class="badge text-bg-orange fw-light text-white">Pending</span>
+                                                <?php
+                                                } else if ($row['status'] == 1) {
+                                                ?>
+                                                    <span class="badge text-bg-danger fw-light text-white">Cancelled</span>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <span class="badge text-bg-success fw-light text-white">Completed</span>
+                                                <?php
+                                                }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                if ($row['status'] > 0) {
+                                                ?>
+                                                    <a href="remove-reservation.php?id=<?php echo $row['id'] ?>" class="link-danger">
+                                                        <i class="bx bx-trash"></i>
+                                                    </a>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <a href="cancel-product-reservation.php?id=<?php echo $row['id'] ?>" class="btn btn-sm btn-secondary">
+                                                        <small>Cancel</small>
+                                                    </a>
+                                                <?php
+                                                }
+                                                ?>
                                             </td>
                                         </tr>
                                     <?php
