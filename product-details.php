@@ -197,34 +197,49 @@
                                         <?php
                                         }
                                         ?>
-                                        <div class="row align-items-center mt-3">
-                                            <div class="col-md">
-                                                <p class="my-1 fs-6 text-secondary">Party Jungle Party Needs and Toys</p>
+
+                                        <!-- check if restricted -->
+                                        <?php
+                                        if (Session::getUser()['is_restricted']) {
+                                        ?>
+                                            <p class="text-center text-secondary "><span class="text-brown">Sorry, our store is not available to your location.</span><br> We are only limited to the areas of San Luis, Lemery, Agoncillo and Taal Batangas. But you still can browse and check our products!</p>
+                                            <!-- <a href="products.php" class="btn btn-orange px-3 rounded-pill">Browse our Products</a> -->
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <div class="row align-items-center mt-3">
+                                                <div class="col-md">
+                                                    <p class="my-1 fs-6 text-secondary">Party Jungle Party Needs and Toys</p>
+                                                </div>
+                                                <div class="col-md text-end">
+                                                    <?php
+                                                    if ($available > 0) {
+                                                    ?>
+                                                        <button class="mt-2 btn btn-yellow px-3 rounded-pill btn-lg mt-3 fs-6" type="submit" name="submit">
+                                                            <small class="text-dark">
+                                                                <span class="bx bxs-cart"></span>
+                                                                Add to cart
+                                                            </small>
+                                                        </button>
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <button class="mt-2 btn btn-yellow px-3 rounded-pill btn-lg mt-3 fs-6" type="submit" name="submit">
+                                                            <small class="text-dark">
+                                                                <span class="bx bxs-time"></span>
+                                                                Reserve
+                                                            </small>
+                                                        </button>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </div>
                                             </div>
-                                            <div class="col-md text-end">
-                                                <?php
-                                                if ($available > 0) {
-                                                ?>
-                                                    <button class="mt-2 btn btn-yellow px-3 rounded-pill btn-lg mt-3 fs-6" type="submit" name="submit">
-                                                        <small class="text-dark">
-                                                            <span class="bx bxs-cart"></span>
-                                                            Add to cart
-                                                        </small>
-                                                    </button>
-                                                <?php
-                                                } else {
-                                                ?>
-                                                    <button class="mt-2 btn btn-yellow px-3 rounded-pill btn-lg mt-3 fs-6" type="submit" name="submit">
-                                                        <small class="text-dark">
-                                                            <span class="bx bxs-time"></span>
-                                                            Reserve
-                                                        </small>
-                                                    </button>
-                                                <?php
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
+                                        <?php
+                                        }
+
+                                        ?>
+
                                     </form>
                                 </div>
 

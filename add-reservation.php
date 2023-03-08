@@ -2,6 +2,10 @@
 include './conn/conn.php';
 include './includes/Session.php';
 
+if(Session::getUser() == null){
+    Session::redirectTo("login.php");
+}
+
 $user_id = Session::getUser()['id'];
 $product_id = $_POST['product_id'];
 $quantity = $_POST['quantity'];

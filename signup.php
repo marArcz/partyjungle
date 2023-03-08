@@ -29,6 +29,8 @@
                     </div>
                     <div class="col-md-6">
                         <form action="signup_submit.php" id="signup-form" method="post">
+                            <input type="hidden" name="state" id="state-box">
+                            <input type="hidden" name="town" id="town-box">
                             <p class="mt-1 mb-4 fs-4 ">Sign Up</p>
                             <div class="mb-3 row  mt-3 mb-3">
                                 <div class="col-md">
@@ -46,8 +48,15 @@
                                     <input type="text" class="form-control" name="lastname">
                                 </div>
                                 <div class="col-md">
+
                                     <label for="" class="form-label">Home Address:</label>
-                                    <input type="text" class="form-control" name="address">
+
+                                    <input type="text" class="form-control" disabled id="home-address" name="address">
+                                    <div class="text-end">
+                                        <a href="#" role="button" id="detect-btn" class="my-0 text-end text-uppercase link-orange text-decoration-underlin"><small><i class='bx bx-current-location'></i> Find my location</small></a>
+                                    </div>
+                                    <!-- <p class="form-text">Click on find my location below to automatically detect your current location.</p> -->
+
                                 </div>
                             </div>
                             <div class="row mb-3 ">
@@ -97,7 +106,7 @@
         var validated = false;
 
         $("#signup-form").on("submit", function(e) {
-            if(validated === true){
+            if (validated === true) {
                 return;
             }
             e.preventDefault();
@@ -135,6 +144,30 @@
                 }
             })
         })
+
+        $("#detect-btn").on("click", function(e) {
+            e.preventDefault();
+            getLocation();
+        })
+
+        const getLocation = () => {
+            $("#home-address").val("...").attr("disabled", true)
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+
+                console.log("Latitude is :", position.coords.latitude);
+                console.log("Longitude is :", position.coords.longitude);
+                let latitude = position.coords.latitude;
+                let longitude = position.coords.longitude
+                let url = `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`
+                axios.get(url).then(res => {
+                    console.log(res)
+                    $("#state-box").val(res.data.address.state)
+                    $("#town-box").val(res.data.address.town)
+                    $("#home-address").val(res.data.display_name).removeAttr("disabled")
+                })
+            });
+        }
     </script>
 </body>
 

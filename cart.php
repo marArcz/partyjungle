@@ -161,19 +161,33 @@
                                         ?>
                                         <li class="list-group-item"></li>
                                     </ul>
-                                <?php
+                                    <?php
                                 } else {
-                                ?>
-                                    <div class="text-center">
-                                        <div class="row justify-content-center mb-3">
-                                            <div class="col-md-4">
-                                                <img src="./assets/images/ban_img1.png" alt="" class="img-fluid">
+                                    if (Session::getUser()['is_restricted']) {
+                                    ?>
+                                        <div class="text-center">
+                                            <div class="row justify-content-center mb-3">
+                                                <div class="col-md-4">
+                                                    <img src="./assets/images/ban_img1.png" alt="" class="img-fluid">
+                                                </div>
                                             </div>
+                                            <p class="text-center text-secondary "><span class="text-brown">Sorry, our store is not available to your location.</span><br> We are only limited to the areas of San Luis, Lemery, Agoncillo and Taal Batangas. But you still can browse and check our products!</p>
+                                            <a href="products.php" class="btn btn-orange px-3 rounded-pill">Browse our Products</a>
                                         </div>
-                                        <p class="text-center text-secondary">You have no item in your cart.</p>
-                                        <a href="products.php" class="btn btn-orange px-3 rounded-pill">Shop now</a>
-                                    </div>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <div class="text-center">
+                                            <div class="row justify-content-center mb-3">
+                                                <div class="col-md-4">
+                                                    <img src="./assets/images/ban_img1.png" alt="" class="img-fluid">
+                                                </div>
+                                            </div>
+                                            <p class="text-center text-secondary">You have no item in your cart.</p>
+                                            <a href="products.php" class="btn btn-orange px-3 rounded-pill">Shop now</a>
+                                        </div>
                                 <?php
+                                    }
                                 }
                                 ?>
 
