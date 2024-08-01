@@ -1,7 +1,7 @@
 ![logo-sm](https://github.com/user-attachments/assets/798d9a8c-3aef-4dc8-928a-8a78c1f3deae)
 
 # Party Jungle Party Needs & Toys
-### Party Jungle web-based system
+### Ecommerce website
 
 #### Technology used:
 - PHP
