@@ -1,3 +1,5 @@
+![logo](https://github.com/user-attachments/assets/eaa1e951-ee6d-4e2c-8191-25252e6462b9)
+
 # Party Jungle Party Needs & Toys
 ###Party Jungle web-based system
 
